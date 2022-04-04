@@ -2,6 +2,8 @@ import { useState } from "react";
 // import { useParams } from "react-router-dom";
 import axios from "axios";
 
+//URL: http://localhost:3000/user/:userId/avatar
+
 const AddAvatar = () => {
   // const params = useParams();
   const [fichero, setFichero] = useState();
@@ -18,7 +20,7 @@ const AddAvatar = () => {
     formData.append("avatarFile", fichero);
 
     const response = await axios.post(
-      "gs://react-http-1b8f6.appspot.com",
+      "http://localhost:3000/api/v1/users/upload",
       fichero
     );
 

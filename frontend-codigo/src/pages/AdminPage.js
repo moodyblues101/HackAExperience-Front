@@ -4,6 +4,7 @@ import CreateNewExperience from "./AdminPageMenu/CreateNewExperience";
 import ModifyExperience from "./AdminPageMenu/ModifyExperience";
 import DeleteExperience from "./AdminPageMenu/DeleteExperience";
 import ManageExperienceReviews from "./AdminPageMenu/ManageExperienceReviews";
+import AddImagesExperience from "./AdminPageMenu/AddImagesExperience";
 
 import classes from "./AdminPage.module.css";
 
@@ -30,6 +31,10 @@ const AdminPage = () => {
 
       <Routes>
         <Route path="new-experience" element={<CreateNewExperience />} />
+        <Route
+          path="new-experience/addImages"
+          element={<AddImagesExperience />}
+        />
         <Route path="modify-experience" element={<ModifyExperience />} />
         <Route path="delete-experience" element={<DeleteExperience />} />
         <Route

@@ -19,6 +19,8 @@ const ExperiencePage = () => {
 
       const data = await response.json();
 
+      console.log(data);
+
       const transformedExperiences = data.experiencesData.map(
         (experienceData) => {
           return {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-// import { Navigate } from "react-router-dom";
-// import axios from "axios";
+import { Navigate } from "react-router-dom";
+import axios from "axios";
 
 import useInput from "../../hooks/use-input";
 import Modal from "../../ui/Modal";
@@ -13,8 +13,9 @@ const CreateNewExperience = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [didSubmit, setDidSubmit] = useState(false);
   const [httpError, setHttpError] = useState(null);
+  const [httpErrorImage, setHttpErrorImage] = useState(null);
 
-  // const [file, setFile] = useState();
+  const [file, setFile] = useState();
   // const [avatarUrl, setAvatarUrl] = useState();
 
   const {
@@ -156,6 +157,7 @@ const CreateNewExperience = () => {
 
     setIsLoading(true);
     setHttpError(null);
+    setHttpErrorImage(null);
 
     const addExperience = async (experience) => {
       try {
@@ -180,33 +182,31 @@ const CreateNewExperience = () => {
 
         const idExperience = data.experienceId;
         console.log(idExperience);
-
         setDidSubmit(true);
+        setIsLoading(false);
+
+        const formData = new FormData();
+
+        formData.append("sampleFile", file);
+
+        const responseImage = await axios.post(
+          `http://localhost:3000/api/v1/experiences/${idExperience}/images`,
+          formData
+        );
+
+        if (!responseImage.ok) {
+          throw new Error("uploaded images went wrong");
+        }
+
+        // setAvatarUrl(response.data.avatarUrl);
       } catch (error) {
         setHttpError(error.message);
       }
       setIsLoading(false);
+      // console.log("despues del loading false", idExperience);
     };
 
     addExperience(experience);
-
-    // console.log("antes del if de is loading");
-    // if (isLoading) {
-    //   return (
-    //     <section className={classes.error_text}>
-    //       <p>Loading...</p>
-    //     </section>
-    //   );
-    // }
-    // console.log("antes del if de httpError", httpError);
-    // if (httpError) {
-    //   console.log("estoy en el if");
-    //   return (
-    //     <section className={classes.error_text}>
-    //       <p>{httpError}</p>
-    //     </section>
-    //   );
-    // }
 
     resetExperienceName();
     resetExperienceDescription();
@@ -229,6 +229,11 @@ const CreateNewExperience = () => {
 
   const hideModal = () => {
     setDidSubmit(false);
+    return (
+      <>
+        <Navigate to="new-experience/addImages">Añadir imagenes</Navigate>
+      </>
+    );
   };
 
   // const returnMainPage = () => {
@@ -256,22 +261,6 @@ const CreateNewExperience = () => {
       </div>
     </React.Fragment>
   );
-
-  //FALTA AVERIGUAR COMO PASAR ID DE NUEVA EXP PARA SUBIR IMAGENES EN LA MISMA
-  // const uploadHandler = async (event) => {
-  //   event.preventDefault();
-
-  //   const formData = new FormData();
-
-  //   formData.append("sampleFile", file);
-
-  //   const response = await axios.post(
-  //     `http://localhost:3000/api/v1/experiences/${idExperience}/images`,
-  //     formData
-  //   );
-
-  //   setAvatarUrl(response.data.avatarUrl);
-  // };
 
   return (
     <>
@@ -385,9 +374,8 @@ const CreateNewExperience = () => {
             <p className={classes.error_text}>Introduzca una categoria.</p>
           )}
         </div>
-        {/* <div>
+        <div>
           <label>
-            {" "}
             Imagene(s):
             <input
               multiple
@@ -397,9 +385,8 @@ const CreateNewExperience = () => {
                 setFile(file);
               }}
             />
-            <button onClick={uploadHandler}>Subir</button>
           </label>
-        </div> */}
+        </div>
         <div className={classes.form_actions}>
           <button disabled={!formIsValid}>Añadir experiencia</button>
         </div>
