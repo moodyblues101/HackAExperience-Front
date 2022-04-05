@@ -1,0 +1,14 @@
+.create_entry_form {
+  color: var(--main-dark);
+}
+
+.create_entry_form input[type="file"] {
+  visibility: hidden;
+}
+
+.create_entry_form .entry_photos_slider {
+  width: 300px;
+  height: 200px;
+  margin-top: 2rem;
+  box-shadow: 2px 2px 10px var(--shadow-dark);
+}

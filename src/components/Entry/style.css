@@ -1,0 +1,13 @@
+.entry_user_info .fa-trash-alt {
+  margin-left: auto;
+  margin-right: 1rem;
+}
+
+.entry_user_info .fa-pencil-alt {
+  margin-right: 1rem;
+}
+
+.entry {
+  background-color: white;
+  box-shadow: 2px 2px 20px rgb(182, 182, 182);
+}

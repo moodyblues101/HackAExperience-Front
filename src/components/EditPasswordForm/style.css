@@ -1,0 +1,8 @@
+.password_match {
+  position: absolute;
+  right: 1rem;
+}
+
+.edit_password_form .input_container {
+  position: relative;
+}
