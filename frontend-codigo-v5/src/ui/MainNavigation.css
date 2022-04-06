@@ -1,0 +1,15 @@
+.main-ul {
+  list-style: none;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.main-li {
+  margin: 0 16px;
+}
+
+nav .active {
+  color: #fd8210;
+}
