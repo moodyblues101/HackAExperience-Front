@@ -8,6 +8,7 @@ import SearchPage from "./pages/SearchPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import NotFound from "./pages/NotFoundPage";
+import NoAuthoritation from "./pages/NoAuthoritationPage";
 
 import AdminPage from "./pages/AdminPage";
 import CreateNewExperience from "./pages/AdminPageMenu/CreateNewExperience";
@@ -57,23 +58,36 @@ function App() {
         )}
 
         <Route path="/user/admin/" exact>
-          {authCtx.isLoggedIn && <AdminPage />}
+          {authCtx.isLoggedIn && authCtx.role === "admin" && <AdminPage />}
+          {authCtx.role !== "admin" && <NoAuthoritation />}
           {!authCtx.isLoggedIn && <Redirect to="/login" />}
         </Route>
         <Route path="/user/admin/new-experience" exact>
-          {authCtx.isLoggedIn && <CreateNewExperience />}
+          {authCtx.isLoggedIn && authCtx.role === "admin" && (
+            <CreateNewExperience />
+          )}
+          {authCtx.role !== "admin" && <NoAuthoritation />}
           {!authCtx.isLoggedIn && <Redirect to="/login" />}
         </Route>
         <Route path="/user/admin/modify-experience" exact>
-          {authCtx.isLoggedIn && <ModifyExperience />}
+          {authCtx.isLoggedIn && authCtx.role === "admin" && (
+            <ModifyExperience />
+          )}
+          {authCtx.role !== "admin" && <NoAuthoritation />}
           {!authCtx.isLoggedIn && <Redirect to="/login" />}
         </Route>
         <Route path="/user/admin/delete-experience" exact>
-          {authCtx.isLoggedIn && <DeleteExperience />}
+          {authCtx.isLoggedIn && authCtx.role === "admin" && (
+            <DeleteExperience />
+          )}
+          {authCtx.role !== "admin" && <NoAuthoritation />}
           {!authCtx.isLoggedIn && <Redirect to="/login" />}
         </Route>
         <Route path="/user/admin/manage-experience-comments" exact>
-          {authCtx.isLoggedIn && <ManageExperienceReviews />}
+          {authCtx.isLoggedIn && authCtx.role === "admin" && (
+            <ManageExperienceReviews />
+          )}
+          {authCtx.role !== "admin" && <NoAuthoritation />}
           {!authCtx.isLoggedIn && <Redirect to="/login" />}
         </Route>
 

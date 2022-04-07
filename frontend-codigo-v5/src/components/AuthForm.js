@@ -65,8 +65,13 @@ const AuthForm = () => {
         const expirationTime = new Date(
           new Date().getTime() + +data.expiresIn * 1000
         );
-        //añado id de usuario para poder usarlo en otras paginas
-        authCtx.login(data.id, data.accessToken, expirationTime.toISOString());
+        //añado id de usuario y role para poder usarlo en otras paginas
+        authCtx.login(
+          data.id,
+          data.role,
+          data.accessToken,
+          expirationTime.toISOString()
+        );
         history.replace("/");
       })
       .catch((err) => {
