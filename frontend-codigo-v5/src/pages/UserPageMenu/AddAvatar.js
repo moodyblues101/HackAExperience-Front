@@ -1,14 +1,14 @@
 import { useState } from "react";
-// import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const AddAvatar = () => {
-  // const params = useParams();
+  const params = useParams();
   const [fichero, setFichero] = useState();
   const [avatarUrl, setAvatarUrl] = useState();
   // const [error, setError] = useState();
 
-  // const idUser = params.userId; //no se como pasarlo al backend
+  const idUser = params.userId;
 
   async function addAvatarUser(event) {
     event.preventDefault();

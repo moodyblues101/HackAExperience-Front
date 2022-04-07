@@ -11,6 +11,7 @@ const MainHeader = () => {
   const authCtx = useContext(AuthContext);
 
   const isLoggedIn = authCtx.isLoggedIn;
+  const userId = authCtx.idUser;
 
   const logoutHandler = () => {
     authCtx.logout();
@@ -41,7 +42,7 @@ const MainHeader = () => {
           )}
           {isLoggedIn && (
             <li className="btn_login">
-              <Link to="/user/:userId">Profile</Link>
+              <Link to={`/user/${userId}`}>Profile</Link>
             </li>
           )}
           {isLoggedIn && (

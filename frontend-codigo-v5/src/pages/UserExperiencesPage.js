@@ -1,20 +1,25 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const UserExperiencesPage = () => {
+  const params = useParams();
   return (
     <div>
       <h2>Experiencias</h2>
       <ul>
         <li>
-          <Link to="/user/:userId/experiences/past">Experiencias pasadas</Link>
+          <Link to={`/user/${params.userId}/experiences/past`}>
+            Experiencias pasadas
+          </Link>
         </li>
         <li>
-          <Link to="/user/:userId/experiences/enrolled">
+          <Link to={`/user/${params.userId}/experiences/enrolled`}>
             Experiencias en las que apareces inscrito
           </Link>
         </li>
         <li>
-          <Link to="/user/:userId/experiences/review">Añadir comentario</Link>
+          <Link to={`/user/${params.userId}/experiences/review`}>
+            Añadir comentario
+          </Link>
         </li>
       </ul>
     </div>
