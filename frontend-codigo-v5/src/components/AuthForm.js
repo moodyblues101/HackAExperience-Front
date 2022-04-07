@@ -72,7 +72,11 @@ const AuthForm = () => {
           data.accessToken,
           expirationTime.toISOString()
         );
-        history.replace("/");
+        if (data.role === "admin") {
+          history.replace("/user/admin/");
+        } else {
+          history.replace("/");
+        }
       })
       .catch((err) => {
         alert(err.message);

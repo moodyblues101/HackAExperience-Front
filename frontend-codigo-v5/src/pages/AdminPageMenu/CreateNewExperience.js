@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 import useInput from "../../hooks/use-input";
@@ -231,11 +231,6 @@ const CreateNewExperience = () => {
 
   const hideModal = () => {
     setDidSubmit(false);
-    returnMainPage();
-  };
-
-  const returnMainPage = () => {
-    return <Redirect to="/user/admin/" />;
   };
 
   console.log("antes del if de httpError", httpError);
@@ -244,7 +239,9 @@ const CreateNewExperience = () => {
     return (
       <section className="error-text">
         <p>{httpError}</p>
-        <button onClick={returnMainPage}>Volver a pagina principal</button>
+        <div>
+          <Link to="/user/admin/">Volver</Link>
+        </div>
       </section>
     );
   }
@@ -413,9 +410,9 @@ const CreateNewExperience = () => {
           </button>
         </div>
       </form>
-      <button className="submit-button" onClick={returnMainPage}>
-        Volver a menu
-      </button>
+      <div>
+        <Link to="/user/admin/">Volver</Link>
+      </div>
       {didSubmit && <Modal onClose={hideModal}>{didSubmitModelContent}</Modal>}
     </>
   );

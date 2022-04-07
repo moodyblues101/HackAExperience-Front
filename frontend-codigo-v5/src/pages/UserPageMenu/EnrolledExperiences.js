@@ -1,10 +1,10 @@
 // import { useState, useEffect } from "react";
-// import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 // import ExperienceList from "../../components/ExperienceList";
 
 const EnrolledExperiences = () => {
-  // const params = useParams();
+  const params = useParams();
   // const [experiences, setExperiences] = useState([]);
   // const [isLoading, setIsLoading] = useState(true);
   // const [httpError, setHttpError] = useState();
@@ -60,6 +60,9 @@ const EnrolledExperiences = () => {
     <div>
       <h2>Experiencias en las que estas inscrito</h2>
       {/* <ExperienceList experiences={experiences} /> */}
+      <div>
+        <Link to={`/user/${params.userId}/experiences`}>Volver</Link>
+      </div>
     </div>
   );
 };

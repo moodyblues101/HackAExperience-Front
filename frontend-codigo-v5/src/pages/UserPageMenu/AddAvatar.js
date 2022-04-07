@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 
 const AddAvatar = () => {
@@ -53,6 +53,9 @@ const AddAvatar = () => {
           <img src={avatarUrl} alt="avatarUrl" />{" "}
         </div>
       )}
+      <div>
+        <Link to={`/user/${params.userId}/personal`}>Volver</Link>
+      </div>
     </div>
   );
 };

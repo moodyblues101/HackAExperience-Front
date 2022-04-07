@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 import Modal from "../../ui/Modal";
 import "./DeleteExperience.css";
@@ -108,6 +109,9 @@ const DeleteExperience = () => {
       </form>
       {didSubmit && <Modal onClose={hideModal}>{didSubmitModelContent}</Modal>}
       {/* {!didSubmit && <Modal onClose={hideModal}>{httpError}</Modal>} */}
+      <div>
+        <Link to="/user/admin/">Volver</Link>
+      </div>
     </>
   );
 };

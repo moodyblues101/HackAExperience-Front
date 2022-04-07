@@ -12,6 +12,7 @@ const MainHeader = () => {
 
   const isLoggedIn = authCtx.isLoggedIn;
   const userId = authCtx.idUser;
+  const isAdmin = authCtx.role === "admin";
 
   const logoutHandler = () => {
     authCtx.logout();
@@ -40,7 +41,7 @@ const MainHeader = () => {
               <Link to="/register">Register</Link>
             </li>
           )}
-          {isLoggedIn && (
+          {isLoggedIn && !isAdmin && (
             <li className="btn_login">
               <Link to={`/user/${userId}`}>Profile</Link>
             </li>

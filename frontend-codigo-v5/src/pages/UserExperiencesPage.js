@@ -22,6 +22,9 @@ const UserExperiencesPage = () => {
           </Link>
         </li>
       </ul>
+      <div>
+        <Link to={`/user/${params.userId}`}>Volver a pagina de usuario</Link>
+      </div>
     </div>
   );
 };
