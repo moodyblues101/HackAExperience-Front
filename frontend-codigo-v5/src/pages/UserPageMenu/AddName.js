@@ -28,9 +28,26 @@ const AddName = () => {
     }
 
     const addedName = async (entName, token) => {
-      const authToken = "Bearer" + token;
+      const authToken = "Bearer " + token;
       console.log(authToken);
       try {
+        // const res = await fetch("http://localhost:3000/api/v1/users/profile");
+
+        // if (!res.ok) {
+        //   throw new Error("error en get profile");
+        // }
+        // const data = await res.json();
+        // console.log(data);
+
+        entName = JSON.parse(`{
+          "name": "Luis Castro",
+          "email": "hackstudent102@yopmail.com",
+          "bio": "Test updated bio ^^",
+          "password": "1234",
+          "repeatPassword": "1234"
+        }`);
+        console.log("entName>>>>>>", entName);
+
         const response = await fetch("http://localhost:3000/api/v1/users", {
           method: "PATCH",
           body: JSON.stringify(entName),
