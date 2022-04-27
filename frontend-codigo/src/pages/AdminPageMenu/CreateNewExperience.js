@@ -1,11 +1,10 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 
 import Input from "../../ui/FormElements/Input";
 import Button from "../../ui/FormElements/Button";
 import ErrorModal from "../../ui/ErrorModal";
 import LoadingSpinner from "../../ui/LoadingSpinner";
-// import ImageUpload from "../../ui/FormElements/ImageUpload";
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../../util/validators";
 import { useForm } from "../../hooks/form-hook";
 import { useHttpClient } from "../../hooks/http-hook";
@@ -17,6 +16,7 @@ import "./CreateNewExperience.css";
 
 const CreateNewExperience = () => {
   const auth = useContext(AuthContext);
+  const [fichero, setFichero] = useState();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -67,6 +67,7 @@ const CreateNewExperience = () => {
 
     try {
       const formData = new FormData();
+
       formData.append("name", formState.inputs.name.value);
       formData.append("description", formState.inputs.description.value);
       formData.append("city", formState.inputs.city.value);
@@ -76,13 +77,28 @@ const CreateNewExperience = () => {
       formData.append("eventEndDate", formState.inputs.eventEndDate.value);
       formData.append("idCategory", formState.inputs.idCategory.value);
       formData.append("idBusiness", formState.inputs.idBusiness.value);
-      await sendRequest(
+
+      const res = await sendRequest(
         "http://localhost:3000/api/v1/experiences/",
         "POST",
         formData,
         { Authorization: "Bearer " + auth.token }
       );
-      setFormData();
+
+      const { experienceId } = res;
+
+      for (let index = 0; index < fichero.length; index++) {
+        formData.append("imageExperience", fichero[index]);
+      }
+
+      await sendRequest(
+        `http://localhost:3000/api/v1/experiences/${experienceId}/images`,
+        "POST",
+        formData,
+        {
+          Authorization: "Bearer " + auth.token,
+        }
+      );
     } catch (err) {}
     history.replace("/user/admin");
   };
@@ -165,15 +181,23 @@ const CreateNewExperience = () => {
           errorText="Por favor, introduzca una código válido."
           onInput={inputHandler}
         />
-        {/* <ImageUpload
-          id="image"
-          onInput={inputHandler}
-          errorText="Please provide an image."
-        /> */}
-        <Button type="submit" disabled={!formState.isValid}>
-          AÑADIR
-        </Button>
-        <Button to="/user/admin/">VOLVER</Button>
+        <label>Imagenes de la experiencia:</label>
+        <input
+          id="files"
+          multiple
+          type="file"
+          onChange={(event) => {
+            const fichero = event.target.files;
+            setFichero(fichero);
+          }}
+        />
+        <hr />
+        <div>
+          <Button type="submit" disabled={!formState.isValid}>
+            AÑADIR
+          </Button>
+          <Button to="/user/admin/">VOLVER</Button>
+        </div>
       </form>
     </React.Fragment>
   );
