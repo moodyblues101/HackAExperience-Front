@@ -26,6 +26,7 @@ import AddAvatar from "./pages/UserPageMenu/AddAvatar";
 import AddName from "./pages/UserPageMenu/AddName";
 import AddBio from "./pages/UserPageMenu/AddBio";
 import ChangePassword from "./pages/UserPageMenu/ChangePassword";
+import DeleteUser from "./pages/UserPageMenu/DeleteUser";
 import PastExperiences from "./pages/UserPageMenu/PastExperiences";
 import EnrolledExperiences from "./pages/UserPageMenu/EnrolledExperiences";
 import AddReview from "./pages/UserPageMenu/AddReview";
@@ -80,6 +81,9 @@ function App() {
         </Route>
         <Route path="/user/:userId/personal/password" exact>
           <ChangePassword />
+        </Route>
+        <Route path="/user/:userId/personal/delete" exact>
+          <DeleteUser />
         </Route>
 
         <Route path="/user/:userId/experiences" exact>

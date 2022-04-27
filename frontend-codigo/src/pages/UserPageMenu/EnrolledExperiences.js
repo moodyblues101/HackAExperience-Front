@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useCallback, useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 
 import ErrorModal from "../../ui/ErrorModal";
@@ -6,10 +6,7 @@ import LoadingSpinner from "../../ui/LoadingSpinner";
 import ExperienceList from "../../components/ExperienceList";
 import { useHttpClient } from "../../hooks/http-hook";
 import { AuthContext } from "../../store/auth-context";
-
-//  /user/:userId/experiences/enrolled
-
-// SIN TERMINAR!!!!
+import Button from "../../ui/FormElements/Button";
 
 const EnrolledExperiences = () => {
   const params = useParams();
@@ -18,65 +15,66 @@ const EnrolledExperiences = () => {
 
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
-  useEffect(() => {
-    const fetchExperiences = async (userId) => {
+  const fetchExperiences = useCallback(
+    async (userId) => {
       try {
-        const responseData = await sendRequest(
+        const responseBookings = await sendRequest(
           `http://localhost:3000/api/v1/users/${userId}/bookings`,
           "GET",
           null,
           { Authorization: "Bearer " + auth.token }
         );
 
-        // respuesta: [
-        //   {
-        //     id: 2,
-        //     idUser: 3,
-        //     idExperience: 2,
-        //     createdAt: "2022-06-28T09:50:00.000Z",
-        //     updatedAt: null,
-        //     name: "exp2",
-        //     city: "Santiago",
-        //     price: "30.00",
-        //   },
-        //   {
-        //     id: 6,
-        //     idUser: 3,
-        //     idExperience: 4,
-        //     createdAt: "2022-06-28T10:00:00.000Z",
-        //     updatedAt: null,
-        //     name: "exp4",
-        //     city: "Vigo",
-        //     price: "15.00",
-        //   },
-        // ];
+        console.log("responseBookings: ", responseBookings);
 
-        //si no hay experiencias reservadas => INFORMAR
-
-        //del sendrequest sacamos las id de las experiencias y luego hay que hacer un
-        //get experience by id y continuamos:
+        if (responseBookings.length === 0) {
+          return <p>No tienes experiencias reservadas</p>;
+        }
 
         const loadedExperiences = [];
 
-        for (const key in responseData) {
+        for (const key in responseBookings) {
+          console.log("key: ", key);
+          const bookedExperience = await sendRequest(
+            `http://localhost:3000/api/v1/experiences/${responseBookings[key].idExperience}`,
+            "GET",
+            null,
+            { Authorization: "Bearer " + auth.token }
+          );
+
+          console.log("bookedExperience: ", bookedExperience);
+
           loadedExperiences.push({
             id: key,
-            name: responseData[key].name,
-            description: responseData[key].description,
-            date: responseData[key].eventStartDate,
+            name: bookedExperience.name,
+            description: bookedExperience.description,
+            date: new Date(bookedExperience.eventStartDate).getTime(),
           });
         }
-        //filtrar resultado por fecha posterior a la del momento de la consulta
-        const now = new Date();
+
+        console.log("loadedExperiences: ", loadedExperiences);
+
+        const now = new Date().getTime();
+        console.log("now: ", now);
+
+        const hora = loadedExperiences[0].date;
+        console.log("hora: ", hora);
+
         const experiencesEnrolled = loadedExperiences.filter(
-          (experience) => loadedExperiences.date > now
+          (experience) => loadedExperiences.name === "exp2"
         );
+
+        console.log("experiencesEnrolled: ", experiencesEnrolled);
 
         setExperiences(experiencesEnrolled);
       } catch (err) {}
-    };
+    },
+    [auth.token, sendRequest]
+  );
+
+  useEffect(() => {
     fetchExperiences(params.userId);
-  }, [auth.token, params.userId, sendRequest]);
+  }, [params.userId, fetchExperiences]);
 
   return (
     <React.Fragment>
@@ -84,6 +82,7 @@ const EnrolledExperiences = () => {
       {isLoading && <LoadingSpinner />}
       <h2>Experiencias en las que estas inscrito</h2>
       <ExperienceList experiences={experiences} />
+      <Button to={`/user/${auth.userId}/experiences/`}>VOLVER</Button>
     </React.Fragment>
   );
 };

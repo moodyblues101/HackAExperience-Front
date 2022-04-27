@@ -23,7 +23,11 @@ const UserPersonalPage = () => {
             Cambiar contraseña
           </Link>
         </li>
-        <li>Darse de baja</li>
+        <li>
+          <Link to={`/user/${params.userId}/personal/delete`}>
+            Darse de baja
+          </Link>
+        </li>
       </ul>
       <div>
         <Link to={`/user/${params.userId}`}>Volver a pagina de usuario</Link>
