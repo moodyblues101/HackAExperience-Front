@@ -18,6 +18,9 @@ import CreateNewExperience from "./pages/AdminPageMenu/CreateNewExperience";
 import ModifyExperience from "./pages/AdminPageMenu/ModifyExperience";
 import DeleteExperience from "./pages/AdminPageMenu/DeleteExperience";
 import ManageExperienceReviews from "./pages/AdminPageMenu/ManageExperienceReviews";
+import ManageExperienceReviewsByUser from "./pages/AdminPageMenu/ManageReviews/ManageExperienceReviewsByUser";
+import ManageExperienceReviewsByExperience from "./pages/AdminPageMenu/ManageReviews/ManageExperienceReviewsByExperience";
+import ManageExperienceReviewsByUserAndExperience from "./pages/AdminPageMenu/ManageReviews/ManageExperienceReviewsByUserAndExperience";
 import UserPersonalPage from "./pages/UserPersonalPage";
 import UserExperiencesPage from "./pages/UserExperiencesPage";
 
@@ -62,6 +65,18 @@ function App() {
         </Route>
         <Route path="/user/admin/manage-experience-comments" exact>
           <ManageExperienceReviews />
+        </Route>
+        <Route path="/user/admin/manage-experience-comments/user" exact>
+          <ManageExperienceReviewsByUser />
+        </Route>
+        <Route path="/user/admin/manage-experience-comments/experience" exact>
+          <ManageExperienceReviewsByExperience />
+        </Route>
+        <Route
+          path="/user/admin/manage-experience-comments/user-experience"
+          exact
+        >
+          <ManageExperienceReviewsByUserAndExperience />
         </Route>
 
         <Route path="/user/:userId" exact>

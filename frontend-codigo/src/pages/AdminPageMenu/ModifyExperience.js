@@ -20,7 +20,7 @@ const ModifyExperience = () => {
       {inputShow && (
         <div>
           <label htmlFor="idExp">
-            Introdude id de experiencia a modificar:
+            Introduce id de la experiencia a modificar:
           </label>
           <input
             id="idExp"
@@ -40,13 +40,13 @@ const ModifyExperience = () => {
             >
               <option></option>
               <option value="name">Nombre</option>
-              <option value="description">Descripcion</option>
+              <option value="description">Descripción</option>
               <option value="city">Ciudad</option>
               <option value="price">Precio</option>
               <option value="totalPlaces">Total plazas</option>
               <option value="eventStartDate">Fecha inicio</option>
               <option value="eventEndDate">Fecha fin</option>
-              <option value="idCategory">Categoria</option>
+              <option value="idCategory">Categoría</option>
               <option value="idBusiness">Empresa</option>
             </select>
           </div>

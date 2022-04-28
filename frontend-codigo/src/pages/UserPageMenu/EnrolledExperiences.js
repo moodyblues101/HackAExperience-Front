@@ -25,8 +25,6 @@ const EnrolledExperiences = () => {
           { Authorization: "Bearer " + auth.token }
         );
 
-        console.log("responseBookings: ", responseBookings);
-
         if (responseBookings.length === 0) {
           return <p>No tienes experiencias reservadas</p>;
         }
@@ -34,15 +32,12 @@ const EnrolledExperiences = () => {
         const loadedExperiences = [];
 
         for (const key in responseBookings) {
-          console.log("key: ", key);
           const bookedExperience = await sendRequest(
             `http://localhost:3000/api/v1/experiences/${responseBookings[key].idExperience}`,
             "GET",
             null,
             { Authorization: "Bearer " + auth.token }
           );
-
-          console.log("bookedExperience: ", bookedExperience);
 
           loadedExperiences.push({
             id: key,
@@ -52,19 +47,11 @@ const EnrolledExperiences = () => {
           });
         }
 
-        console.log("loadedExperiences: ", loadedExperiences);
-
         const now = new Date().getTime();
-        console.log("now: ", now);
-
-        const hora = loadedExperiences[0].date;
-        console.log("hora: ", hora);
 
         const experiencesEnrolled = loadedExperiences.filter(
-          (experience) => loadedExperiences.name === "exp2"
+          (experience) => experience.date > now
         );
-
-        console.log("experiencesEnrolled: ", experiencesEnrolled);
 
         setExperiences(experiencesEnrolled);
       } catch (err) {}
