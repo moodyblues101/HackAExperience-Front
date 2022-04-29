@@ -6,6 +6,7 @@ const ReviewList = (props) => {
       {props.reviews.map((review) => (
         <ReviewsItem
           key={review.id}
+          id={review.id}
           idUser={review.idUser}
           idExperience={review.idExperience}
           comment={review.comment}

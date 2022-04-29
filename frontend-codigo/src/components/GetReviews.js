@@ -6,7 +6,7 @@ import { AuthContext } from "../store/auth-context";
 import ErrorModal from "../ui/ErrorModal";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import Button from "../ui/FormElements/Button";
-import ReviewList from "./ReviewList";
+import DeleteReviews from "./DeleteReviews";
 
 const GetReviews = ({ idToGet, urlPath }) => {
   const [reviews, setReviews] = useState([]);
@@ -26,33 +26,37 @@ const GetReviews = ({ idToGet, urlPath }) => {
       Authorization: "Bearer " + auth.token,
     });
 
-    const reviewsMapped = res.map((rev, index) => {
+    const reviewsMapped = res.map((rev) => {
       return {
-        key: res[index].id,
-        idUser: res[index].idUser,
-        idExperience: res[index].idExperience,
-        comment: res[index].comment,
+        id: rev.id,
+        idUser: rev.idUser,
+        idExperience: rev.idExperience,
+        comment: rev.comment,
       };
     });
 
-    let transformedReviews;
+    setReviews(reviewsMapped);
 
-    if (urlPath === "users") {
-      transformedReviews = reviewsMapped.map((rev, i) => {
-        return {
-          idExperience: reviewsMapped[i].idExperience,
-          comment: reviewsMapped[i].comment,
-        };
-      });
-    } else {
-      transformedReviews = reviewsMapped.map((rev, i) => {
-        return {
-          idUser: reviewsMapped[i].idUser,
-          comment: reviewsMapped[i].comment,
-        };
-      });
-    }
-    setReviews(transformedReviews);
+    // let transformedReviews;
+
+    // if (urlPath === "users") {
+    //   transformedReviews = reviewsMapped.map((rev, i) => {
+    //     return {
+    //       id: reviewsMapped[i].id,
+    //       idExperience: reviewsMapped[i].idExperience,
+    //       comment: reviewsMapped[i].comment,
+    //     };
+    //   });
+    // } else {
+    //   transformedReviews = reviewsMapped.map((rev, i) => {
+    //     return {
+    //       id: reviewsMapped[i].id,
+    //       idUser: reviewsMapped[i].idUser,
+    //       comment: reviewsMapped[i].comment,
+    //     };
+    //   });
+    // }
+    // setReviews(transformedReviews);
   }, [idToGet, urlPath, auth.token, sendRequest]);
 
   useEffect(() => {
@@ -64,7 +68,7 @@ const GetReviews = ({ idToGet, urlPath }) => {
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner />}
       <h2>El usuario con id {idToGet} tiene los siguientes comentarios:</h2>
-      <ReviewList reviews={reviews} />
+      <DeleteReviews reviews={reviews} />
       <Button to="/user/admin/manage-experience-comments">VOLVER</Button>
     </>
   );
