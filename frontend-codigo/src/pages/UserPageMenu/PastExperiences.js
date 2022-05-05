@@ -1,7 +1,11 @@
-//IGUAL QUE ENROLLED EXPERIENCES PERO FECHA DE EXPERIENCIA MENOR QUE FECHA ACTUAL
+import GetExperiences from "../../components/GetExperiences";
 
 const PastExperiences = () => {
-  return <h2>Experiencias en las que estas inscrito</h2>;
+  return (
+    <>
+      <GetExperiences towards="past" />
+    </>
+  );
 };
 
 export default PastExperiences;

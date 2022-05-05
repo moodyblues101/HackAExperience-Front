@@ -121,7 +121,7 @@ const PatchRequest = (props) => {
     return (
       <div className="center">
         <Card>
-          <h2>Could not find!</h2>
+          <h2>¡No se ha encontrado!</h2>
         </Card>
         <Button
           to={

@@ -1,76 +1,10 @@
-import React, { useCallback, useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
-
-import ErrorModal from "../../ui/ErrorModal";
-import LoadingSpinner from "../../ui/LoadingSpinner";
-import ExperienceList from "../../components/ExperienceList";
-import { useHttpClient } from "../../hooks/http-hook";
-import { AuthContext } from "../../store/auth-context";
-import Button from "../../ui/FormElements/Button";
+import GetExperiences from "../../components/GetExperiences";
 
 const EnrolledExperiences = () => {
-  const params = useParams();
-  const auth = useContext(AuthContext);
-  const [experiences, setExperiences] = useState([]);
-
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
-
-  const fetchExperiences = useCallback(
-    async (userId) => {
-      try {
-        const responseBookings = await sendRequest(
-          `http://localhost:3000/api/v1/users/${userId}/bookings`,
-          "GET",
-          null,
-          { Authorization: "Bearer " + auth.token }
-        );
-
-        if (responseBookings.length === 0) {
-          return <p>No tienes experiencias reservadas</p>;
-        }
-
-        const loadedExperiences = [];
-
-        for (const key in responseBookings) {
-          const bookedExperience = await sendRequest(
-            `http://localhost:3000/api/v1/experiences/${responseBookings[key].idExperience}`,
-            "GET",
-            null,
-            { Authorization: "Bearer " + auth.token }
-          );
-
-          loadedExperiences.push({
-            id: key,
-            name: bookedExperience.name,
-            description: bookedExperience.description,
-            date: new Date(bookedExperience.eventStartDate).getTime(),
-          });
-        }
-
-        const now = new Date().getTime();
-
-        const experiencesEnrolled = loadedExperiences.filter(
-          (experience) => experience.date > now
-        );
-
-        setExperiences(experiencesEnrolled);
-      } catch (err) {}
-    },
-    [auth.token, sendRequest]
-  );
-
-  useEffect(() => {
-    fetchExperiences(params.userId);
-  }, [params.userId, fetchExperiences]);
-
   return (
-    <React.Fragment>
-      <ErrorModal error={error} onClear={clearError} />
-      {isLoading && <LoadingSpinner />}
-      <h2>Experiencias en las que estas inscrito</h2>
-      <ExperienceList experiences={experiences} />
-      <Button to={`/user/${auth.userId}/experiences/`}>VOLVER</Button>
-    </React.Fragment>
+    <>
+      <GetExperiences towards="future" />
+    </>
   );
 };
 

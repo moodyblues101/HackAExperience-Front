@@ -7,7 +7,7 @@ import ErrorModal from "../ui/ErrorModal";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import Modal from "../ui/Modal";
 
-const DeleteReviews = ({ reviews }) => {
+const DeleteReviews = ({ reviews, urlPath }) => {
   const [deleted, setDeleted] = useState(false);
   const [checkedId, setCheckedId] = useState({ idReview: [] });
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -58,9 +58,9 @@ const DeleteReviews = ({ reviews }) => {
                   value={review.id}
                   onChange={handleChange}
                 />
-                <label htmlFor={review.id}>Id: {review.id}</label>
-                <p>idUser: {review.idUser}</p>
+                <label htmlFor={review.id}>Id review: {review.id}</label>
                 <p>idExperience: {review.idExperience}</p>
+                <p>idUser: {review.idUser}</p>
                 <p>comment: {review.comment}</p>
               </li>
             );

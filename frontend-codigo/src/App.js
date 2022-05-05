@@ -23,6 +23,9 @@ import ManageExperienceReviewsByExperience from "./pages/AdminPageMenu/ManageRev
 import ManageExperienceReviewsByUserAndExperience from "./pages/AdminPageMenu/ManageReviews/ManageExperienceReviewsByUserAndExperience";
 import UserPersonalPage from "./pages/UserPersonalPage";
 import UserExperiencesPage from "./pages/UserExperiencesPage";
+import ManageBusiness from "./pages/AdminPageMenu/ManageBusiness";
+import AddBusiness from "./pages/AdminPageMenu/ManageBusiness/AddBusiness";
+import HandleBusiness from "./pages/AdminPageMenu/ManageBusiness/HandleBusiness";
 
 import UserPage from "./pages/UserPage";
 import AddAvatar from "./pages/UserPageMenu/AddAvatar";
@@ -32,7 +35,6 @@ import ChangePassword from "./pages/UserPageMenu/ChangePassword";
 import DeleteUser from "./pages/UserPageMenu/DeleteUser";
 import PastExperiences from "./pages/UserPageMenu/PastExperiences";
 import EnrolledExperiences from "./pages/UserPageMenu/EnrolledExperiences";
-import AddReview from "./pages/UserPageMenu/AddReview";
 
 import { AuthContext } from "./store/auth-context";
 import { useAuth } from "./hooks/auth-hook";
@@ -51,6 +53,9 @@ function App() {
         <Route path="/" exact>
           <LandingPage />
         </Route>
+        <Route path="/experiences" exact>
+          <ExperiencePage />
+        </Route>
         <Route path="/user/admin/" exact>
           <AdminPage />
         </Route>
@@ -63,6 +68,7 @@ function App() {
         <Route path="/user/admin/delete-experience" exact>
           <DeleteExperience />
         </Route>
+
         <Route path="/user/admin/manage-experience-comments" exact>
           <ManageExperienceReviews />
         </Route>
@@ -77,6 +83,15 @@ function App() {
           exact
         >
           <ManageExperienceReviewsByUserAndExperience />
+        </Route>
+        <Route path="/user/admin/business" exact>
+          <ManageBusiness />
+        </Route>
+        <Route path="/user/admin/business/add-business" exact>
+          <AddBusiness />
+        </Route>
+        <Route path="/user/admin/business/manage" exact>
+          <HandleBusiness />
         </Route>
 
         <Route path="/user/:userId" exact>
@@ -110,9 +125,9 @@ function App() {
         <Route path="/user/:userId/experiences/enrolled" exact>
           <EnrolledExperiences />
         </Route>
-        <Route path="/user/:userId/experiences/review" exact>
+        {/* <Route path="/user/:userId/experiences/review" exact>
           <AddReview />
-        </Route>
+        </Route> */}
         <Redirect to="/" />
       </Switch>
     );

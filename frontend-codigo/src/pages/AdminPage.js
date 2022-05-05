@@ -26,6 +26,12 @@ const AdminPage = () => {
             Gestionar comentarios
           </Link>
         </li>
+        <li className="admin-il">
+          <div className="circle-il"></div>
+          <Link to="/user/admin/business">
+            Gestionar empresas colaboradoras
+          </Link>
+        </li>
       </ul>
     </Fragment>
   );

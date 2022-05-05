@@ -7,9 +7,9 @@ import { useForm } from "../../../hooks/form-hook";
 import { useHttpClient } from "../../../hooks/http-hook";
 import { AuthContext } from "../../../store/auth-context";
 import Card from "../../../ui/Card";
-import ReviewList from "../../../components/ReviewList";
 import ErrorModal from "../../../ui/ErrorModal";
 import LoadingSpinner from "../../../ui/LoadingSpinner";
+import DeleteReviews from "../../../components/DeleteReviews";
 
 const ManageExperienceReviewsByUserAndExperience = () => {
   const [isExpShow, setIsExpShow] = useState(false);
@@ -92,10 +92,12 @@ const GetReviewsTwoData = ({ user, experience }) => {
         { Authorization: "Bearer " + auth.token }
       );
 
-      const reviewsMapped = res.map((rev, index) => {
+      const reviewsMapped = res.map((rev) => {
         return {
-          idUser: res[index].idUser,
-          comment: res[index].comment,
+          id: rev.id,
+          idExperience: experience,
+          idUser: rev.idUser,
+          comment: rev.comment,
         };
       });
 
@@ -119,7 +121,7 @@ const GetReviewsTwoData = ({ user, experience }) => {
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner />}
       {content}
-      <ReviewList reviews={reviews} />
+      <DeleteReviews reviews={reviews} />
     </>
   );
 };

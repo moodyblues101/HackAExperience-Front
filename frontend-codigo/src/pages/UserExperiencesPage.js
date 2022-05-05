@@ -17,11 +17,11 @@ const UserExperiencesPage = () => {
             Experiencias en las que apareces inscrito
           </Link>
         </li>
-        <li>
+        {/* <li>
           <Link to={`/user/${params.userId}/experiences/review`}>
             Añadir comentario
           </Link>
-        </li>
+        </li> */}
       </ul>
       <div>
         <Link to={`/user/${params.userId}`}>Volver a pagina de usuario</Link>
