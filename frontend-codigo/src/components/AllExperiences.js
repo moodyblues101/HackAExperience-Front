@@ -4,10 +4,20 @@ import { useHistory, useLocation } from "react-router-dom";
 import { useHttpClient } from "../hooks/http-hook";
 import ErrorModal from "../ui/ErrorModal";
 import LoadingSpinner from "../ui/LoadingSpinner";
-import ExperienceList from "./ExperienceList";
+// import ExperienceList from "./ExperienceList";
 import Card from "../ui/Card";
 import Button from "../ui/FormElements/Button";
 import Modal from "../ui/Modal";
+
+const sortExperiences = (experiences, ascending) => {
+  return experiences.sort((expA, expB) => {
+    if (ascending) {
+      return expA.price > expB.price ? 1 : -1;
+    } else {
+      return expA.price < expB.price ? 1 : -1;
+    }
+  });
+};
 
 const AllExperiences = () => {
   const history = useHistory();
@@ -117,14 +127,33 @@ const AllExperiences = () => {
 
     setShowList(true);
 
-    // history.push({
-    //   pathname: location.pathname,
-    //   search: `?city=${city}&date=${date}&category=${category}&sort="asc"`,
-    // });
+    history.push({
+      pathname: location.pathname,
+      search: `?city=${city}&date=${date}&category=${category}&sort="asc"`,
+    });
   };
 
   const cleanSearchHandler = () => {
     setShowList(false);
+    history.push("/search");
+  };
+
+  const queryParams = new URLSearchParams(location.search);
+
+  const citySearch = queryParams.get("city");
+  const dateSearch = queryParams.get("date");
+  const categorySearch = queryParams.get("category");
+  const isSortAscending = queryParams.get("sort") === "asc";
+
+  const sortedExperiences = sortExperiences(loadedExperiences, isSortAscending);
+
+  const changeSortHandler = () => {
+    history.push({
+      pathname: location.pathname,
+      search: `?city=${citySearch}&date=${dateSearch}&category=${categorySearch}&sort=${
+        isSortAscending ? "desc" : "asc"
+      }`,
+    });
   };
 
   return (
@@ -169,9 +198,46 @@ const AllExperiences = () => {
         </div>
       )}
       {isLoading && <LoadingSpinner />}
-      {showList && <ExperienceList experiences={loadedExperiences} />}
+      {showList && (
+        <div>
+          <div>
+            <Button type="button" onClick={changeSortHandler}>
+              {isSortAscending ? "De mayor a menor" : "De menor a mayor"}
+            </Button>
+          </div>
+          <ul>
+            {sortedExperiences.map((experience) => (
+              <Experience
+                key={experience.id}
+                name={experience.name}
+                description={experience.description}
+                city={experience.city}
+                price={experience.price}
+                eventStartDate={experience.eventStartDate}
+                eventEndDate={experience.eventEndDate}
+                idBusiness={experience.idBusiness}
+              />
+            ))}
+          </ul>
+        </div>
+      )}
     </>
   );
 };
 
 export default AllExperiences;
+
+const Experience = (props) => {
+  return (
+    <li>
+      <h2>{props.name}</h2>
+      <h3>{props.description}</h3>
+      <h3>{props.description}</h3>
+      <h3>{props.city}</h3>
+      <h3>{props.price}</h3>
+      <h3>{props.eventStartDate}</h3>
+      <h3>{props.eventEndDate}</h3>
+      <h3>{props.idBusiness}</h3>
+    </li>
+  );
+};
