@@ -4,7 +4,6 @@ import { useHistory, useLocation } from "react-router-dom";
 import { useHttpClient } from "../hooks/http-hook";
 import ErrorModal from "../ui/ErrorModal";
 import LoadingSpinner from "../ui/LoadingSpinner";
-// import ExperienceList from "./ExperienceList";
 import Card from "../ui/Card";
 import Button from "../ui/FormElements/Button";
 import Modal from "../ui/Modal";
