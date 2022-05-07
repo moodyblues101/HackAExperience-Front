@@ -17,6 +17,7 @@ const MainHeader = () => {
     authCtx.logout();
     history.replace("/");
   };
+
   return (
     <header className="header_main">
       <Link to="/" className="logo">

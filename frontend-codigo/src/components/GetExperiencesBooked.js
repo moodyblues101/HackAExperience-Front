@@ -9,7 +9,7 @@ import Button from "../ui/FormElements/Button";
 import OptionsExperienceList from "./OptionsExperienceList";
 import OptionAddReview from "./OptionAddReview";
 
-const GetExperiences = ({ towards }) => {
+const GetExperiencesBooked = ({ towards }) => {
   const params = useParams();
   const auth = useContext(AuthContext);
   const [experiences, setExperiences] = useState([]);
@@ -86,4 +86,4 @@ const GetExperiences = ({ towards }) => {
   );
 };
 
-export default GetExperiences;
+export default GetExperiencesBooked;

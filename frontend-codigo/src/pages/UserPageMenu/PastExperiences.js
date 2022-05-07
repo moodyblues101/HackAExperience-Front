@@ -1,9 +1,9 @@
-import GetExperiences from "../../components/GetExperiences";
+import GetExperiencesBooked from "../../components/GetExperiencesBooked";
 
 const PastExperiences = () => {
   return (
     <>
-      <GetExperiences towards="past" />
+      <GetExperiencesBooked towards="past" />
     </>
   );
 };

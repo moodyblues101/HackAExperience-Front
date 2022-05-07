@@ -137,19 +137,28 @@ function App() {
         <Route path="/" exact>
           <LandingPage />
         </Route>
-        <Route path="/experiences">
+        <Route path="/experiences" exact>
           <ExperiencePage />
         </Route>
-        <Route path="/search">
+        <Route path="/search" exact>
           <SearchPage />
         </Route>
-        <Route path="/login">
+        {/* <Route path="/search/date" exact>
+          <SearchPage />
+        </Route>
+        <Route path="/search/price" exact>
+          <SearchPage />
+        </Route>
+        <Route path="/search/place" exact>
+          <SearchPage />
+        </Route> */}
+        <Route path="/login" exact>
           <LoginPage />
         </Route>
-        <Route path="/register">
+        <Route path="/register" exact>
           <RegisterPage />
         </Route>
-        <Route path="/:idCategory">
+        <Route path="/:idCategory" exact>
           <CategoryPage />
         </Route>
         <Route path="*">
