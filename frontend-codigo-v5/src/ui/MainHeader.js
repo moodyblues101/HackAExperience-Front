@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 
 import AuthContext from "../store/auth-context";
+import logo from "./LogoHackAExperience.jpg";
 import "./MainHeader.css";
 import { SearchIcon } from "@heroicons/react/outline";
 
@@ -18,9 +19,7 @@ const MainHeader = () => {
   };
   return (
     <header className="header_main">
-      <Link to="/" className="logo">
-        HackAnExperience
-      </Link>
+      <img src={logo} />
       <form className="form_search">
         <input />
         <button className="form_search_btn">

@@ -1,0 +1,5 @@
+.user_profile .user_avatar {
+  width: 200px;
+  height: 200px;
+  box-shadow: 2px 2px 10px var(--shadow-dark);
+}

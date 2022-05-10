@@ -28,6 +28,7 @@ import AddReview from "./pages/UserPageMenu/AddReview";
 
 import AuthContext from "./store/auth-context";
 import Layout from "./ui/Layout";
+import AcercadePage from "./pages/AcercadePage";
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -117,6 +118,9 @@ function App() {
         <Route path="/user/:userId/experiences/review" exact>
           {authCtx.isLoggedIn && <AddReview />}
           {!authCtx.isLoggedIn && <Redirect to="/login" />}
+        </Route>
+        <Route path="/acercade">
+          <AcercadePage />
         </Route>
 
         <Route path="/:idCategory">
