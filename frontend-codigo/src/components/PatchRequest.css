@@ -1,7 +1,6 @@
 .place-form {
-  position: relative;
-  list-style: none;
-  margin: 0 auto;
+  /* margin-top: 7.5rem; */
+  margin: 7.5rem auto 0;
   padding: 1rem;
   width: 90%;
   max-width: 40rem;

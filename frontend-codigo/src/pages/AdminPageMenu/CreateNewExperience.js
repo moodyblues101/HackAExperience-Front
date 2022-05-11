@@ -10,8 +10,6 @@ import { useForm } from "../../hooks/form-hook";
 import { useHttpClient } from "../../hooks/http-hook";
 import { AuthContext } from "../../store/auth-context";
 
-// import { SearchIcon } from "@heroicons/react/outline";
-
 import "./CreateNewExperience.css";
 
 const CreateNewExperience = () => {
@@ -181,7 +179,7 @@ const CreateNewExperience = () => {
           errorText="Por favor, introduzca una código válido."
           onInput={inputHandler}
         />
-        <label>Imagenes de la experiencia:</label>
+        <label className="new-exp-label">Imagenes de la experiencia:</label>
         <input
           id="files"
           multiple

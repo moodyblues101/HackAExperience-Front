@@ -7,6 +7,7 @@ const ExperienceList = (props) => {
         {props.experiences.map((experience) => (
           <Experience
             key={experience.id}
+            id={experience.id}
             name={experience.name}
             description={experience.description}
             city={experience.city}

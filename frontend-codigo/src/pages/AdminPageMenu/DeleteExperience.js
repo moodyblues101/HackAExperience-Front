@@ -3,8 +3,9 @@ import { useHistory } from "react-router-dom";
 
 import Modal from "../../ui/Modal";
 import Button from "../../ui/FormElements/Button";
-
 import DeleteRequest from "../../components/DeleteRequest";
+
+import "./DeleteExperience.css";
 
 const DeleteExperience = () => {
   const history = useHistory();
@@ -35,13 +36,25 @@ const DeleteExperience = () => {
     <>
       {inputShow && (
         <React.Fragment>
-          <div>
-            <input type="text" value={experienceId} onChange={changeHandler} />
-            <Button onClick={toggleHandler} type="button">
-              BORRAR
-            </Button>
+          <div className="del-exp">
+            <div className="del-exp-label-input">
+              <label htmlFor="experienceId" className="del-exp-label">
+                Introduce el id de la experiencia a borrar:
+              </label>
+              <input
+                id="experienceId"
+                type="text"
+                value={experienceId}
+                onChange={changeHandler}
+              />
+            </div>
+            <div>
+              <Button to="/user/admin/">VOLVER</Button>
+              <Button onClick={toggleHandler} type="button">
+                BORRAR
+              </Button>
+            </div>
           </div>
-          <Button to="/user/admin/">VOLVER</Button>
         </React.Fragment>
       )}
       <Modal

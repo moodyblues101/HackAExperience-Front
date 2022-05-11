@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import PatchRequest from "../../components/PatchRequest";
 import Button from "../../ui/FormElements/Button";
 
+import "./ModifyExperience.css";
+
 const ModifyExperience = () => {
   const [idExperience, setIdExperience] = useState("");
   const [fieldToUpdate, setFieldToUpdate] = useState("");
@@ -18,18 +20,23 @@ const ModifyExperience = () => {
   return (
     <React.Fragment>
       {inputShow && (
-        <div>
-          <label htmlFor="idExp">
-            Introduce id de la experiencia a modificar:
-          </label>
-          <input
-            id="idExp"
-            type="text"
-            value={idExperience}
-            onChange={(event) => setIdExperience(event.target.value)}
-          />
-          <div>
-            <label htmlFor="dataToUpdate-field">Elige campo a modificar:</label>
+        <div className="form-mod-exp">
+          <div className="field-exp">
+            <label htmlFor="idExp" className="field-exp-label">
+              Introduce id de la experiencia a modificar:
+            </label>
+            <input
+              id="idExp"
+              type="number"
+              min={0}
+              value={idExperience}
+              onChange={(event) => setIdExperience(event.target.value)}
+            />
+          </div>
+          <div className="field-exp">
+            <label htmlFor="dataToUpdate-field" className="field-exp-label">
+              Elige campo a modificar:
+            </label>
             <select
               name="dataToUpdate"
               id="dataToUpdate-field"
@@ -50,9 +57,12 @@ const ModifyExperience = () => {
               <option value="idBusiness">Empresa</option>
             </select>
           </div>
-          <Button type="button" onClick={toggleHandler}>
-            MOSTRAR
-          </Button>
+          <div>
+            <Button to="/user/admin/">VOLVER</Button>
+            <Button type="button" onClick={toggleHandler}>
+              MOSTRAR
+            </Button>
+          </div>
         </div>
       )}
       {isExpShow && (
@@ -62,7 +72,6 @@ const ModifyExperience = () => {
           id={idExperience}
         />
       )}
-      <Button to="/user/admin/">VOLVER</Button>
     </React.Fragment>
   );
 };

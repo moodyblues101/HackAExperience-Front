@@ -1,3 +1,5 @@
+import avatarPic from "../assets/avatar/avatar2.png";
+
 const ReviewItem = (props) => {
   return (
     // <li key={props.id}>
@@ -6,10 +8,9 @@ const ReviewItem = (props) => {
     //   <h3>{props.comment}</h3>
     // </li>
     <li key={props.id}>
-      <input type="checkbox" id={props.id} name={props.id} />
-      <label>Id: {props.id}</label>
-      <p>idUser: {props.idUser}</p>
-      <p>idExperience: {props.idExperience}</p>
+      <div>
+        <img source={props.avatar || avatarPic} alt="profile pic" />
+      </div>
       <p>comment: {props.comment}</p>
     </li>
   );

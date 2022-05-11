@@ -1,66 +1,80 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState, useEffect, useCallback, useContext } from "react";
+import { useParams, useHistory } from "react-router-dom";
 
-import ExperienceList from "../components/ExperienceList";
+import { useHttpClient } from "../hooks/http-hook";
+import { AuthContext } from "../store/auth-context";
+import Button from "../ui/FormElements/Button";
+import Modal from "../ui/Modal";
+import ErrorModal from "../ui/ErrorModal";
+import LoadingSpinner from "../ui/LoadingSpinner";
 
 const ExperiencePage = () => {
-  const [experiences, setExperiences] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const auth = useContext(AuthContext);
+  const history = useHistory();
+  const idExp = useParams().idExp;
+  const [experience, setExperience] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
-  const fetchExperiencesHandler = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const response = await fetch("http://localhost:3000/api/v1/experiences/");
+  const fetchExperience = useCallback(async () => {
+    const res = await sendRequest(
+      `http://localhost:3000/api/v1/experiences/${idExp}`
+    );
 
-      if (!response.ok) {
-        throw new Error("something went wrong");
-      }
-
-      const data = await response.json();
-
-      const transformedExperiences = data.experiencesData.map(
-        (experienceData) => {
-          return {
-            id: experienceData.idExperiences,
-            name: experienceData.name,
-            description: experienceData.description,
-          };
-        }
-      );
-      setExperiences(transformedExperiences);
-    } catch (error) {
-      setError(error.message);
-    }
-    setIsLoading(false);
-  }, []);
+    // console.log(res);
+    setExperience(res);
+  }, [idExp, sendRequest]);
 
   useEffect(() => {
-    fetchExperiencesHandler();
-  }, [fetchExperiencesHandler]);
+    fetchExperience();
+  }, [fetchExperience]);
 
-  let content = <p>Found no experiences</p>;
+  const bookingHandler = () => {
+    if (auth.token) {
+      history.push(`/booking/${idExp}`);
+    } else {
+      // history.push("/login");
+      setShowModal(true);
+    }
+  };
 
-  if (experiences.length > 0) {
-    content = <ExperienceList experiences={experiences} />;
-  }
-
-  if (error) {
-    content = <p>{error}</p>;
-  }
-
-  if (isLoading) {
-    content = <p>Loading...</p>;
-  }
+  const cancelHandler = () => {
+    setShowModal(false);
+  };
 
   return (
-    <div>
-      <h1>Experiences Page</h1>
-      {/* <section>
-        <button onClick={fetchExperiencesHandler}>Fetch experiences</button>
-      </section> */}
-      <section>{content}</section>
-    </div>
+    <>
+      <ErrorModal error={error} onClear={clearError} />
+      {isLoading && <LoadingSpinner />}
+      <p>{`Categoria/${experience.name}`}</p>
+      <h3>{experience.name}</h3>
+      <div>
+        <div>image</div>
+        <div>rating</div>
+        <div>{experience.description}</div>
+      </div>
+      <div>
+        <div>
+          <Button type="button" onClick={bookingHandler}>
+            RESERVAR
+          </Button>
+        </div>
+        <div>avatares de inscritos</div>
+      </div>
+      <div>Opiniones de nuestros clientes:</div>
+      <Modal
+        show={showModal}
+        onCancel={cancelHandler}
+        footer={
+          <div>
+            <Button onClick={cancelHandler}>CANCELAR</Button>
+            <Button to="/login">LOGIN</Button>
+          </div>
+        }
+      >
+        <p>Para poder reservar una experiencia tienes que iniciar sesión</p>
+      </Modal>
+    </>
   );
 };
 

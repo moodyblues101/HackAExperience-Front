@@ -7,6 +7,7 @@ import {
 
 import LandingPage from "./pages/LandingPage";
 import CategoryPage from "./pages/CategoryPage";
+import BookingPage from "./pages/BookingPage";
 import ExperiencePage from "./pages/ExperiencePage";
 import SearchPage from "./pages/SearchPage";
 import LoginPage from "./pages/LoginPage";
@@ -38,135 +39,12 @@ import EnrolledExperiences from "./pages/UserPageMenu/EnrolledExperiences";
 
 import { AuthContext } from "./store/auth-context";
 import { useAuth } from "./hooks/auth-hook";
-import MainHeader from "./ui/Navigation/MainHeader";
 import MainNavigation from "./ui/Navigation/MainNavigation";
 import Footer from "./ui/Navigation/Footer";
 
 function App() {
   const { token, login, logout, userId, userRole } = useAuth();
 
-  let routes;
-
-  if (token) {
-    routes = (
-      <Switch>
-        <Route path="/" exact>
-          <LandingPage />
-        </Route>
-        <Route path="/experiences" exact>
-          <ExperiencePage />
-        </Route>
-        <Route path="/user/admin/" exact>
-          <AdminPage />
-        </Route>
-        <Route path="/user/admin/new-experience" exact>
-          <CreateNewExperience />
-        </Route>
-        <Route path="/user/admin/modify-experience" exact>
-          <ModifyExperience />
-        </Route>
-        <Route path="/user/admin/delete-experience" exact>
-          <DeleteExperience />
-        </Route>
-
-        <Route path="/user/admin/manage-experience-comments" exact>
-          <ManageExperienceReviews />
-        </Route>
-        <Route path="/user/admin/manage-experience-comments/user" exact>
-          <ManageExperienceReviewsByUser />
-        </Route>
-        <Route path="/user/admin/manage-experience-comments/experience" exact>
-          <ManageExperienceReviewsByExperience />
-        </Route>
-        <Route
-          path="/user/admin/manage-experience-comments/user-experience"
-          exact
-        >
-          <ManageExperienceReviewsByUserAndExperience />
-        </Route>
-        <Route path="/user/admin/business" exact>
-          <ManageBusiness />
-        </Route>
-        <Route path="/user/admin/business/add-business" exact>
-          <AddBusiness />
-        </Route>
-        <Route path="/user/admin/business/manage" exact>
-          <HandleBusiness />
-        </Route>
-
-        <Route path="/user/:userId" exact>
-          <UserPage />
-        </Route>
-        <Route path="/user/:userId/personal" exact>
-          <UserPersonalPage />
-        </Route>
-        <Route path="/user/:userId/personal/avatar" exact>
-          <AddAvatar />
-        </Route>
-        <Route path="/user/:userId/personal/name" exact>
-          <AddName />
-        </Route>
-        <Route path="/user/:userId/personal/bio" exact>
-          <AddBio />
-        </Route>
-        <Route path="/user/:userId/personal/password" exact>
-          <ChangePassword />
-        </Route>
-        <Route path="/user/:userId/personal/delete" exact>
-          <DeleteUser />
-        </Route>
-
-        <Route path="/user/:userId/experiences" exact>
-          <UserExperiencesPage />
-        </Route>
-        <Route path="/user/:userId/experiences/past" exact>
-          <PastExperiences />
-        </Route>
-        <Route path="/user/:userId/experiences/enrolled" exact>
-          <EnrolledExperiences />
-        </Route>
-        {/* <Route path="/user/:userId/experiences/review" exact>
-          <AddReview />
-        </Route> */}
-        <Redirect to="/" />
-      </Switch>
-    );
-  } else {
-    routes = (
-      <Switch>
-        <Route path="/" exact>
-          <LandingPage />
-        </Route>
-        <Route path="/experiences" exact>
-          <ExperiencePage />
-        </Route>
-        <Route path="/search" exact>
-          <SearchPage />
-        </Route>
-        {/* <Route path="/search/date" exact>
-          <SearchPage />
-        </Route>
-        <Route path="/search/price" exact>
-          <SearchPage />
-        </Route>
-        <Route path="/search/place" exact>
-          <SearchPage />
-        </Route> */}
-        <Route path="/login" exact>
-          <LoginPage />
-        </Route>
-        <Route path="/register" exact>
-          <RegisterPage />
-        </Route>
-        <Route path="/:idCategory" exact>
-          <CategoryPage />
-        </Route>
-        <Route path="*">
-          <NotFound />
-        </Route>
-      </Switch>
-    );
-  }
   return (
     <AuthContext.Provider
       value={{
@@ -179,9 +57,154 @@ function App() {
       }}
     >
       <Router>
-        <MainHeader />
-        {userRole !== "administrador" && <MainNavigation />}
-        <main>{routes}</main>
+        <MainNavigation />
+        <main>
+          <Switch>
+            <Route path="/" exact>
+              <LandingPage />
+            </Route>
+            <Route path="/search" exact>
+              <SearchPage />
+            </Route>
+            <Route path="/login" exact>
+              <LoginPage />
+            </Route>
+            <Route path="/register" exact>
+              <RegisterPage />
+            </Route>
+            <Route path="/category/:catName/:idCategory" exact>
+              <CategoryPage />
+            </Route>
+            <Route path="/experiences/:idExp" exact>
+              <ExperiencePage />
+            </Route>
+            {userRole === "administrador" && (
+              <Route path="/user/admin/" exact>
+                <AdminPage />
+              </Route>
+            )}
+            {userRole === "administrador" && (
+              <Route path="/user/admin/new-experience" exact>
+                <CreateNewExperience />
+              </Route>
+            )}
+            {userRole === "administrador" && (
+              <Route path="/user/admin/modify-experience" exact>
+                <ModifyExperience />
+              </Route>
+            )}
+            {userRole === "administrador" && (
+              <Route path="/user/admin/delete-experience" exact>
+                <DeleteExperience />
+              </Route>
+            )}
+            {userRole === "administrador" && (
+              <Route path="/user/admin/manage-experience-comments" exact>
+                <ManageExperienceReviews />
+              </Route>
+            )}
+            {userRole === "administrador" && (
+              <Route path="/user/admin/manage-experience-comments/user" exact>
+                <ManageExperienceReviewsByUser />
+              </Route>
+            )}
+            {userRole === "administrador" && (
+              <Route
+                path="/user/admin/manage-experience-comments/experience"
+                exact
+              >
+                <ManageExperienceReviewsByExperience />
+              </Route>
+            )}
+            {userRole === "administrador" && (
+              <Route
+                path="/user/admin/manage-experience-comments/user-experience"
+                exact
+              >
+                <ManageExperienceReviewsByUserAndExperience />
+              </Route>
+            )}
+            {userRole === "administrador" && (
+              <Route path="/user/admin/business" exact>
+                <ManageBusiness />
+              </Route>
+            )}
+            {userRole === "administrador" && (
+              <Route path="/user/admin/business/add-business" exact>
+                <AddBusiness />
+              </Route>
+            )}
+            {userRole === "administrador" && (
+              <Route path="/user/admin/business/manage" exact>
+                <HandleBusiness />
+              </Route>
+            )}
+
+            {userRole === "usuario" && (
+              <Route path="/user/:userId" exact>
+                <UserPage />
+              </Route>
+            )}
+            {userRole === "usuario" && (
+              <Route path="/user/:userId/personal" exact>
+                <UserPersonalPage />
+              </Route>
+            )}
+            {userRole === "usuario" && (
+              <Route path="/user/:userId/personal/avatar" exact>
+                <AddAvatar />
+              </Route>
+            )}
+            {userRole === "usuario" && (
+              <Route path="/user/:userId/personal/name" exact>
+                <AddName />
+              </Route>
+            )}
+            {userRole === "usuario" && (
+              <Route path="/user/:userId/personal/bio" exact>
+                <AddBio />
+              </Route>
+            )}
+            {userRole === "usuario" && (
+              <Route path="/user/:userId/personal/password" exact>
+                <ChangePassword />
+              </Route>
+            )}
+            {userRole === "usuario" && (
+              <Route path="/user/:userId/personal/delete" exact>
+                <DeleteUser />
+              </Route>
+            )}
+            {userRole === "usuario" && (
+              <Route path="/user/:userId/experiences" exact>
+                <UserExperiencesPage />
+              </Route>
+            )}
+            {userRole === "usuario" && (
+              <Route path="/user/:userId/experiences/past" exact>
+                <PastExperiences />
+              </Route>
+            )}
+            {userRole === "usuario" && (
+              <Route path="/user/:userId/experiences/enrolled" exact>
+                <EnrolledExperiences />
+              </Route>
+            )}
+            {userRole === "usuario" && (
+              <Route path="/booking/:idExp" exact>
+                <BookingPage />
+              </Route>
+            )}
+
+            <Route path="/category/:catName/:idCategory" exact>
+              <CategoryPage />
+            </Route>
+            <Redirect to="/" />
+            <Route path="*">
+              <NotFound />
+            </Route>
+          </Switch>
+        </main>
         <Footer />
       </Router>
     </AuthContext.Provider>

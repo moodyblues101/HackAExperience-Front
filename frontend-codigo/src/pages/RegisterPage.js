@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 
 import Card from "../ui/Card";
 import Input from "../ui/FormElements/Input";
@@ -18,7 +18,6 @@ import "./LoginPage.css";
 
 const RegisterPage = () => {
   const auth = useContext(AuthContext);
-  // const [isLoginMode, setIsLoginMode] = useState(true);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const [formState, inputHandler, setFormData] = useForm(
@@ -51,54 +50,9 @@ const RegisterPage = () => {
     false
   );
 
-  // const switchModeHandler = () => {
-  // if (!isLoginMode) {
-  //   setFormData(
-  //     {
-  //       ...formState.inputs,
-  //       name: undefined,
-  //       image: undefined,
-  //     },
-  //     formState.inputs.email.isValid && formState.inputs.password.isValid
-  //   );
-  // } else {
-  //     setFormData(
-  //       {
-  //         ...formState.inputs,
-  //         name: {
-  //           value: "",
-  //           isValid: false,
-  //         },
-  //         image: {
-  //           value: null,
-  //           isValid: false,
-  //         },
-  //       },
-  //       false
-  //     );
-  //   // }
-  //   setIsLoginMode((prevMode) => !prevMode);
-  // };
-
   const authSubmitHandler = async (event) => {
     event.preventDefault();
 
-    // if (isLoginMode) {
-    // try {
-    //   const responseData = await sendRequest(
-    //     "http://localhost:5000/api/users/login", //CAMBIAR!!!
-    //     "POST",
-    //     JSON.stringify({
-    //       email: formState.inputs.email.value,
-    //       password: formState.inputs.password.value,
-    //     }),
-    //     {
-    //       "Content-Type": "application/json",
-    //     }
-    //   );
-    //   auth.login(responseData.userId, responseData.token);
-    // } catch (err) {}
-    // } else {
     try {
       const formData = new FormData();
       formData.append("name", formState.inputs.name.value);
@@ -115,13 +69,12 @@ const RegisterPage = () => {
 
       auth.login(responseData.userId, responseData.token);
     } catch (err) {}
-    // }
   };
 
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
-      <Card className="authentication">
+      <Card className="auth">
         {isLoading && <LoadingSpinner asOverlay />}
         <h2>Registro</h2>
         <hr />
@@ -130,9 +83,9 @@ const RegisterPage = () => {
             element="input"
             id="name"
             type="text"
-            label="Your Name"
+            label="Nombre"
             validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please enter a name."
+            errorText="Por favor, introduce un nombre."
             onInput={inputHandler}
           />
           {/* <ImageUpload
@@ -147,25 +100,25 @@ const RegisterPage = () => {
             type="email"
             label="E-Mail"
             validators={[VALIDATOR_EMAIL()]}
-            errorText="Please enter a valid email address."
+            errorText="Por favor, introduce una dirección de e-mail."
             onInput={inputHandler}
           />
           <Input
             element="textarea"
             id="bio"
             type="text"
-            label="Your Bio"
+            label="Cuentanos algo de ti:"
             validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please enter something about you."
+            errorText="Por favor, introduce un texto cortito sobre ti."
             onInput={inputHandler}
           />
           <Input
             element="input"
             id="password"
             type="password"
-            label="Password"
+            label="Contraseña"
             validators={[VALIDATOR_MINLENGTH(4)]}
-            errorText="Please enter a valid password, at least 4 characters."
+            errorText="Por favor, introduce una contraseña (min. 4 caracteres)."
             onInput={inputHandler}
           />
           <Input
@@ -174,17 +127,13 @@ const RegisterPage = () => {
             type="password"
             label="Password"
             validators={[VALIDATOR_MINLENGTH(4)]}
-            errorText="Repeat password."
+            errorText="Repite la contraseña."
             onInput={inputHandler}
           />
           <Button type="submit" disabled={!formState.isValid}>
-            REGISTRATE
-            {/* {isLoginMode ? "LOGIN" : "SIGNUP"} */}
+            REGÍSTRATE
           </Button>
         </form>
-        {/* <Button inverse onClick={switchModeHandler}>
-          SWITCH TO {isLoginMode ? "SIGNUP" : "LOGIN"}
-        </Button> */}
       </Card>
     </React.Fragment>
   );

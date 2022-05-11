@@ -58,9 +58,9 @@ const LoginPage = () => {
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
-      <Card className="authentication">
+      <Card className="auth">
         {isLoading && <LoadingSpinner asOverlay />}
-        <h2>Login Required</h2>
+        <h2>Iniciar sesión</h2>
         <hr />
         <form onSubmit={authSubmitHandler}>
           <Input
@@ -69,16 +69,16 @@ const LoginPage = () => {
             type="email"
             label="E-Mail"
             validators={[VALIDATOR_EMAIL()]}
-            errorText="Please enter a valid email address."
+            errorText="Por favor, introduzca un email válido."
             onInput={inputHandler}
           />
           <Input
             element="input"
             id="password"
             type="password"
-            label="Password"
+            label="Contraseña"
             validators={[VALIDATOR_MINLENGTH(4)]}
-            errorText="Please enter a valid password, at least 4 characters."
+            errorText="Por favor, introduzca una contraseña válida (min. 4 caracteres)."
             onInput={inputHandler}
           />
           <Button type="submit" disabled={!formState.isValid}>

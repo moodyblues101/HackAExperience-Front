@@ -1,11 +1,17 @@
 .place-form {
   position: relative;
-  list-style: none;
-  margin: 0 auto;
+  /* list-style: none; */
+  /* margin: 0 auto; */
+  margin-top: 7.5rem;
   padding: 1rem;
   width: 90%;
   max-width: 40rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 6px;
   background: white;
+}
+
+.new-exp-label {
+  font-weight: bold;
+  margin-right: 1rem;
 }

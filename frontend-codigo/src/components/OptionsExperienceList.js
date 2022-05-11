@@ -26,7 +26,7 @@ const OptionsExperienceList = ({ experiences }) => {
   };
 
   const deleteBooking = async (id) => {
-    console.log(`cancelar reserva ${id}`);
+    // console.log(`cancelar reserva ${id}`);
     try {
       await sendRequest(
         `http://localhost:3000/api/v1/bookings/${id}`,
@@ -58,9 +58,12 @@ const OptionsExperienceList = ({ experiences }) => {
             <li key={exp.id}>
               <label htmlFor={exp.id}>Nombre: {exp.name}</label>
               <p>Descripción: {exp.description}</p>
+              <p>Fecha de la experiencia:</p>
               <DateExperience date={exp.date} />
+              <p>Fecha de la reserva:</p>
+              <DateExperience date={new Date(exp.createdAt)} />
               <div>
-                <Button to={"/experiences"}>VER</Button>
+                <Button to={`/experiences/${exp.idExperience}`}>VER</Button>
                 <Button
                   type="button"
                   onClick={() => {

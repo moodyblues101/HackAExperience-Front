@@ -10,6 +10,7 @@ const ReviewList = (props) => {
           idUser={review.idUser}
           idExperience={review.idExperience}
           comment={review.comment}
+          avatar={review.profilePic}
         />
       ))}
     </ul>

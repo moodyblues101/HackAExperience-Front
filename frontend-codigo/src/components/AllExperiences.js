@@ -7,6 +7,7 @@ import LoadingSpinner from "../ui/LoadingSpinner";
 import Card from "../ui/Card";
 import Button from "../ui/FormElements/Button";
 import Modal from "../ui/Modal";
+import { Link } from "react-router-dom";
 
 const sortExperiences = (experiences, ascending) => {
   return experiences.sort((expA, expB) => {
@@ -208,6 +209,7 @@ const AllExperiences = () => {
             {sortedExperiences.map((experience) => (
               <Experience
                 key={experience.id}
+                id={experience.id}
                 name={experience.name}
                 description={experience.description}
                 city={experience.city}
@@ -229,7 +231,9 @@ export default AllExperiences;
 const Experience = (props) => {
   return (
     <li>
-      <h2>{props.name}</h2>
+      <h2>
+        <Link to={`/experiences/${props.id}`}>{props.name}</Link>
+      </h2>
       <h3>{props.description}</h3>
       <h3>{props.description}</h3>
       <h3>{props.city}</h3>
