@@ -10,7 +10,8 @@ const Footer = () => {
       </Link>
       <div>
         <Link to="/acercade"> Acerca de</Link>
-
+      </div>
+      <div>
         <Link to="/">FAQ</Link>
       </div>
       <div>Logos RRSS</div>
