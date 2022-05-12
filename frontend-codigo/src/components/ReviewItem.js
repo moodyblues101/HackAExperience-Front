@@ -1,5 +1,3 @@
-import avatarPic from "../assets/avatar/avatar2.png";
-
 const ReviewItem = (props) => {
   return (
     // <li key={props.id}>
@@ -9,7 +7,10 @@ const ReviewItem = (props) => {
     // </li>
     <li key={props.id}>
       <div>
-        <img source={props.avatar || avatarPic} alt="profile pic" />
+        <img
+          src={`http://localhost:3000/avatars/${props.avatar}`}
+          alt="profile pic"
+        />
       </div>
       <p>comment: {props.comment}</p>
     </li>

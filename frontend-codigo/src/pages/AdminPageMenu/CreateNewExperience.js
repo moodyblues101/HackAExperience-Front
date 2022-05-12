@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useRef, useContext } from "react";
 import { useHistory } from "react-router-dom";
 
 import Input from "../../ui/FormElements/Input";
@@ -14,6 +14,10 @@ import "./CreateNewExperience.css";
 
 const CreateNewExperience = () => {
   const auth = useContext(AuthContext);
+  const startTimeHourRef = useRef();
+  const startTimeMinutesRef = useRef();
+  const endTimeHourRef = useRef();
+  const endTimeMinutesRef = useRef();
   const [fichero, setFichero] = useState();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [formState, inputHandler, setFormData] = useForm(
@@ -62,6 +66,19 @@ const CreateNewExperience = () => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
+    const startTime =
+      startTimeHourRef.current.value +
+      ":" +
+      startTimeMinutesRef.current.value +
+      ":00";
+    const endTime =
+      endTimeHourRef.current.value +
+      ":" +
+      endTimeMinutesRef.current.value +
+      ":00";
+
+    console.log("fecha comienzo: ", startTime);
+    console.log("fecha fin: ", endTime);
 
     try {
       const formData = new FormData();
@@ -71,8 +88,22 @@ const CreateNewExperience = () => {
       formData.append("city", formState.inputs.city.value);
       formData.append("price", formState.inputs.price.value);
       formData.append("totalPlaces", formState.inputs.totalPlaces.value);
-      formData.append("eventStartDate", formState.inputs.eventStartDate.value);
-      formData.append("eventEndDate", formState.inputs.eventEndDate.value);
+      formData.append(
+        "eventStartDate",
+        formState.inputs.eventStartDate.value + " " + startTime
+      );
+      console.log(
+        "fecha inicio: ",
+        formState.inputs.eventStartDate.value + " " + startTime
+      );
+      formData.append(
+        "eventEndDate",
+        formState.inputs.eventEndDate.value + " " + endTime
+      );
+      console.log(
+        "fecha final: ",
+        formState.inputs.eventEndDate.value + " " + startTime
+      );
       formData.append("idCategory", formState.inputs.idCategory.value);
       formData.append("idBusiness", formState.inputs.idBusiness.value);
 
@@ -155,6 +186,44 @@ const CreateNewExperience = () => {
           errorText="Por favor, introduzca una fecha válida."
           onInput={inputHandler}
         />
+        <label htmlFor="startTime">Hora de comienzo:</label>
+        <select name="startTime-hour" id="startTime" ref={startTimeHourRef}>
+          <option value="00">00</option>
+          <option value="01">01</option>
+          <option value="02">02</option>
+          <option value="03">03</option>
+          <option value="04">04</option>
+          <option value="05">05</option>
+          <option value="06">06</option>
+          <option value="07">07</option>
+          <option value="08">08</option>
+          <option value="09">09</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+          <option value="13">13</option>
+          <option value="14">14</option>
+          <option value="15">15</option>
+          <option value="16">16</option>
+          <option value="17">17</option>
+          <option value="18">18</option>
+          <option value="19">19</option>
+          <option value="20">20</option>
+          <option value="21">21</option>
+          <option value="22">22</option>
+          <option value="23">23</option>
+        </select>
+        :
+        <select
+          name="startTime-minutes"
+          id="startTime"
+          ref={startTimeMinutesRef}
+        >
+          <option value="00">00</option>
+          <option value="15">15</option>
+          <option value="30">30</option>
+          <option value="45">45</option>
+        </select>
         <Input
           id="eventEndDate"
           element="date"
@@ -163,6 +232,40 @@ const CreateNewExperience = () => {
           errorText="Por favor, introduzca una fecha válida."
           onInput={inputHandler}
         />
+        <label id="endTime">Hora de final:</label>
+        <select name="endTime-hour" id="endTime" ref={endTimeHourRef}>
+          <option value="00">00</option>
+          <option value="01">01</option>
+          <option value="02">02</option>
+          <option value="03">03</option>
+          <option value="04">04</option>
+          <option value="05">05</option>
+          <option value="06">06</option>
+          <option value="07">07</option>
+          <option value="08">08</option>
+          <option value="09">09</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+          <option value="13">13</option>
+          <option value="14">14</option>
+          <option value="15">15</option>
+          <option value="16">16</option>
+          <option value="17">17</option>
+          <option value="18">18</option>
+          <option value="19">19</option>
+          <option value="20">20</option>
+          <option value="21">21</option>
+          <option value="22">22</option>
+          <option value="23">23</option>
+        </select>
+        :
+        <select name="endTime-minutes" id="endTime" ref={endTimeMinutesRef}>
+          <option value="00">00</option>
+          <option value="15">15</option>
+          <option value="30">30</option>
+          <option value="45">45</option>
+        </select>
         <Input
           id="idCategory"
           element="input"
@@ -192,6 +295,7 @@ const CreateNewExperience = () => {
         <hr />
         <div>
           <Button type="submit" disabled={!formState.isValid}>
+            {/* <Button type="submit"> */}
             AÑADIR
           </Button>
           <Button to="/user/admin/">VOLVER</Button>

@@ -111,9 +111,9 @@ const LandingPage = () => {
       </ul>
       <h2>Experiencias mas buscadas</h2>
       <ul>
-        {expMostVisited.map((experience) => (
+        {expMostVisited.map((experience, index) => (
           <Experience
-            key={experience.id}
+            key={index}
             id={experience.id}
             name={experience.name}
             description={experience.description}
@@ -181,7 +181,10 @@ const Review = (props) => {
   return (
     <li>
       <div>
-        <img src={props.avatar} alt="avatar user" />
+        <img
+          src={`http://localhost:3000/avatars/${props.avatar}`}
+          alt="avatar user"
+        />
       </div>
       <p>{props.comment}</p>
     </li>

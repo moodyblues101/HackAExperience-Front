@@ -7,17 +7,22 @@ import Button from "../ui/FormElements/Button";
 import Modal from "../ui/Modal";
 import ErrorModal from "../ui/ErrorModal";
 import LoadingSpinner from "../ui/LoadingSpinner";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
+
+import "./ExperiencePage.css";
 
 const ExperiencePage = () => {
   const auth = useContext(AuthContext);
   const history = useHistory();
   const idExp = useParams().idExp;
-  const [experience, setExperience] = useState("");
+  const [experience, setExperience] = useState({});
+  const [imgExperience, setImgExperience] = useState([]);
+  const [currentImg, setCurrentImg] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const fetchExperience = useCallback(async () => {
-    const res = await sendRequest(
+    const resExp = await sendRequest(
       `http://localhost:3000/api/v1/experiences/${idExp}`
     );
 
@@ -28,13 +33,28 @@ const ExperiencePage = () => {
     //avisos de no quedan plazas (si no quedan plazas, inhabilitar boton de reservar) y de
     //no hay opiniones aun
 
-    // console.log(res);
-    setExperience(res);
+    setExperience(resExp);
+
+    const expImg = await sendRequest(
+      `http://localhost:3000/api/v1/experiences/${idExp}/images`
+    );
+
+    setImgExperience(expImg);
   }, [idExp, sendRequest]);
 
   useEffect(() => {
     fetchExperience();
   }, [fetchExperience]);
+
+  const prevImg = (e) => {
+    e?.stopPropagation();
+    setCurrentImg(currentImg === 0 ? imgExperience.length - 1 : currentImg - 1);
+  };
+
+  const nextImg = (e) => {
+    e?.stopPropagation();
+    setCurrentImg(currentImg === 0 ? imgExperience.length - 1 : currentImg + 1);
+  };
 
   const bookingHandler = () => {
     if (auth.token) {
@@ -57,6 +77,33 @@ const ExperiencePage = () => {
       <h3>{experience.name}</h3>
       <div>
         <div>image</div>
+        <List
+          data={imgExperience}
+          render={(image, index) => (
+            <div key={image.id}>
+              {index === currentImg && (
+                <>
+                  <img
+                    src={`http://localhost:3000/experiences/${idExp}/${image.name}`}
+                    alt="experience_image"
+                  />
+                  {imgExperience.length > 1 && (
+                    <>
+                      <ChevronLeftIcon
+                        className="slide-arrow-exp"
+                        onClick={prevImg}
+                      />
+                      <ChevronRightIcon
+                        className="slide-arrow-exp"
+                        onClick={nextImg}
+                      />
+                    </>
+                  )}
+                </>
+              )}
+            </div>
+          )}
+        />
         <div>rating</div>
         <div>{experience.description}</div>
       </div>
@@ -92,3 +139,7 @@ const ExperiencePage = () => {
 };
 
 export default ExperiencePage;
+
+const List = ({ data, render }) => {
+  return <div>{data.map(render)}</div>;
+};
