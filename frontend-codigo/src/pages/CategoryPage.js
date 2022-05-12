@@ -46,6 +46,8 @@ const CategoryPage = () => {
         `http://localhost:3000/api/v1/categories/${idCat}/experiences`
       );
 
+      //EN ESTA RESPUESTA FALTA IMAGEN DE LA EXPERIENCIA Y EL NOMBRE DE LA EMPRESA
+
       const now = new Date();
 
       const arrayNextExperiences = resExp.filter(

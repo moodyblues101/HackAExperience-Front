@@ -14,7 +14,11 @@ const ExperienceList = (props) => {
             price={experience.price}
             eventStartDate={experience.eventStartDate}
             eventEndDate={experience.eventEndDate}
-            idBusiness={experience.idBusiness}
+            // idBusiness={experience.idBusiness}
+            businessName={experience.businessName}
+            categoryName={experience.categoryName}
+            idImg={experience.idImg}
+            rating={experience.rating}
           />
         ))}
       </ul>

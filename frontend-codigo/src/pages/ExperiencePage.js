@@ -21,6 +21,13 @@ const ExperiencePage = () => {
       `http://localhost:3000/api/v1/experiences/${idExp}`
     );
 
+    //EN ESTA RESPUESTA FALTA IMAGENES DE EXPERIENCIA, RATING, NOMBRE DE LA EMPRESA,
+    //FECHA DEL EVENTO
+
+    //tambien falta avatares de usuarios y el numero de plazas disponibles
+    //avisos de no quedan plazas (si no quedan plazas, inhabilitar boton de reservar) y de
+    //no hay opiniones aun
+
     // console.log(res);
     setExperience(res);
   }, [idExp, sendRequest]);
@@ -46,7 +53,7 @@ const ExperiencePage = () => {
     <>
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner />}
-      <p>{`Categoria/${experience.name}`}</p>
+      {/* <p>{`Categoria/${experience.name}`}</p> */}
       <h3>{experience.name}</h3>
       <div>
         <div>image</div>
@@ -59,6 +66,12 @@ const ExperiencePage = () => {
             RESERVAR
           </Button>
         </div>
+        {auth.token && (
+          <div>
+            <div>Quedan x plazas disponibles</div>
+            <div>Mira quién está apuntado en esta experiencia:</div>
+          </div>
+        )}
         <div>avatares de inscritos</div>
       </div>
       <div>Opiniones de nuestros clientes:</div>
