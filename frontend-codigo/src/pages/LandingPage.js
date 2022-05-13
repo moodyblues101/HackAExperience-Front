@@ -22,7 +22,7 @@ const LandingPage = () => {
     const resExp = await sendRequest(
       "http://localhost:3000/api/v1/experiences"
     );
-    // console.log("res: ", resExp);
+    console.log("res: ", resExp);
 
     const now = new Date();
 
@@ -35,6 +35,8 @@ const LandingPage = () => {
     for (let i = 0; i < 4; i++) {
       expToShow.push(nextExp[i]);
     }
+
+    //TODO: OBTENER PRIMERA IMAGEN DE CADA EXPERIENCIA A PARTE
 
     setExperiences(expToShow);
 
