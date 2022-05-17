@@ -8,6 +8,7 @@ import Modal from "../ui/Modal";
 import ErrorModal from "../ui/ErrorModal";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
+import ReactStars from "react-rating-stars-component";
 
 import formatDate from "../util/formatDate";
 
@@ -18,8 +19,7 @@ const ExperiencePage = () => {
   const history = useHistory();
   const idExp = useParams().idExp;
   const [experience, setExperience] = useState({});
-  const [startDateTime, setStartDateTime] = useState({});
-  const [endDateTime, setEndDateTime] = useState({});
+  const [dates, setDates] = useState([]);
   const [imgExperience, setImgExperience] = useState([]);
   const [currentImg, setCurrentImg] = useState(0);
   const [avatars, setAvatars] = useState([]);
@@ -36,7 +36,22 @@ const ExperiencePage = () => {
       `http://localhost:3000/api/v1/experiences/${idExp}`
     );
 
-    console.log("resExp: ", resExp);
+    const resDates = await sendRequest(
+      `http://localhost:3000/api/v1/experiences/${idExp}/dates`
+    );
+
+    const now = new Date();
+    const nextDates = resDates.filter(
+      (exp) => new Date(exp.eventStartDate) > now
+    );
+
+    const formatNextDates = nextDates.map((date) => {
+      const startDate = formatDate(date.eventStartDate);
+      const endDate = formatDate(date.eventEndDate);
+      return { startDate, endDate };
+    });
+
+    setDates(formatNextDates);
 
     const avgRatingExp = await sendRequest(
       `http://localhost:3000/api/v1/experiences/${idExp}/rating`
@@ -72,25 +87,19 @@ const ExperiencePage = () => {
       setAvatars(arrayProfilePics);
     }
 
-    const response = fetch(
+    const response = await fetch(
       `http://localhost:3000/api/v1/experiences/${idExp}/reviews`
     );
 
+    // console.log("response reviews: ", response);
+
     if (!response.ok) {
-      setNoReviews(true);
+      setNoReviews(true); //¿HACE FALTA?
     } else {
       const revRes = await response.json();
-
       setReviews(revRes);
     }
-
-    const startDate = formatDate(experience.eventStartDate);
-    // console.log("startDate: ", startDate);
-    setStartDateTime(startDate);
-
-    const endDate = formatDate(experience.eventEndDate);
-    setEndDateTime(endDate);
-  }, [idExp, experience.eventStartDate, experience.eventEndDate, sendRequest]);
+  }, [idExp, sendRequest]);
 
   useEffect(() => {
     fetchExperience();
@@ -167,26 +176,50 @@ const ExperiencePage = () => {
           )}
         />
         <div>VALORACION: </div>
-        {experience.avgRatingExp
-          ? `${experience.avgRatingExp}`
-          : "Esta experiencia aun no ha sido valorada"}
+        {experience.avgRatingExp ? (
+          <ReactStars
+            value={+experience.avgRatingExp}
+            count={5}
+            size={24}
+            activeColor="#ffd700"
+            edit={false}
+          />
+        ) : (
+          "Esta experiencia aún no ha sido valorada"
+        )}
         <div>DESCRIPCION: {experience.description}</div>
       </div>
       <div>
-        <p>¿Cuándo y dónde?</p>
-        {startDateTime.day === endDateTime.day ? (
-          <p>
-            Empieza el {startDateTime.day} de {startDateTime.month} del{" "}
-            {startDateTime.year} a las {startDateTime.time}h. Termina a las{" "}
-            {endDateTime.time}h
-          </p>
+        <p>{experience.city}</p>
+        {dates.length === 0 ? (
+          <p>No hay próximas fechas</p>
         ) : (
-          <p>
-            Empieza el {startDateTime.day} de {startDateTime.month} del{" "}
-            {startDateTime.year} a las {startDateTime.time}h. Termina el día{" "}
-            {endDateTime.day} a las {endDateTime.time}h
-          </p>
+          <div>
+            <p>Próximas fechas:</p>
+            {dates.map((date) => {
+              let dateData;
+              if (date.startDate.day === date.endDate.day) {
+                dateData = (
+                  <p>
+                    -{date.startDate.day} de {date.startDate.month} del{" "}
+                    {date.startDate.year} a las {date.startDate.time}h. Termina
+                    a las {date.endDate.time}h
+                  </p>
+                );
+              } else {
+                dateData = (
+                  <p>
+                    -Del {date.startDate.day} de {date.startDate.month} del{" "}
+                    {date.startDate.year} a las {date.startDate.time}h hasta{" "}
+                    {date.endDate.day} a las {date.endDate.time}h
+                  </p>
+                );
+              }
+              return dateData;
+            })}
+          </div>
         )}
+
         <p>Gestionado por {experience.businessName}</p>
       </div>
 
@@ -212,13 +245,13 @@ const ExperiencePage = () => {
             )}
             {!noAvatars && (
               <Button type="button" onClick={showUsersBooked}>
-                Mira quién está apuntado en esta experiencia:
+                Mira quién está apuntado en esta experiencia
               </Button>
             )}
           </div>
         )}
         {/* <div>avatares de inscritos</div> */}
-        {noAvatars ? (
+        {avatars.length === 0 ? (
           <p>
             Aún no hay inscritos en esta experiencia. ¿Quieres ser el primero?
           </p>
@@ -237,7 +270,7 @@ const ExperiencePage = () => {
           </ul>
         )}
       </div>
-      {noReviews ? (
+      {reviews.length === 0 ? (
         <p>Todavía no hay opiniones sobre esta experiencia.</p>
       ) : (
         <div>

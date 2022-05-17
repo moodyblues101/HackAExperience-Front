@@ -78,7 +78,6 @@ const LandingPage = () => {
   const fetchReviews = useCallback(async () => {
     const resRev = await sendRequest("http://localhost:3000/api/v1/reviews");
     const bestReviews = resRev.reviewsData.filter((exp) => exp.rating >= 4);
-    //TODO: QUE NO SE REPITA USUARIO ¿?
     const revToShow = [];
 
     if (bestReviews.length >= 4) {
