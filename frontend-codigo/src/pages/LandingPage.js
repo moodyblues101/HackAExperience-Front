@@ -6,6 +6,7 @@ import ErrorModal from "../ui/ErrorModal";
 import Button from "../ui/FormElements/Button";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import Modal from "../ui/Modal";
+import ReactStars from "react-rating-stars-component";
 
 import "./LandingPage.css";
 
@@ -20,33 +21,30 @@ const LandingPage = () => {
     const resExp = await sendRequest(
       "http://localhost:3000/api/v1/experiences"
     );
-    // console.log("res: ", resExp);
 
-    const now = new Date();
-
-    const nextExp = resExp.experiencesData.filter(
-      (exp) => new Date(exp.eventStartDate) > now
-    );
+    const orderBestExp = resExp.experiencesData
+      .sort(function (expA, expB) {
+        return expA.rating - expB.rating;
+      })
+      .reverse();
 
     const expToShow = [];
 
-    if (nextExp.length >= 4) {
+    if (orderBestExp.length >= 4) {
       for (let i = 0; i < 4; i++) {
-        const id = nextExp[i].id;
+        const id = orderBestExp[i].id;
         const resImg = await sendRequest(
           `http://localhost:3000/api/v1/experiences/${id}/images`
         );
 
-        // console.log("imagenes: ", resImg);
-        expToShow.push({ ...nextExp[i], imgExp: resImg[0].name });
+        expToShow.push({ ...orderBestExp[i], imgExp: resImg[0].name });
       }
     } else {
-      for (let i = 0; i < nextExp.length; i++) {
-        expToShow.push(nextExp[i]);
+      for (let i = 0; i < orderBestExp.length; i++) {
+        expToShow.push(orderBestExp[i]);
       }
     }
 
-    // console.log("expToShow: ", expToShow);
     setExperiences(expToShow);
 
     const orderResExpVisits = resExp.experiencesData
@@ -54,7 +52,7 @@ const LandingPage = () => {
         return expA.visits - expB.visits;
       })
       .reverse();
-    // console.log("expVisit: ", expVisited);
+
     const expVisited4Most = [];
 
     if (orderResExpVisits.length >= 4) {
@@ -79,9 +77,8 @@ const LandingPage = () => {
 
   const fetchReviews = useCallback(async () => {
     const resRev = await sendRequest("http://localhost:3000/api/v1/reviews");
-    // console.log("resREv: ", resRev);
     const bestReviews = resRev.reviewsData.filter((exp) => exp.rating >= 4);
-    //TODO: QUE NO SE REPITA OPINION DE USUARIO ¿?
+    //TODO: QUE NO SE REPITA USUARIO ¿?
     const revToShow = [];
 
     if (bestReviews.length >= 4) {
@@ -115,24 +112,24 @@ const LandingPage = () => {
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner />}
       <h1>Landing Page</h1>
-      <h2>Próximas experiencias</h2>
+      <h2>Experiencias mejor valoradas</h2>
       <ul>
-        {experiences.map((experience) => (
-          <Experience
-            key={experience.id}
-            id={experience.id}
-            name={experience.name}
-            description={experience.description}
-            city={experience.city}
-            price={experience.price}
-            eventStartDate={experience.eventStartDate}
-            eventEndDate={experience.eventEndDate}
-            // idBusiness={experience.idBusiness}
-            businessName={experience.businessName}
-            categoryName={experience.categoryName}
-            imgExp={experience.imgExp}
-            rating={experience.rating}
-          />
+        {experiences.map((exp) => (
+          <li key={exp.id}>
+            <img
+              src={`http://localhost:3000/experiences/${exp.id}/${exp.imgExp}`}
+              alt="experience"
+            />
+            <Link to={`/experiences/${exp.id}`}>{exp.name}</Link>
+
+            <ReactStars
+              value={exp.rating}
+              count={5}
+              size={24}
+              activeColor="#ffd700"
+              edit={false}
+            />
+          </li>
         ))}
       </ul>
       <h2>Opininiones de nuestros clientes</h2>
@@ -147,22 +144,25 @@ const LandingPage = () => {
       </ul>
       <h2>Experiencias mas buscadas</h2>
       <ul>
-        {expMostVisited.map((experience, index) => (
-          <Experience
-            key={index}
-            id={experience.id}
-            name={experience.name}
-            description={experience.description}
-            city={experience.city}
-            price={experience.price}
-            eventStartDate={experience.eventStartDate}
-            eventEndDate={experience.eventEndDate}
-            // idBusiness={experience.idBusiness}
-            businessName={experience.businessName}
-            categoryName={experience.categoryName}
-            imgExp={experience.imgExp}
-            rating={experience.rating}
-          />
+        {expMostVisited.map((exp) => (
+          <li key={exp.id}>
+            <img
+              src={`http://localhost:3000/experiences/${exp.id}/${exp.imgExp}`}
+              alt="experience"
+            />
+            <Link to={`/experiences/${exp.id}`}>{exp.name}</Link>
+            {exp.rating !== null ? (
+              <ReactStars
+                value={exp.rating}
+                count={5}
+                size={24}
+                activeColor="#ffd700"
+                edit={false}
+              />
+            ) : (
+              <div>sin valoraciones</div>
+            )}
+          </li>
         ))}
       </ul>
       <h3>
@@ -193,30 +193,6 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
-
-const Experience = (props) => {
-  return (
-    <li>
-      <div>
-        <img
-          src={`http://localhost:3000/experiences/${props.id}/${props.imgExp}`}
-          alt="experience"
-        />
-      </div>
-      <h2>
-        <Link to={`/experiences/${props.id}`}>{props.name}</Link>
-      </h2>
-      <h3>{props.description}</h3>
-      <h3>{props.city}</h3>
-      <h3>{props.price}</h3>
-      <h3>{props.eventStartDate}</h3>
-      <h3>{props.eventEndDate}</h3>
-      <h3>{props.rating}</h3>
-      <h3>{props.businessName}</h3>
-      <h3>{props.categoryName}</h3>
-    </li>
-  );
-};
 
 const Review = (props) => {
   return (

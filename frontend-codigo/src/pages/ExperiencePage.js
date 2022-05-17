@@ -28,6 +28,7 @@ const ExperiencePage = () => {
   const [noReviews, setNoReviews] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalShowUsers, setModalShowUsers] = useState(false);
+  const [isShowModalMail, setIsShowModalMail] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const fetchExperience = useCallback(async () => {
@@ -35,10 +36,7 @@ const ExperiencePage = () => {
       `http://localhost:3000/api/v1/experiences/${idExp}`
     );
 
-    // console.log("resExp: ", resExp);
-
-    //  y el numero de plazas disponibles
-    //avisos de no quedan plazas (si no quedan plazas, inhabilitar boton de reservar) y
+    console.log("resExp: ", resExp);
 
     const avgRatingExp = await sendRequest(
       `http://localhost:3000/api/v1/experiences/${idExp}/rating`
@@ -64,7 +62,11 @@ const ExperiencePage = () => {
       // console.log("bookRes: ", bookRes);
 
       const arrayProfilePics = bookRes.map((booking) => {
-        return { avatar: booking.profilePic, bio: booking.bio };
+        return {
+          avatar: booking.profilePic,
+          bio: booking.bio,
+          name: booking.name,
+        };
       });
       // console.log("arrayProfilePics: ", arrayProfilePics);
       setAvatars(arrayProfilePics);
@@ -117,10 +119,15 @@ const ExperiencePage = () => {
   const cancelHandler = () => {
     setShowModal(false);
     setModalShowUsers(false);
+    setIsShowModalMail(false);
   };
 
   const showUsersBooked = () => {
     setModalShowUsers(true);
+  };
+
+  const showModalMail = () => {
+    setIsShowModalMail(true);
   };
 
   return (
@@ -167,17 +174,30 @@ const ExperiencePage = () => {
       </div>
       <div>
         <p>¿Cuándo y dónde?</p>
-        <p>
-          {startDateTime.day} {startDateTime.month} {startDateTime.year} a las{" "}
-          {startDateTime.time}h en {experience.city}. Termina a las{" "}
-          {endDateTime.time}h.
-        </p>
+        {startDateTime.day === endDateTime.day ? (
+          <p>
+            Empieza el {startDateTime.day} de {startDateTime.month} del{" "}
+            {startDateTime.year} a las {startDateTime.time}h. Termina a las{" "}
+            {endDateTime.time}h
+          </p>
+        ) : (
+          <p>
+            Empieza el {startDateTime.day} de {startDateTime.month} del{" "}
+            {startDateTime.year} a las {startDateTime.time}h. Termina el día{" "}
+            {endDateTime.day} a las {endDateTime.time}h
+          </p>
+        )}
         <p>Gestionado por {experience.businessName}</p>
       </div>
 
       <div>
         {experience.availablePlaces === 0 ? (
-          <p>No quedan plazas disponibles</p>
+          <div>
+            <p>No quedan plazas disponibles</p>
+            <Button type="button" onClick={showModalMail}>
+              Avísame cuando vuelva a estar disponible
+            </Button>
+          </div>
         ) : (
           <div>
             <Button type="button" onClick={bookingHandler}>
@@ -191,9 +211,9 @@ const ExperiencePage = () => {
               <div>Quedan {experience.availablePlaces} plazas disponibles</div>
             )}
             {!noAvatars && (
-              <button onClick={showUsersBooked}>
+              <Button type="button" onClick={showUsersBooked}>
                 Mira quién está apuntado en esta experiencia:
-              </button>
+              </Button>
             )}
           </div>
         )}
@@ -262,11 +282,26 @@ const ExperiencePage = () => {
                   src={`http://localhost:3000/avatars/${user.avatar}`}
                   alt="user"
                 />
+                <div>{user.name}</div>
                 <p>{user.bio}</p>
               </li>
             );
           })}
         </ul>
+      </Modal>
+      <Modal
+        show={isShowModalMail}
+        onCancel={cancelHandler}
+        footer={
+          <Button type="button" onClick={cancelHandler}>
+            OK
+          </Button>
+        }
+      >
+        <div>
+          <label htmlFor="mail-user">Introduce tu mail para avisarte:</label>
+          <input id="mail-user" type="text" />
+        </div>
       </Modal>
     </>
   );

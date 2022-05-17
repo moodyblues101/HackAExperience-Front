@@ -53,9 +53,11 @@ const CategoryPage = () => {
         (exp) => new Date(exp.eventStartDate) > now
       );
 
+      console.log("arrayNext: ", arrayNextExperiences);
+
       const arrayBestExp = [];
 
-      if (arrayNextExperiences.length >= 4) {
+      if (arrayNextExperiences.length > 4) {
         for (let i = 0; i < 4; i++) {
           arrayBestExp.push(arrayNextExperiences[i]);
         }

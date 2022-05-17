@@ -30,10 +30,10 @@ const RegisterPage = () => {
         value: "",
         isValid: false,
       },
-      bio: {
-        value: "",
-        isValid: false,
-      },
+      // bio: {
+      //   value: "",
+      //   isValid: false,
+      // },
       password: {
         value: "",
         isValid: false,
@@ -57,7 +57,7 @@ const RegisterPage = () => {
       const formData = new FormData();
       formData.append("name", formState.inputs.name.value);
       formData.append("email", formState.inputs.email.value);
-      formData.append("bio", formState.inputs.bio.value);
+      // formData.append("bio", 'añade tu bio');
       formData.append("password", formState.inputs.password.value);
       formData.append("verifyPassword", formState.inputs.verifyPassword.value);
       // formData.append("image", formState.inputs.image.value);
@@ -103,7 +103,7 @@ const RegisterPage = () => {
             errorText="Por favor, introduce una dirección de e-mail."
             onInput={inputHandler}
           />
-          <Input
+          {/* <Input
             element="textarea"
             id="bio"
             type="text"
@@ -111,7 +111,7 @@ const RegisterPage = () => {
             validators={[VALIDATOR_REQUIRE()]}
             errorText="Por favor, introduce un texto cortito sobre ti."
             onInput={inputHandler}
-          />
+          /> */}
           <Input
             element="input"
             id="password"
