@@ -18,9 +18,6 @@ const NavigationCategories = () => {
         <li>
           <NavLink to="/category/Aventura/4">Aventura</NavLink>
         </li>
-        {/* <li className="main-li">
-    <NavLink to="/sopresa">Sorpresa</NavLink>
-  </li> */}
       </ul>
     </nav>
   );

@@ -3,6 +3,12 @@ import { Link } from "react-router-dom";
 const Experience = (props) => {
   return (
     <li>
+      <div>
+        <img
+          src={`http://localhost:3000/experiences/${props.id}/${props.imgExp}`}
+          alt="experience"
+        />
+      </div>
       <h2>
         <Link to={`/experiences/${props.id}`}>{props.name}</Link>
       </h2>

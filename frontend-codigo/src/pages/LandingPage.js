@@ -7,8 +7,6 @@ import Button from "../ui/FormElements/Button";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import Modal from "../ui/Modal";
 
-// import ExperienceList from "../components/ExperienceList";
-
 import "./LandingPage.css";
 
 const LandingPage = () => {
@@ -22,7 +20,7 @@ const LandingPage = () => {
     const resExp = await sendRequest(
       "http://localhost:3000/api/v1/experiences"
     );
-    console.log("res: ", resExp);
+    // console.log("res: ", resExp);
 
     const now = new Date();
 
@@ -32,12 +30,23 @@ const LandingPage = () => {
 
     const expToShow = [];
 
-    for (let i = 0; i < 4; i++) {
-      expToShow.push(nextExp[i]);
+    if (nextExp.length >= 4) {
+      for (let i = 0; i < 4; i++) {
+        const id = nextExp[i].id;
+        const resImg = await sendRequest(
+          `http://localhost:3000/api/v1/experiences/${id}/images`
+        );
+
+        // console.log("imagenes: ", resImg);
+        expToShow.push({ ...nextExp[i], imgExp: resImg[0].name });
+      }
+    } else {
+      for (let i = 0; i < nextExp.length; i++) {
+        expToShow.push(nextExp[i]);
+      }
     }
 
-    //TODO: OBTENER PRIMERA IMAGEN DE CADA EXPERIENCIA A PARTE
-
+    // console.log("expToShow: ", expToShow);
     setExperiences(expToShow);
 
     const orderResExpVisits = resExp.experiencesData
@@ -48,8 +57,22 @@ const LandingPage = () => {
     // console.log("expVisit: ", expVisited);
     const expVisited4Most = [];
 
-    for (let i = 0; i < 4; i++) {
-      expVisited4Most.push(orderResExpVisits[i]);
+    if (orderResExpVisits.length >= 4) {
+      for (let i = 0; i < 4; i++) {
+        const id = orderResExpVisits[i].id;
+        const resImg = await sendRequest(
+          `http://localhost:3000/api/v1/experiences/${id}/images`
+        );
+
+        expVisited4Most.push({
+          ...orderResExpVisits[i],
+          imgExp: resImg[0].name,
+        });
+      }
+    } else {
+      for (let i = 0; i < orderResExpVisits.length; i++) {
+        expVisited4Most.push(orderResExpVisits[i]);
+      }
     }
     setExpMostVisited(expVisited4Most);
   }, [sendRequest]);
@@ -58,8 +81,20 @@ const LandingPage = () => {
     const resRev = await sendRequest("http://localhost:3000/api/v1/reviews");
     // console.log("resREv: ", resRev);
     const bestReviews = resRev.reviewsData.filter((exp) => exp.rating >= 4);
+    //TODO: QUE NO SE REPITA OPINION DE USUARIO ¿?
+    const revToShow = [];
 
-    setReviews(bestReviews);
+    if (bestReviews.length >= 4) {
+      for (let i = 0; i < 4; i++) {
+        revToShow.push(bestReviews[i]);
+      }
+    } else {
+      for (let i = 0; i < bestReviews.length; i++) {
+        revToShow.push(bestReviews[i]);
+      }
+    }
+
+    setReviews(revToShow);
   }, [sendRequest]);
 
   useEffect(() => {
@@ -81,7 +116,6 @@ const LandingPage = () => {
       {isLoading && <LoadingSpinner />}
       <h1>Landing Page</h1>
       <h2>Próximas experiencias</h2>
-      {/* <ExperienceList experiences={experiences} /> */}
       <ul>
         {experiences.map((experience) => (
           <Experience
@@ -96,7 +130,7 @@ const LandingPage = () => {
             // idBusiness={experience.idBusiness}
             businessName={experience.businessName}
             categoryName={experience.categoryName}
-            idImg={experience.idImg}
+            imgExp={experience.imgExp}
             rating={experience.rating}
           />
         ))}
@@ -126,7 +160,7 @@ const LandingPage = () => {
             // idBusiness={experience.idBusiness}
             businessName={experience.businessName}
             categoryName={experience.categoryName}
-            idImg={experience.idImg}
+            imgExp={experience.imgExp}
             rating={experience.rating}
           />
         ))}
@@ -163,7 +197,12 @@ export default LandingPage;
 const Experience = (props) => {
   return (
     <li>
-      <div>{props.idImg}</div>
+      <div>
+        <img
+          src={`http://localhost:3000/experiences/${props.id}/${props.imgExp}`}
+          alt="experience"
+        />
+      </div>
       <h2>
         <Link to={`/experiences/${props.id}`}>{props.name}</Link>
       </h2>

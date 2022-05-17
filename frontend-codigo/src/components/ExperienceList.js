@@ -17,7 +17,7 @@ const ExperienceList = (props) => {
             // idBusiness={experience.idBusiness}
             businessName={experience.businessName}
             categoryName={experience.categoryName}
-            idImg={experience.idImg}
+            imgExp={experience.imgExp}
             rating={experience.rating}
           />
         ))}

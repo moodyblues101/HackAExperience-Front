@@ -6,13 +6,14 @@ import ExperienceList from "../components/ExperienceList";
 import ReviewList from "../components/ReviewList";
 import ErrorModal from "../ui/ErrorModal";
 import LoadingSpinner from "../ui/LoadingSpinner";
+import Button from "../ui/FormElements/Button";
 
 import bienestarImage from "../assets/categories/bienestar.jpg";
 import aventuraImage from "../assets/categories/adventure.jpg";
 import gastronomiaImage from "../assets/categories/gastronomia.jpg";
 import velocidadImage from "../assets/categories/velocidad.jpg";
+
 import "./CategoryPage.css";
-import Button from "../ui/FormElements/Button";
 
 const CategoryPage = () => {
   const idCat = useParams().idCategory; //idCategory
@@ -46,36 +47,61 @@ const CategoryPage = () => {
         `http://localhost:3000/api/v1/categories/${idCat}/experiences`
       );
 
-      //EN ESTA RESPUESTA FALTA IMAGEN DE LA EXPERIENCIA Y EL NOMBRE DE LA EMPRESA
-
       const now = new Date();
 
       const arrayNextExperiences = resExp.filter(
         (exp) => new Date(exp.eventStartDate) > now
       );
 
-      // console.log("arrayNextExp: ", arrayNextExperiences);
+      const arrayBestExp = [];
 
-      if (arrayNextExperiences.lenght >= 4) {
-        const arrayBestExp = [];
-        for (let i = 0; i < 3; i++) {
+      if (arrayNextExperiences.length >= 4) {
+        for (let i = 0; i < 4; i++) {
           arrayBestExp.push(arrayNextExperiences[i]);
         }
-        setExperiences(arrayBestExp);
       } else {
-        setExperiences(arrayNextExperiences);
+        for (let i = 0; i < arrayNextExperiences.length; i++) {
+          arrayBestExp.push(arrayNextExperiences[i]);
+        }
       }
+
+      const imgAdded = [];
+
+      for (let i = 0; i < arrayBestExp.length; i++) {
+        const id = arrayBestExp[i].id;
+        const resImgExp = await sendRequest(
+          `http://localhost:3000/api/v1/experiences/${id}/images`
+        );
+
+        imgAdded.push({
+          ...arrayBestExp[i],
+          imgExp: resImgExp[0].name,
+        });
+      }
+
+      setExperiences(imgAdded);
 
       const resRev = await sendRequest(
         `http://localhost:3000/api/v1/reviews/category/${idCat}`
       );
 
-      //TODO: filtrar las mejor valoradas
-      // const arrayBestRev = [];
-      // for (let i = 0; i < 3; i++) {
-      //   arrayBestRev.push(resRev[i]);
-      // }
-      setReviews(resRev);
+      const orderRev = resRev
+        .sort(function (revA, revB) {
+          return revA.rating - revB.rating;
+        })
+        .reverse();
+
+      const arrayBestRev = [];
+      if (orderRev.length > 4) {
+        for (let i = 0; i < 3; i++) {
+          arrayBestRev.push(orderRev[i]);
+        }
+      } else {
+        for (let i = 0; i < orderRev.length; i++) {
+          arrayBestRev.push(orderRev[i]);
+        }
+      }
+      setReviews(arrayBestRev);
     } catch (err) {}
   }, [idCat, sendRequest]);
 
@@ -105,7 +131,7 @@ const CategoryPage = () => {
           mattis lacus. Suspendisse at sodales libero.
         </p>
       </div>
-      <p>Experiencias mejor valoradas en {nameCat}</p>
+      <p>Próximas experiencias en {nameCat}</p>
       <div>
         <ExperienceList experiences={experiences} />
       </div>
