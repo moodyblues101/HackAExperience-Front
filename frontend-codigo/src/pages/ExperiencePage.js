@@ -25,7 +25,6 @@ const ExperiencePage = () => {
   const [avatars, setAvatars] = useState([]);
   const [noAvatars, setNoAvatars] = useState(false);
   const [reviews, setReviews] = useState([]);
-  const [noReviews, setNoReviews] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalShowUsers, setModalShowUsers] = useState(false);
   const [isShowModalMail, setIsShowModalMail] = useState(false);
@@ -94,7 +93,7 @@ const ExperiencePage = () => {
     // console.log("response reviews: ", response);
 
     if (!response.ok) {
-      setNoReviews(true); //¿HACE FALTA?
+      setReviews([]);
     } else {
       const revRes = await response.json();
       setReviews(revRes);
