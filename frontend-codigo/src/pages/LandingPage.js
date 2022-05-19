@@ -28,21 +28,17 @@ const LandingPage = () => {
       })
       .reverse();
 
+    // console.log("orderBestExp: ", orderBestExp);
+
     const expToShow = [];
 
-    if (orderBestExp.length >= 4) {
-      for (let i = 0; i < 4; i++) {
-        const id = orderBestExp[i].id;
-        const resImg = await sendRequest(
-          `http://localhost:3000/api/v1/experiences/${id}/images`
-        );
+    for (let i = 0; i < orderBestExp.length && i < 4; i++) {
+      const id = orderBestExp[i].id;
+      const resImg = await sendRequest(
+        `http://localhost:3000/api/v1/experiences/${id}/images`
+      );
 
-        expToShow.push({ ...orderBestExp[i], imgExp: resImg[0].name });
-      }
-    } else {
-      for (let i = 0; i < orderBestExp.length; i++) {
-        expToShow.push(orderBestExp[i]);
-      }
+      expToShow.push({ ...orderBestExp[i], imgExp: resImg[0].name });
     }
 
     setExperiences(expToShow);
@@ -55,23 +51,18 @@ const LandingPage = () => {
 
     const expVisited4Most = [];
 
-    if (orderResExpVisits.length >= 4) {
-      for (let i = 0; i < 4; i++) {
-        const id = orderResExpVisits[i].id;
-        const resImg = await sendRequest(
-          `http://localhost:3000/api/v1/experiences/${id}/images`
-        );
+    for (let i = 0; i < orderResExpVisits.length && i < 4; i++) {
+      const id = orderResExpVisits[i].id;
+      const resImg = await sendRequest(
+        `http://localhost:3000/api/v1/experiences/${id}/images`
+      );
 
-        expVisited4Most.push({
-          ...orderResExpVisits[i],
-          imgExp: resImg[0].name,
-        });
-      }
-    } else {
-      for (let i = 0; i < orderResExpVisits.length; i++) {
-        expVisited4Most.push(orderResExpVisits[i]);
-      }
+      expVisited4Most.push({
+        ...orderResExpVisits[i],
+        imgExp: resImg[0].name,
+      });
     }
+
     setExpMostVisited(expVisited4Most);
   }, [sendRequest]);
 
@@ -80,14 +71,8 @@ const LandingPage = () => {
     const bestReviews = resRev.reviewsData.filter((exp) => exp.rating >= 4);
     const revToShow = [];
 
-    if (bestReviews.length >= 4) {
-      for (let i = 0; i < 4; i++) {
-        revToShow.push(bestReviews[i]);
-      }
-    } else {
-      for (let i = 0; i < bestReviews.length; i++) {
-        revToShow.push(bestReviews[i]);
-      }
+    for (let i = 0; i < bestReviews.length && i < 4; i++) {
+      revToShow.push(bestReviews[i]);
     }
 
     setReviews(revToShow);
@@ -159,7 +144,7 @@ const LandingPage = () => {
                 edit={false}
               />
             ) : (
-              <div>sin valoraciones</div>
+              <div>Aún sin valorar</div>
             )}
           </li>
         ))}

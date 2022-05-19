@@ -16,7 +16,7 @@ import velocidadImage from "../assets/categories/velocidad.jpg";
 import "./CategoryPage.css";
 
 const CategoryPage = () => {
-  const idCat = useParams().idCategory; //idCategory
+  const idCat = useParams().idCategory;
   const nameCat = useParams().catName;
   const [experiences, setExperiences] = useState([]);
   const [reviews, setReviews] = useState([]);
@@ -47,36 +47,49 @@ const CategoryPage = () => {
         `http://localhost:3000/api/v1/categories/${idCat}/experiences`
       );
 
+      // console.log("resExp: ", resExp);
+
       const now = new Date();
+      const arrayNextExperiences = [];
 
-      const arrayNextExperiences = resExp.filter(
-        (exp) => new Date(exp.eventStartDate) > now
-      );
+      // const arrayNextExperiences = resExp.filter(
+      //   (exp) => new Date(exp.eventStartDate) > now
+      // );
 
-      console.log("arrayNext: ", arrayNextExperiences);
+      for (let i = 0; i < resExp.length; i++) {
+        const dateExp = await sendRequest(
+          `http://localhost:3000/api/v1/experiences/${resExp[i].id}/dates`
+        );
+        // console.log("dateExp: ", dateExp);
+        const nextDates = dateExp.filter(
+          (date) => new Date(date.eventStartDate) > now
+        );
 
-      const arrayBestExp = [];
-
-      if (arrayNextExperiences.length > 4) {
-        for (let i = 0; i < 4; i++) {
-          arrayBestExp.push(arrayNextExperiences[i]);
-        }
-      } else {
-        for (let i = 0; i < arrayNextExperiences.length; i++) {
-          arrayBestExp.push(arrayNextExperiences[i]);
+        // console.log("nextDates: ", nextDates);
+        if (nextDates.length !== 0) {
+          arrayNextExperiences.push(resExp[i]);
         }
       }
+      // console.log("arrayNext: ", arrayNextExperiences);
+
+      const arrayShowExp = [];
+
+      for (let i = 0; i < arrayNextExperiences.length && i < 4; i++) {
+        arrayShowExp.push(arrayNextExperiences[i]);
+      }
+
+      // console.log("arrayShowExp: ", arrayShowExp);
 
       const imgAdded = [];
 
-      for (let i = 0; i < arrayBestExp.length; i++) {
-        const id = arrayBestExp[i].id;
+      for (let i = 0; i < arrayShowExp.length; i++) {
+        const id = arrayShowExp[i].id;
         const resImgExp = await sendRequest(
           `http://localhost:3000/api/v1/experiences/${id}/images`
         );
 
         imgAdded.push({
-          ...arrayBestExp[i],
+          ...arrayShowExp[i],
           imgExp: resImgExp[0].name,
         });
       }
@@ -94,15 +107,11 @@ const CategoryPage = () => {
         .reverse();
 
       const arrayBestRev = [];
-      if (orderRev.length > 4) {
-        for (let i = 0; i < 3; i++) {
-          arrayBestRev.push(orderRev[i]);
-        }
-      } else {
-        for (let i = 0; i < orderRev.length; i++) {
-          arrayBestRev.push(orderRev[i]);
-        }
+
+      for (let i = 0; i < orderRev.length && i < 4; i++) {
+        arrayBestRev.push(orderRev[i]);
       }
+
       setReviews(arrayBestRev);
     } catch (err) {}
   }, [idCat, sendRequest]);
