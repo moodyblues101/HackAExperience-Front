@@ -36,14 +36,27 @@ const AllExperiences = () => {
     try {
       const res = await sendRequest("http://localhost:3000/api/v1/experiences");
 
+      const expWithDates = [];
+
+      for (const exp of res) {
+        const dates = await sendRequest(
+          `http://localhost:3000/api/v1/experiences/${exp.id}/dates`
+        );
+        expWithDates.push({ ...exp, dates });
+      }
+      // console.log("expwhithdates: ", expWithDates);
+
       const now = new Date();
 
-      const nextExp = res.experiencesData.filter(
-        (exp) => new Date(exp.eventStartDate) > now
-      );
+      const nextExp = [];
+      for (const exp of expWithDates) {
+        const isAfterDate = (e) => e > now;
+        if (exp.dates.findIndex(isAfterDate) !== null) {
+          nextExp.push(exp);
+        }
+      }
 
-      // console.log(nextExperiences);
-
+      console.log("nextExp: ", nextExp);
       setNextExperiences(nextExp);
     } catch (err) {}
   }, [sendRequest]);
@@ -81,7 +94,7 @@ const AllExperiences = () => {
     let filtExp2;
     if (category.length !== 0) {
       filtExp2 = filteredExperiences.filter((exp) => {
-        console.log("id categoria exp: ", exp.idCategory);
+        // console.log("id categoria exp: ", exp.idCategory);
         return exp.idCategory === +category;
       });
     } else {
@@ -90,22 +103,26 @@ const AllExperiences = () => {
       });
     }
 
-    // console.log("filteredExp2: ", filtExp2);
-    // console.log("filteredExp2 long: ", filtExp2.length);
-
-    // console.log("fecha introducida: ", date);
-
     let finalFilterExp;
+
+    // console.log("date: ", date);
     if (date.length !== 0) {
-      finalFilterExp = filtExp2.filter((exp) => {
-        const dateExp = new Date(exp.eventStartDate);
-        const yearExp = dateExp.getFullYear();
-        const monthExp = ("0" + (dateExp.getMonth() + 1)).slice(-2);
-        const dayExp = ("0" + dateExp.getDate()).slice(-2);
-        const dateExpTrans = `${yearExp}-${monthExp}-${dayExp}`;
-        // console.log("fecha conver: ", dateExp);
-        return dateExpTrans === date;
+      const almostFinalFilterExp = filtExp2.map((exp) => {
+        const formatDates = exp.dates.map((date) => {
+          const dateExp = new Date(date.eventStartDate);
+          const yearExp = dateExp.getFullYear();
+          const monthExp = ("0" + (dateExp.getMonth() + 1)).slice(-2);
+          const dayExp = ("0" + dateExp.getDate()).slice(-2);
+          const dateExpTrans = `${yearExp}-${monthExp}-${dayExp}`;
+          return dateExpTrans;
+        });
+        return { ...exp, dates: formatDates };
       });
+      // console.log("formatDaes: ", almostFinalFilterExp);
+
+      finalFilterExp = almostFinalFilterExp.filter((exp) =>
+        exp.dates.includes(date)
+      );
     } else {
       finalFilterExp = filtExp2.map((exp) => {
         return { ...exp };
@@ -214,9 +231,7 @@ const AllExperiences = () => {
                 description={experience.description}
                 city={experience.city}
                 price={experience.price}
-                eventStartDate={experience.eventStartDate}
-                eventEndDate={experience.eventEndDate}
-                idBusiness={experience.idBusiness}
+                businessName={experience.businessName}
               />
             ))}
           </ul>
@@ -235,12 +250,9 @@ const Experience = (props) => {
         <Link to={`/experiences/${props.id}`}>{props.name}</Link>
       </h2>
       <h3>{props.description}</h3>
-      <h3>{props.description}</h3>
       <h3>{props.city}</h3>
       <h3>{props.price}</h3>
-      <h3>{props.eventStartDate}</h3>
-      <h3>{props.eventEndDate}</h3>
-      <h3>{props.idBusiness}</h3>
+      <h3>{props.businessName}</h3>
     </li>
   );
 };

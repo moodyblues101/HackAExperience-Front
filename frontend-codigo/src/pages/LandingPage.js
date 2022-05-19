@@ -22,7 +22,7 @@ const LandingPage = () => {
       "http://localhost:3000/api/v1/experiences"
     );
 
-    const orderBestExp = resExp.experiencesData
+    const orderBestExp = resExp
       .sort(function (expA, expB) {
         return expA.rating - expB.rating;
       })
@@ -43,7 +43,7 @@ const LandingPage = () => {
 
     setExperiences(expToShow);
 
-    const orderResExpVisits = resExp.experiencesData
+    const orderResExpVisits = resExp
       .sort(function (expA, expB) {
         return expA.visits - expB.visits;
       })
