@@ -9,6 +9,7 @@ import ErrorModal from "../ui/ErrorModal";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import Card from "../ui/Card";
 import Button from "../ui/FormElements/Button";
+import formatDate from "../util/formatDate";
 
 const OptionAddReview = ({ experiences }) => {
   const history = useHistory();
@@ -114,7 +115,7 @@ const OptionAddReview = ({ experiences }) => {
               <li key={exp.id}>
                 <label htmlFor={exp.id}>Nombre: {exp.name}</label>
                 <p>Descripción: {exp.description}</p>
-                <DateExperience date={exp.date} />
+                <DateExperience date={exp.eventStartDate} />
                 <div>
                   <Button to={"/experiences"}>VER</Button>
                   {exp.isNotCommented && (
@@ -180,16 +181,12 @@ const OptionAddReview = ({ experiences }) => {
 export default OptionAddReview;
 
 const DateExperience = ({ date }) => {
-  const day = date.toLocaleString("es-ES", { day: "numeric" });
-  const month = date.toLocaleString("es-ES", { month: "long" });
-  const year = date.toLocaleString("es-ES", { year: "numeric" });
-  const hour = date.getHours();
-  const minutes = date.getMinutes();
+  const newDate = formatDate(date);
 
   return (
     <div>
       <div>
-        {day} {month} {year} {hour}:{minutes}
+        {newDate.day} {newDate.month} {newDate.year} {newDate.time}
       </div>
     </div>
   );

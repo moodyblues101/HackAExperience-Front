@@ -6,6 +6,7 @@ import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import ErrorModal from "../ui/ErrorModal";
 import LoadingSpinner from "../ui/LoadingSpinner";
+import formatDate from "../util/formatDate";
 
 const OptionsExperienceList = ({ experiences }) => {
   const history = useHistory();
@@ -59,9 +60,9 @@ const OptionsExperienceList = ({ experiences }) => {
               <label htmlFor={exp.id}>Nombre: {exp.name}</label>
               <p>Descripción: {exp.description}</p>
               <p>Fecha de la experiencia:</p>
-              <DateExperience date={exp.date} />
+              <DateExperience date={exp.eventStartDate} />
               <p>Fecha de la reserva:</p>
-              <DateExperience date={new Date(exp.createdAt)} />
+              <DateExperience date={exp.createdAt} />
               <div>
                 <Button to={`/experiences/${exp.idExperience}`}>VER</Button>
                 <Button
@@ -116,16 +117,12 @@ const OptionsExperienceList = ({ experiences }) => {
 export default OptionsExperienceList;
 
 const DateExperience = ({ date }) => {
-  const day = date.toLocaleString("es-ES", { day: "numeric" });
-  const month = date.toLocaleString("es-ES", { month: "long" });
-  const year = date.toLocaleString("es-ES", { year: "numeric" });
-  // const hour = date.getHours();
-  // const minutes = date.getMinutes();
+  const newDate = formatDate(date);
 
   return (
     <div>
       <div>
-        {day} {month} {year}
+        {newDate.day} {newDate.month} {newDate.year} {newDate.time}
       </div>
     </div>
   );

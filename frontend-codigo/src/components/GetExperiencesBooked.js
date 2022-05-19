@@ -27,34 +27,24 @@ const GetExperiencesBooked = ({ towards }) => {
           { Authorization: "Bearer " + auth.token }
         );
 
-        //obtengo:
-        // "id": 1,
-        // "idUser": 2,
-        // "idExperience": 1,
-        // "createdAt": "2022-06-28T09:50:00.000Z",
-        // "updatedAt": null,
-        // "name": "exp1",
-        // "city": "Madrid",
-        // "price": "25.00"
-
         if (responseBookings.length === 0) {
           return <p>No tienes experiencias reservadas</p>;
         }
 
-        const resBookingsTransformed = responseBookings.map((booking) => {
-          return { ...booking, date: new Date(booking.eventStartDate) };
-        });
+        // const resBookingsTransformed = responseBookings.map((booking) => {
+        //   return { ...booking, date: new Date(booking.eventStartDate) };
+        // });
 
         const now = new Date();
 
         let gotExperiences;
         if (towards === "future") {
-          gotExperiences = resBookingsTransformed.filter(
-            (experience) => experience.date > now
+          gotExperiences = responseBookings.filter(
+            (experience) => new Date(experience.eventStartDate) > now
           );
         } else {
-          gotExperiences = resBookingsTransformed.filter(
-            (experience) => experience.date < now
+          gotExperiences = responseBookings.filter(
+            (experience) => new Date(experience.eventStartDate) < now
           );
         }
 
