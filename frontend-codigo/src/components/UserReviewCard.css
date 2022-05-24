@@ -1,0 +1,57 @@
+.user-review-card {
+  margin: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 6px 18px -9px rgba(0, 0, 0.75);
+  transition: transform 100ms ease-in;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  min-height: fit-content;
+  width: 25%;
+}
+
+.user-review-card:hover {
+  transform: scale(1.07);
+}
+
+.user-review-card > img {
+  /* object-fit: fill; */
+  /* border-radius: 999px; */
+  /* min-width: 300px;
+  min-height: 200px;
+  width: 100%; */
+  /* width: fit-content;
+  height: 100px;
+  padding: 10px; */
+  /* border-radius: 99%; */
+  border-radius: 5px 20px 5px;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  padding-left: 10px;
+}
+
+.card-info {
+  margin-top: -9px;
+  border-radius: 10px;
+  padding: 20px;
+  border: 1;
+}
+
+.card-info > h2 {
+  font-size: 18px;
+  font-weight: 600px;
+}
+
+.card-info > h4 {
+  font-size: 14px;
+  font-weight: 300px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  /* margin-right: auto;
+  margin-left: auto; */
+  /* word-wrap: break-word; */
+}

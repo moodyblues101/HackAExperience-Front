@@ -1,14 +1,14 @@
 import { useState, useEffect, useCallback } from "react";
-import { Link } from "react-router-dom";
 
 import { useHttpClient } from "../hooks/http-hook";
 import ErrorModal from "../ui/ErrorModal";
 import Button from "../ui/FormElements/Button";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import Modal from "../ui/Modal";
-import ReactStars from "react-rating-stars-component";
 
 import "./LandingPage.css";
+import ExperienceCard from '../components/ExperienceCard';
+import Review from "../components/UserReviewCard";
 
 const LandingPage = () => {
   const [experiences, setExperiences] = useState([]);
@@ -95,60 +95,42 @@ const LandingPage = () => {
     <div className="landing-page">
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner />}
-      <h1>Landing Page</h1>
       <h2>Experiencias mejor valoradas</h2>
-      <ul>
-        {experiences.map((exp) => (
-          <li key={exp.id}>
-            <img
-              src={`http://localhost:3000/experiences/${exp.id}/${exp.imgExp}`}
-              alt="experience"
-            />
-            <Link to={`/experiences/${exp.id}`}>{exp.name}</Link>
 
-            <ReactStars
-              value={exp.rating}
-              count={5}
-              size={24}
-              activeColor="#ffd700"
-              edit={false}
-            />
-          </li>
+      <div className="container">
+        {experiences.map((exp) => (
+          <ExperienceCard
+            id={exp.id}
+            imgExp={exp.imgExp}
+            name={exp.name}
+            rating={exp.rating}
+          />
         ))}
-      </ul>
+      </div>
+
       <h2>Opininiones de nuestros clientes</h2>
-      <ul>
+      <div className="container">
         {reviews.map((review) => (
           <Review
             key={review.id}
             avatar={review.profilePic}
+            name={review.name}
             comment={review.comment}
           />
         ))}
-      </ul>
+      </div>
+
       <h2>Experiencias mas buscadas</h2>
-      <ul>
+      <div className="container">
         {expMostVisited.map((exp) => (
-          <li key={exp.id}>
-            <img
-              src={`http://localhost:3000/experiences/${exp.id}/${exp.imgExp}`}
-              alt="experience"
-            />
-            <Link to={`/experiences/${exp.id}`}>{exp.name}</Link>
-            {exp.rating !== null ? (
-              <ReactStars
-                value={exp.rating}
-                count={5}
-                size={24}
-                activeColor="#ffd700"
-                edit={false}
-              />
-            ) : (
-              <div>Aún sin valorar</div>
-            )}
-          </li>
+          <ExperienceCard
+            id={exp.id}
+            imgExp={exp.imgExp}
+            name={exp.name}
+            rating={exp.rating}
+          />
         ))}
-      </ul>
+      </div>
       <h3>
         Para elegir tu próxima experiencia, apúntate a nuestra newsletter
         <Button type="button" onClick={showModalHandler}>
@@ -178,16 +160,3 @@ const LandingPage = () => {
 
 export default LandingPage;
 
-const Review = (props) => {
-  return (
-    <li>
-      <div>
-        <img
-          src={`http://localhost:3000/avatars/${props.avatar}`}
-          alt="avatar user"
-        />
-      </div>
-      <p>{props.comment}</p>
-    </li>
-  );
-};

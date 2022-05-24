@@ -1,7 +1,9 @@
 .nav-cat-ul {
   text-align: center;
-  margin-top: 5.5rem;
+  /* margin-top: 5.5rem; */
   /* position: fixed; */
+  position: sticky;
+  top: 80px;
 }
 .nav-cat-ul li {
   display: inline;
