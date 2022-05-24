@@ -1,0 +1,80 @@
+.header_main {
+  width: 100%;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgb(28, 27, 27);
+  padding: 0 1.5rem;
+}
+
+.logo {
+  object-fit: contain;
+  font-size: 2rem;
+  color: #fd8210;
+  font-weight: bold;
+  margin: 0;
+  text-decoration: none;
+}
+
+.form_search {
+  height: 1rem;
+  flex: 1 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input_search {
+  height: 1rem;
+  flex: 1 1 auto;
+  max-width: 400px;
+}
+.icon_search {
+  height: 1rem;
+  color: #fd8210;
+}
+
+.btn_search {
+  height: fit-content;
+  border: #fd8210;
+  padding: 0.25rem 0.25rem;
+  margin-left: 0.5rem;
+  text-align: center;
+  border-radius: 8px;
+  background-color: white;
+}
+
+.btn_login {
+  border: #fd8210;
+  color: #fd8210;
+  line-height: 2;
+  padding: 0 20px;
+  margin-right: 0.5rem;
+  font-size: 1rem;
+  text-align: center;
+  border-radius: 8px;
+  background-color: white;
+}
+
+.btn_login:hover {
+  background-color: #fd8210;
+  color: white;
+}
+
+.btn_register {
+  border: white;
+  color: white;
+  line-height: 2;
+  padding: 0 20px;
+  margin-left: 0.5rem;
+  font-size: 1rem;
+  text-align: center;
+  border-radius: 8px;
+  background-color: #fd8210;
+}
+
+.btn_register:hover {
+  background-color: white;
+  color: #fd8210;
+}

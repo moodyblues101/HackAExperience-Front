@@ -1,0 +1,28 @@
+.footer_main {
+  background-color: black;
+  position:fixed;
+    left:0px;
+    right: 0px;
+    bottom:0px;
+    height:30px;
+    width:100%;
+
+  display:flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgb(111, 107, 107);
+  padding: 0 1.5rem;
+  position: absolute;
+  bottom: 0;
+}
+
+.logo {
+  object-fit: contain;
+  font-size: 2rem;
+  color: #fd8210;
+  font-weight: bold;
+  margin: 0;
+  text-decoration: none;
+}
+
