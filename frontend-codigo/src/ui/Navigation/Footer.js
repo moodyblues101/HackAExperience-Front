@@ -6,10 +6,12 @@ const Footer = () => {
   return (
     <footer className="footer_main">
       <Link to="/" className="logo">
-        HackAnExperience
+        HackAExperience
       </Link>
       <div>
-        <Link to="/">Acerca de</Link>
+        <Link to="/acercade"> Acerca de</Link>
+      </div>
+      <div>
         <Link to="/">FAQ</Link>
       </div>
       <div>Logos RRSS</div>
