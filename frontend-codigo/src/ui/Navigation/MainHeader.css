@@ -1,0 +1,162 @@
+<<<<<<< HEAD:frontend-codigo/src/ui/Navigation/MainHeader.css
+.main-header {
+
+=======
+.header_main {
+  display: flex;
+>>>>>>> 3f3ac1853dcaa22b2d3857aa7d383ca79501615f:frontend-codigo-v5/src/ui/MainHeader.css
+  flex-grow:inherit;
+  width: 100%;
+  height: 5rem;
+
+  position: fixed;
+  top: 0; 
+
+  display: flex;
+  align-items:center;
+  justify-content: center;
+<<<<<<< HEAD:frontend-codigo/src/ui/Navigation/MainHeader.css
+  background-color: #202123;
+  padding: 0 1.5rem;
+}
+
+.main-header img {
+  padding-top: 8px;
+}
+
+=======
+  background-color: rgb(28, 27, 27);
+  padding: 0 1.5rem;
+}
+
+>>>>>>> 3f3ac1853dcaa22b2d3857aa7d383ca79501615f:frontend-codigo-v5/src/ui/MainHeader.css
+.form_search {
+  height: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form_search input {
+  height: fit-content;
+  flex: 1 1 auto;
+  max-width: 400px;
+}
+
+.icon_search {
+  height: 1rem;
+  color: #fd8210;
+}
+
+.form_search_btn {
+  height: fit-content;
+  border: #fd8210;
+  padding: 0.25rem 0.25rem;
+  margin-left: 0.5rem;
+  text-align: center;
+  background-color: white;
+}
+
+.head-ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: baseline;
+}
+
+.li-login {
+  border: white;
+  line-height: 2;
+  padding: 0 20px;
+  margin-right: 0.5rem;
+  font-size: 1rem;
+  text-align: center;
+  border-radius: 6px;
+  background-color:#fd8210;
+  justify-content: space-between;
+}
+
+.btn_login {
+<<<<<<< HEAD:frontend-codigo/src/ui/Navigation/MainHeader.css
+  border: white;
+=======
+  border: #fd8210;
+>>>>>>> 3f3ac1853dcaa22b2d3857aa7d383ca79501615f:frontend-codigo-v5/src/ui/MainHeader.css
+  line-height: 2;
+  padding: 0 20px;
+  margin-right: 0.5rem;
+  font-size: 1rem;
+  text-align: center;
+  border-radius: 8px;
+<<<<<<< HEAD:frontend-codigo/src/ui/Navigation/MainHeader.css
+  background-color: #fd8210;
+=======
+  background-color: white;
+>>>>>>> 3f3ac1853dcaa22b2d3857aa7d383ca79501615f:frontend-codigo-v5/src/ui/MainHeader.css
+} 
+
+ .btn_login:hover {
+  background-color: #fd8210;
+  color: white;
+}
+
+.li-register {
+<<<<<<< HEAD:frontend-codigo/src/ui/Navigation/MainHeader.css
+  border:white;
+=======
+  border: white;
+>>>>>>> 3f3ac1853dcaa22b2d3857aa7d383ca79501615f:frontend-codigo-v5/src/ui/MainHeader.css
+  line-height: 2;
+  padding: 0 20px;
+  margin-right: 0.5rem;
+  font-size: 1rem;
+  text-align: center;
+  border-radius: 6px;
+<<<<<<< HEAD:frontend-codigo/src/ui/Navigation/MainHeader.css
+  background-color:#fd8210;
+}
+
+btn_register {
+  border: #fd8210;
+=======
+  background-color: #fd8210;
+}
+
+btn_register {
+  border: white;
+>>>>>>> 3f3ac1853dcaa22b2d3857aa7d383ca79501615f:frontend-codigo-v5/src/ui/MainHeader.css
+  color: white;
+  line-height: 2;
+  padding: 0 20px;
+  margin-left: 0.5rem;
+  font-size: 1rem;
+  text-align: center;
+  border-radius: 6px;
+<<<<<<< HEAD:frontend-codigo/src/ui/Navigation/MainHeader.css
+  background-color: white;
+=======
+  background-color: #fd8210;
+>>>>>>> 3f3ac1853dcaa22b2d3857aa7d383ca79501615f:frontend-codigo-v5/src/ui/MainHeader.css
+}
+
+.btn_register:hover {
+  background-color: white;
+  color: #fd8210;
+} */
+
+.btn_logout {
+  border:#fd8210;
+  color: #fd8210;
+  line-height: 2;
+  padding: 0 20px;
+  margin-right: 0.5rem;
+  font-size: 1rem;
+  text-align: center;
+  border-radius: 8px;
+  background-color: white;
+}
+*/ .btn_logout:hover {
+  background-color: #fd8210;
+  color:aqua;
+}
