@@ -126,7 +126,7 @@ const LandingPage = () => {
           />
         ))}
       </ul>
-      <h2>Experiencias mas buscadas</h2>
+      <h2>Experiencias más buscadas</h2>
       <ul>
         {expMostVisited.map((exp) => (
           <li key={exp.id}>

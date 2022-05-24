@@ -1,14 +1,22 @@
-.footer_main {
-  width: 100%;
-  height: 4rem;
 
-  display: flex;
+.footer_main {
+  background-color: black;
+  position:fixed;
+    left:0px;
+    right: 0px;
+    bottom:0px;
+    height:10rem;
+    width:100%;
+
+  display:flex;
+  width: 100%;
   align-items: center;
   justify-content: space-between;
-  background-color: rgb(111, 107, 107);
+  background-color: rgb(233, 229, 229);
   padding: 0 1.5rem;
-  position: relative;
+  position: absolute;
   bottom: 0;
+  font-family: 'Montserrat Light', arial;
 }
 
 .logo {
@@ -19,3 +27,8 @@
   margin: 0;
   text-decoration: none;
 }
+.logos{ display: flex;
+flex-direction: column;
+font-family: 'Montserrat Light', arial;
+align-items: flex-end;
+text-align: end;}
