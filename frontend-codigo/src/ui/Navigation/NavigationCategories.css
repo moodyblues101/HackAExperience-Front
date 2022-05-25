@@ -1,9 +1,14 @@
 .nav-cat-ul {
   text-align: center;
+<<<<<<< HEAD
   /* margin-top: 5.5rem; */
   /* position: fixed; */
   position: sticky;
   top: 80px;
+=======
+  margin-top: 5.5rem;
+  /* position: fixed; */
+>>>>>>> 289609200467aa78a5a42178316a21d57aae38c0
 }
 .nav-cat-ul li {
   display: inline;

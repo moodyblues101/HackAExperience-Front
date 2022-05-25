@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 .container {
   display: flex;
   padding: 30px;
 }
 h2 {
   padding-left: 20px;
+=======
+.landing-page {
+  margin-top: 6.5rem;
+>>>>>>> 289609200467aa78a5a42178316a21d57aae38c0
 }
