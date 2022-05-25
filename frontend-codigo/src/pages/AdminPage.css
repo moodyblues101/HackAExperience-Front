@@ -1,0 +1,35 @@
+.admin-container {
+  margin-top: 7rem;
+}
+
+.admin-ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.admin-il {
+  margin: 14x 0;
+  padding-left: 25px;
+  padding-bottom: 1rem;
+
+  display: flex;
+  align-items: center;
+}
+
+.admin-il a {
+  text-decoration: none;
+  color: black;
+}
+
+.admin-il a:hover {
+  color: #fd8210;
+}
+
+.circle-il {
+  height: 5px;
+  width: 5px;
+  border-radius: 50%;
+  background-color: #fd8210;
+  margin-right: 10px;
+}
