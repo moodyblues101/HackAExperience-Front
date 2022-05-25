@@ -1,12 +1,11 @@
-import React, { useState, useContext } from "react";
-// import { useHistory } from "react-router-dom";
+import React, { useState } from "react";
 
 import Card from "../ui/Card";
 import Input from "../ui/FormElements/Input";
 import Button from "../ui/FormElements/Button";
+import Modal from "../ui/Modal";
 import ErrorModal from "../ui/ErrorModal";
 import LoadingSpinner from "../ui/LoadingSpinner";
-// import ImageUpload from '../../shared/components/FormElements/ImageUpload';
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_MINLENGTH,
@@ -14,17 +13,13 @@ import {
 } from "../util/validators";
 import { useForm } from "../hooks/form-hook";
 import { useHttpClient } from "../hooks/http-hook";
-import { AuthContext } from "../store/auth-context";
 import "./LoginPage.css";
-import Modal from "../ui/Modal";
 
 const RegisterPage = () => {
-  // const history = useHistory();
-  const auth = useContext(AuthContext);
   const [showConfirmEmail, setShowConfirmEmail] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
-  const [formState, inputHandler, setFormData] = useForm(
+  const [formState, inputHandler] = useForm(
     {
       name: {
         value: "",
@@ -34,10 +29,6 @@ const RegisterPage = () => {
         value: "",
         isValid: false,
       },
-      // bio: {
-      //   value: "",
-      //   isValid: false,
-      // },
       password: {
         value: "",
         isValid: false,
@@ -46,10 +37,6 @@ const RegisterPage = () => {
         value: "",
         isValid: false,
       },
-      // image: {
-      //   value: null,
-      //   isValid: false,
-      // },
     },
     false
   );
@@ -61,18 +48,12 @@ const RegisterPage = () => {
       const formData = new FormData();
       formData.append("name", formState.inputs.name.value);
       formData.append("email", formState.inputs.email.value);
-      // formData.append("bio", 'añade tu bio');
       formData.append("password", formState.inputs.password.value);
       formData.append("verifyPassword", formState.inputs.verifyPassword.value);
-      // formData.append("image", formState.inputs.image.value);
-      const responseData = await sendRequest(
-        "http://localhost:3000/api/v1/users",
-        "POST",
-        formData
-      );
-      // auth.login(responseData.userId, responseData.token);
+
+      await sendRequest("http://localhost:3000/api/v1/users", "POST", formData);
+
       setShowConfirmEmail(true);
-      // history.replace("/");
     } catch (err) {}
   };
 
@@ -93,12 +74,6 @@ const RegisterPage = () => {
             errorText="Por favor, introduce un nombre."
             onInput={inputHandler}
           />
-          {/* <ImageUpload
-              center
-              id="image"
-              onInput={inputHandler}
-              errorText="Please provide an image."
-            /> */}
           <Input
             element="input"
             id="email"
@@ -108,15 +83,6 @@ const RegisterPage = () => {
             errorText="Por favor, introduce una dirección de e-mail."
             onInput={inputHandler}
           />
-          {/* <Input
-            element="textarea"
-            id="bio"
-            type="text"
-            label="Cuentanos algo de ti:"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Por favor, introduce un texto cortito sobre ti."
-            onInput={inputHandler}
-          /> */}
           <Input
             element="input"
             id="password"
