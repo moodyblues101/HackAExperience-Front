@@ -5,15 +5,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-<<<<<<< HEAD
   background-color: rgb(235, 209, 186);
   padding: 0 1.5rem;
   position: sticky;
-=======
-  background-color: rgb(111, 107, 107);
-  padding: 0 1.5rem;
-  position: relative;
->>>>>>> 289609200467aa78a5a42178316a21d57aae38c0
   bottom: 0;
 }
 

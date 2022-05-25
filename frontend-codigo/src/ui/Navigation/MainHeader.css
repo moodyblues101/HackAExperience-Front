@@ -1,14 +1,9 @@
 .main-header {
   width: 100%;
   height: 5rem;
-<<<<<<< HEAD
   position: sticky;
   top: 0;
   z-index: 100;
-=======
-  position: fixed;
-  top: 0;
->>>>>>> 289609200467aa78a5a42178316a21d57aae38c0
 
   display: flex;
   align-items: center;

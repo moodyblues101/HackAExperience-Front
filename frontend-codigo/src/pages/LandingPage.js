@@ -1,24 +1,14 @@
 import { useState, useEffect, useCallback } from "react";
-<<<<<<< HEAD
-=======
-import { Link } from "react-router-dom";
->>>>>>> 289609200467aa78a5a42178316a21d57aae38c0
 
 import { useHttpClient } from "../hooks/http-hook";
 import ErrorModal from "../ui/ErrorModal";
 import Button from "../ui/FormElements/Button";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import Modal from "../ui/Modal";
-<<<<<<< HEAD
 
 import "./LandingPage.css";
 import ExperienceCard from '../components/ExperienceCard';
 import Review from "../components/UserReviewCard";
-=======
-import ReactStars from "react-rating-stars-component";
-
-import "./LandingPage.css";
->>>>>>> 289609200467aa78a5a42178316a21d57aae38c0
 
 const LandingPage = () => {
   const [experiences, setExperiences] = useState([]);
@@ -105,7 +95,6 @@ const LandingPage = () => {
     <div className="landing-page">
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner />}
-<<<<<<< HEAD
       <h2>Experiencias mejor valoradas</h2>
 
       <div className="container">
@@ -121,36 +110,10 @@ const LandingPage = () => {
 
       <h2>Opininiones de nuestros clientes</h2>
       <div className="container">
-=======
-      <h1>Landing Page</h1>
-      <h2>Experiencias mejor valoradas</h2>
-      <ul>
-        {experiences.map((exp) => (
-          <li key={exp.id}>
-            <img
-              src={`http://localhost:3000/experiences/${exp.id}/${exp.imgExp}`}
-              alt="experience"
-            />
-            <Link to={`/experiences/${exp.id}`}>{exp.name}</Link>
-
-            <ReactStars
-              value={exp.rating}
-              count={5}
-              size={24}
-              activeColor="#ffd700"
-              edit={false}
-            />
-          </li>
-        ))}
-      </ul>
-      <h2>Opininiones de nuestros clientes</h2>
-      <ul>
->>>>>>> 289609200467aa78a5a42178316a21d57aae38c0
         {reviews.map((review) => (
           <Review
             key={review.id}
             avatar={review.profilePic}
-<<<<<<< HEAD
             name={review.name}
             comment={review.comment}
           />
@@ -168,35 +131,6 @@ const LandingPage = () => {
           />
         ))}
       </div>
-=======
-            comment={review.comment}
-          />
-        ))}
-      </ul>
-      <h2>Experiencias mas buscadas</h2>
-      <ul>
-        {expMostVisited.map((exp) => (
-          <li key={exp.id}>
-            <img
-              src={`http://localhost:3000/experiences/${exp.id}/${exp.imgExp}`}
-              alt="experience"
-            />
-            <Link to={`/experiences/${exp.id}`}>{exp.name}</Link>
-            {exp.rating !== null ? (
-              <ReactStars
-                value={exp.rating}
-                count={5}
-                size={24}
-                activeColor="#ffd700"
-                edit={false}
-              />
-            ) : (
-              <div>Aún sin valorar</div>
-            )}
-          </li>
-        ))}
-      </ul>
->>>>>>> 289609200467aa78a5a42178316a21d57aae38c0
       <h3>
         Para elegir tu próxima experiencia, apúntate a nuestra newsletter
         <Button type="button" onClick={showModalHandler}>
@@ -226,19 +160,3 @@ const LandingPage = () => {
 
 export default LandingPage;
 
-<<<<<<< HEAD
-=======
-const Review = (props) => {
-  return (
-    <li>
-      <div>
-        <img
-          src={`http://localhost:3000/avatars/${props.avatar}`}
-          alt="avatar user"
-        />
-      </div>
-      <p>{props.comment}</p>
-    </li>
-  );
-};
->>>>>>> 289609200467aa78a5a42178316a21d57aae38c0

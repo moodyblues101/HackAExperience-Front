@@ -88,25 +88,6 @@ const CreateExperience = () => {
       formData.append("city", formState.inputs.city.value);
       formData.append("price", formState.inputs.price.value);
       formData.append("totalPlaces", formState.inputs.totalPlaces.value);
-<<<<<<< HEAD
-      formData.append(
-        "eventStartDate",
-        formState.inputs.eventStartDate.value + " " + startTime
-      );
-      //   console.log(
-      //     "fecha inicio: ",
-      //     formState.inputs.eventStartDate.value + " " + startTime
-      //   );
-      formData.append(
-        "eventEndDate",
-        formState.inputs.eventEndDate.value + " " + endTime
-      );
-      //   console.log(
-      //     "fecha final: ",
-      //     formState.inputs.eventEndDate.value + " " + startTime
-      //   );
-=======
->>>>>>> 289609200467aa78a5a42178316a21d57aae38c0
       formData.append("idCategory", formState.inputs.idCategory.value);
       formData.append("idBusiness", formState.inputs.idBusiness.value);
 
@@ -119,9 +100,6 @@ const CreateExperience = () => {
 
       const { experienceId } = res;
 
-<<<<<<< HEAD
-      console.log("fichero: ", fichero);
-=======
       const formDate = new FormData();
 
       formDate.append(
@@ -141,17 +119,12 @@ const CreateExperience = () => {
       );
 
       // console.log("fichero: ", fichero);
->>>>>>> 289609200467aa78a5a42178316a21d57aae38c0
 
       for (let index = 0; index < fichero.length; index++) {
         formData.append("imageExperience", fichero[index]);
       }
 
-<<<<<<< HEAD
-      console.log("formData: ", formData);
-=======
       // console.log("formData: ", formData);
->>>>>>> 289609200467aa78a5a42178316a21d57aae38c0
 
       await sendRequest(
         `http://localhost:3000/api/v1/experiences/${experienceId}/images`,
@@ -161,7 +134,7 @@ const CreateExperience = () => {
           Authorization: "Bearer " + auth.token,
         }
       );
-    } catch (err) {}
+    } catch (err) { }
     history.replace("/user/admin");
   };
 
