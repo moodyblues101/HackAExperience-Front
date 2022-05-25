@@ -88,22 +88,6 @@ const CreateExperience = () => {
       formData.append("city", formState.inputs.city.value);
       formData.append("price", formState.inputs.price.value);
       formData.append("totalPlaces", formState.inputs.totalPlaces.value);
-      formData.append(
-        "eventStartDate",
-        formState.inputs.eventStartDate.value + " " + startTime
-      );
-      //   console.log(
-      //     "fecha inicio: ",
-      //     formState.inputs.eventStartDate.value + " " + startTime
-      //   );
-      formData.append(
-        "eventEndDate",
-        formState.inputs.eventEndDate.value + " " + endTime
-      );
-      //   console.log(
-      //     "fecha final: ",
-      //     formState.inputs.eventEndDate.value + " " + startTime
-      //   );
       formData.append("idCategory", formState.inputs.idCategory.value);
       formData.append("idBusiness", formState.inputs.idBusiness.value);
 
@@ -116,13 +100,31 @@ const CreateExperience = () => {
 
       const { experienceId } = res;
 
-      console.log("fichero: ", fichero);
+      const formDate = new FormData();
+
+      formDate.append(
+        "eventStartDate",
+        formState.inputs.eventStartDate.value + " " + startTime
+      );
+      formDate.append(
+        "eventEndDate",
+        formState.inputs.eventEndDate.value + " " + endTime
+      );
+
+      await sendRequest(
+        `http://localhost:3000/api/v1/experiences/${experienceId}/dates`,
+        "POST",
+        formDate,
+        { Authorization: "Bearer " + auth.token }
+      );
+
+      // console.log("fichero: ", fichero);
 
       for (let index = 0; index < fichero.length; index++) {
         formData.append("imageExperience", fichero[index]);
       }
 
-      console.log("formData: ", formData);
+      // console.log("formData: ", formData);
 
       await sendRequest(
         `http://localhost:3000/api/v1/experiences/${experienceId}/images`,
