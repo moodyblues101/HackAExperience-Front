@@ -1,6 +1,5 @@
 
 .main-header {
-
  
   display: flex;
 
@@ -93,7 +92,6 @@
 
 .li-register {
 
-  border: white;
   line-height: 2;
   padding: 0 20px;
   margin-right: 0.5rem;
@@ -101,28 +99,17 @@
   text-align: center;
   border-radius: 6px;
 
-  background-color:#fd8210;
+  background-color:white;
 }
 
 .btn_register {
-  border: #fd8210;
-
-  background-color: #fd8210;
-}
-
-.btn_register {
-  border: white;
-
-  color: white;
+  background-color: white;
   line-height: 2;
   padding: 0 20px;
   margin-left: 0.5rem;
   font-size: 1rem;
   text-align: center;
   border-radius: 6px;
-
-
-  background-color: #fd8210;
 
 }
 

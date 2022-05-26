@@ -7,6 +7,7 @@
     bottom:0px;
     height:10rem;
     width:100%;
+    object-fit: contain;
 
   display:flex;
   width: 100%;
@@ -27,8 +28,8 @@
   margin: 0;
   text-decoration: none;
 }
-.logos{ display: flex;
-flex-direction: column;
+.logos
+{display:flex;
 font-family: 'Montserrat Light', arial;
 align-items: flex-end;
 text-align: end;}
