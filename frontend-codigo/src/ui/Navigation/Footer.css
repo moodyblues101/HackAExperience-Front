@@ -28,8 +28,15 @@
   margin: 0;
   text-decoration: none;
 }
-.logos
-{display:flex;
-font-family: 'Montserrat Light', arial;
-align-items: flex-end;
-text-align: end;}
+
+.logos {
+  display: flex;
+  gap: 10px;
+  font-family: 'Montserrat Light', arial;
+  align-items: flex-end;
+  text-align: end;
+}
+
+  .logo-footer {
+    height: 50px;
+  }
