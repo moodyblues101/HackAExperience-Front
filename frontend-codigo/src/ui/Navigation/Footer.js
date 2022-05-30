@@ -17,16 +17,21 @@ const Footer = () => {
       <div>
         <Link to="/">FAQ</Link>
       </div>
-      <div className="logos">Logos RRSS</div>
-      <Link to={"https:www.facebook.com"}>
-        <img src={logoFacebook} alt="logo Facebook" />
-      </Link>
-      <Link to={"https:www.twitter.com"}>
-        <img src={logoTwitter} alt="logo twitter" />
-      </Link>
-      <Link to={"https:www.instagram.com"}>
-        <img src={logoInstagram} alt="logo instagram" />
-      </Link>
+      <div className="logos">
+        <Link to={{ pathname: "https://www.facebook.com" }} target="_blank">
+          <img className="logo-footer" src={logoFacebook} alt="logo Facebook" />
+        </Link>
+        <Link to={"https://www.twitter.com"}>
+          <img className="logo-footer" src={logoTwitter} alt="logo twitter" />
+        </Link>
+        <Link to={"https:www.instagram.com"}>
+          <img
+            className="logo-footer"
+            src={logoInstagram}
+            alt="logo instagram"
+          />
+        </Link>
+      </div>
     </footer>
   );
 };
