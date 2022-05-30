@@ -20,7 +20,7 @@ const ModifyExperience = () => {
   return (
     <React.Fragment>
       {inputShow && (
-        <div className="form-mod-exp">
+        <div>
           <div className="field-exp">
             <label htmlFor="idExp" className="field-exp-label">
               Introduce id de la experiencia a modificar:

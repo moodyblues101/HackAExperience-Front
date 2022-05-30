@@ -30,12 +30,12 @@ const NavLinks = () => {
           </li>
         )}
         {isLoggedIn && user === "usuario" && (
-          <li className="li-side">
+          <li className="li-register">
             <Link to="/user/:userId">Menú</Link>
           </li>
         )}
         {isLoggedIn && user === "administrador" && (
-          <li className="li-side">
+          <li className="li-register">
             <Link to="/user/admin/">Menú</Link>
           </li>
         )}

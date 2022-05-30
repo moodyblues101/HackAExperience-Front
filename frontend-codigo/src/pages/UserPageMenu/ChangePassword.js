@@ -77,9 +77,9 @@ const ChangePassword = () => {
             id="password"
             element="input"
             type="password"
-            label="Password"
+            label="Contraseña"
             validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(4)]}
-            errorText="Please enter a valid password (at least 4 characters)."
+            errorText="Por favor, introduce una contraseña válida (de al menos 4 caracteres)."
             onInput={inputHandler}
             initialValue=""
             initialValid={true}
@@ -88,15 +88,15 @@ const ChangePassword = () => {
             id="repeatedPassword"
             element="input"
             type="password"
-            label="Repeat Password"
+            label="Repetir contraseña"
             validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(4)]}
-            errorText="Please enter a valid password (at least 4 characters)."
+            errorText="Por favor, introduce una contraseña válida (de al menos 4 caracteres)."
             onInput={inputHandler}
             initialValue=""
             initialValid={true}
           />
           <Button type="submit" disabled={!formState.isValid}>
-            UPDATE PASSWORD
+            ACTUALIZAR CONTRASEÑA
           </Button>
           <Button to={`/user/${userId}/personal`}>CANCELAR</Button>
         </form>

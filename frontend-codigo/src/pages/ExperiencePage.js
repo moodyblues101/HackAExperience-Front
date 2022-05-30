@@ -232,6 +232,7 @@ const ExperiencePage = () => {
           </div>
         ) : (
           <div>
+            <p>Precio: {experience.price}</p>
             <Button type="button" onClick={bookingHandler}>
               RESERVAR
             </Button>

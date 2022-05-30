@@ -8,6 +8,8 @@ import ErrorModal from "../ui/ErrorModal";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import formatDate from "../util/formatDate";
 
+import "./OptionAddReview.css";
+
 const OptionsExperienceList = ({ experiences }) => {
   const history = useHistory();
   const auth = useContext(AuthContext);
@@ -53,31 +55,54 @@ const OptionsExperienceList = ({ experiences }) => {
     <>
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner />}
-      <ul>
-        {experiences.map((exp) => {
-          return (
-            <li key={exp.id}>
-              <label htmlFor={exp.id}>Nombre: {exp.name}</label>
-              <p>Descripción: {exp.description}</p>
-              <p>Fecha de la experiencia:</p>
-              <DateExperience date={exp.eventStartDate} />
-              <p>Fecha de la reserva:</p>
-              <DateExperience date={exp.createdAt} />
-              <div>
-                <Button to={`/experiences/${exp.idExperience}`}>VER</Button>
-                <Button
-                  type="button"
-                  onClick={() => {
-                    cancelExpHandler(exp.id);
-                  }}
-                >
-                  CANCELAR RESERVA
-                </Button>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Fecha experiencia</th>
+            <th>Fecha reserva</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {experiences.map((exp) => {
+            return (
+              <tr key={exp.id}>
+                <td>
+                  <label htmlFor={exp.id}>{exp.name}</label>
+                </td>
+                <td>{exp.description}</td>
+                <td>
+                  <DateExperience date={exp.eventStartDate} />
+                </td>
+                <td>
+                  <DateExperience date={exp.createdAt} />
+                </td>
+                <td>
+                  <div className="btn-container">
+                    <div>
+                      <Button to={`/experiences/${exp.idExperience}`}>
+                        VER
+                      </Button>
+                    </div>
+                    <div>
+                      <Button
+                        type="button"
+                        onClick={() => {
+                          cancelExpHandler(exp.id);
+                        }}
+                      >
+                        CANCELAR RESERVA
+                      </Button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
       <Modal
         show={sureModal}
         onCancel={cancelActionHandler}

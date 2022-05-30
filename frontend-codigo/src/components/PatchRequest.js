@@ -144,7 +144,12 @@ const PatchRequest = (props) => {
         <form className="place-form" onSubmit={updateSubmitHandler}>
           <Input
             id={`${props.dataToUpdate}`}
-            element={props.dataToUpdate === "bio" ? "textarea" : "input"}
+            element={
+              props.dataToUpdate === "bio" ||
+              props.dataToUpdate === "description"
+                ? "textarea"
+                : "input"
+            }
             type="text"
             validators={[VALIDATOR_REQUIRE()]}
             errorText="Por favor, introduzca un dato válido"

@@ -54,7 +54,9 @@ const AddAvatar = () => {
           />
           <Button type="submit">AÑADIR AVATAR</Button>
         </form>
-        <Button to={`/user/${auth.userId}/personal`}>VOLVER</Button>
+        <div style={{ "margin-top": "2rem" }}>
+          <Button to={`/user/${auth.userId}/personal`}>VOLVER</Button>
+        </div>
       </Card>
     </React.Fragment>
   );

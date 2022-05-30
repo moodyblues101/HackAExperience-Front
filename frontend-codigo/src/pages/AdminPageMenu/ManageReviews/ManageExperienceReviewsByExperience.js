@@ -28,19 +28,21 @@ const ManageExperienceReviewsByExperience = () => {
     <React.Fragment>
       {inputShow && (
         <>
-          <Input
-            id="idExperience"
-            element="input"
-            type="text"
-            label="Introduzca id de experiencia:"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Por favor, introduzca una id válida"
-            onInput={inputHandler}
-          />
+          <div style={{ width: "15rem" }}>
+            <Input
+              id="idExperience"
+              element="input"
+              type="text"
+              label="Introduzca id de experiencia:"
+              validators={[VALIDATOR_REQUIRE()]}
+              errorText="Por favor, introduzca una id válida"
+              onInput={inputHandler}
+            />
+          </div>
+          <Button to="/user/admin/manage-experience-comments">VOLVER</Button>
           <Button type="button" onClick={toggleHandler}>
             MOSTRAR
           </Button>
-          <Button to="/user/admin/manage-experience-comments">VOLVER</Button>
         </>
       )}
       {isExpShow && (

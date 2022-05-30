@@ -1,0 +1,43 @@
+.user-ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.user-li {
+  margin: 14x 0;
+  padding-left: 25px;
+  padding-bottom: 1rem;
+
+  display: flex;
+  align-items: center;
+}
+
+.user-li a {
+  text-decoration: none;
+  color: black;
+}
+
+.user-li a:hover {
+  color: #fd8210;
+}
+
+.user-circle-li {
+  height: 5px;
+  width: 5px;
+  border-radius: 50%;
+  background-color: #fd8210;
+  margin-right: 10px;
+}
+
+.back-menu {
+  margin-top: 2rem;
+}
+.back-menu a {
+  text-decoration: none;
+  color: black;
+}
+
+.back-menu a:hover {
+  color: #fd8210;
+}
