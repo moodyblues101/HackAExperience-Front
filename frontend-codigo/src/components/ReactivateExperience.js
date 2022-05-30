@@ -98,14 +98,14 @@ const ReactivateExperience = ({ idExp }) => {
           value: resExp.totalPlaces,
           isValid: true,
         },
-        eventStartDate: {
-          value: resExp.eventStartDate,
-          isValid: true,
-        },
-        eventEndDate: {
-          value: resExp.eventEndDate,
-          isValid: true,
-        },
+        // eventStartDate: {
+        //   value: resExp.eventStartDate,
+        //   isValid: true,
+        // },
+        // eventEndDate: {
+        //   value: resExp.eventEndDate,
+        //   isValid: true,
+        // },
         idCategory: {
           value: resExp.idCategory,
           isValid: true,
@@ -118,19 +118,40 @@ const ReactivateExperience = ({ idExp }) => {
       true
     );
 
+    // const resDates = await sendRequest(
+    //   `http://localhost:3000/api/v1/experiences/${idExp}/dates`
+    // );
+
+    // setFormData(
+    //   {
+    //     eventStartDate: {
+    //       value: resDates.eventStartDate,
+    //       isValid: true,
+    //     },
+    //     eventEndDate: {
+    //       value: resDates.eventEndDate,
+    //       isValid: true,
+    //     },
+    //   },
+    //   true
+    // );
+
     const imgExpRes = await sendRequest(
       `http://localhost:3000/api/v1/experiences/${idExp}/images`
     );
 
-    console.log("imgExpRes: ", imgExpRes);
+    // console.log("imgExpRes: ", imgExpRes);
 
-    const imgExp = imgExpRes.map((img) => {
-      const file = new File(["img"], `${img.name}`, { type: "image/jpg" });
+    // const imgExp = imgExpRes.map((img) => {
+    //   const file = new File(["img"], `${img.name}`, { type: "image/png" });
 
-      return file;
-    });
+    //   return file;
+    // });
 
-    setFiles(imgExp);
+    // setFiles(imgExp);
+
+    // const imgExp = imgExpRes.map((exp) => exp.name);
+    setFiles(imgExpRes);
   }, [idExp, setFormData, sendRequest]);
 
   useEffect(() => {
@@ -162,26 +183,24 @@ const ReactivateExperience = ({ idExp }) => {
       formData.append("city", formState.inputs.city.value);
       formData.append("price", formState.inputs.price.value);
       formData.append("totalPlaces", formState.inputs.totalPlaces.value);
-      formData.append(
-        "eventStartDate",
-        formState.inputs.eventStartDate.value + " " + startTime
-      );
+      // formData.append(
+      //   "eventStartDate",
+      //   formState.inputs.eventStartDate.value + " " + startTime
+      // );
       //   console.log(
       //     "fecha inicio: ",
       //     formState.inputs.eventStartDate.value + " " + startTime
       //   );
-      formData.append(
-        "eventEndDate",
-        formState.inputs.eventEndDate.value + " " + endTime
-      );
+      // formData.append(
+      //   "eventEndDate",
+      //   formState.inputs.eventEndDate.value + " " + endTime
+      // );
       //   console.log(
       //     "fecha final: ",
       //     formState.inputs.eventEndDate.value + " " + startTime
       //   );
       formData.append("idCategory", formState.inputs.idCategory.value);
       formData.append("idBusiness", formState.inputs.idBusiness.value);
-
-      console.log("formData: ", formData);
 
       const res = await sendRequest(
         "http://localhost:3000/api/v1/experiences/",
@@ -192,19 +211,39 @@ const ReactivateExperience = ({ idExp }) => {
 
       const { experienceId } = res;
 
+      const formDate = new FormData();
+
+      formDate.append(
+        "eventStartDate",
+        formState.inputs.eventStartDate.value + " " + startTime
+      );
+      formDate.append(
+        "eventEndDate",
+        formState.inputs.eventEndDate.value + " " + endTime
+      );
+
+      await sendRequest(
+        `http://localhost:3000/api/v1/experiences/${experienceId}/dates`,
+        "POST",
+        formDate,
+        { Authorization: "Bearer " + auth.token }
+      );
+
+      const formDataImg = new FormData();
+
       console.log("fichero: ", files);
 
       for (let index = 0; index < files.length; index++) {
         console.log("paso fichero a formData: ", files[index]);
-        formData.append("imageExperience", files[index]);
+        formDataImg.append("imageExperience", files[index]);
       }
 
-      console.log("formData: ", formData);
+      // console.log("formDataImg: ", formDataImg);
 
       await sendRequest(
         `http://localhost:3000/api/v1/experiences/${experienceId}/images`,
         "POST",
-        formData,
+        formDataImg,
         {
           Authorization: "Bearer " + auth.token,
         }
@@ -345,6 +384,17 @@ const ReactivateExperience = ({ idExp }) => {
             setFichero(fichero);
           }}
         /> */}
+        {/* <label className="new-exp-label">Imagenes de la experiencia:</label>
+        <ul>
+          {files.map((img) => (
+            <li key={img.id}>
+              <img
+                src={`http://localhost:3000/experiences/${idExp}/${img.name}`}
+                alt="foto experiencia"
+              />
+            </li>
+          ))}
+        </ul> */}
         <hr />
         <div>
           <Button type="submit" disabled={!formState.isValid}>

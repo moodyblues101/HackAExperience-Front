@@ -7,6 +7,8 @@ import ErrorModal from "../ui/ErrorModal";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import Modal from "../ui/Modal";
 
+import "./DeleteReviews.css";
+
 const DeleteReviews = ({ reviews, urlPath }) => {
   const [deleted, setDeleted] = useState(false);
   const [checkedId, setCheckedId] = useState({ idReview: [] });
@@ -47,25 +49,37 @@ const DeleteReviews = ({ reviews, urlPath }) => {
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner />}
       <form onSubmit={sendReviewsToDelete}>
-        <ul>
-          {reviews.map((review) => {
-            return (
-              <li key={review.id}>
-                <input
-                  type="checkbox"
-                  id={review.id}
-                  name={review.id}
-                  value={review.id}
-                  onChange={handleChange}
-                />
-                <label htmlFor={review.id}>Id review: {review.id}</label>
-                <p>idExperience: {review.idExperience}</p>
-                <p>idUser: {review.idUser}</p>
-                <p>comment: {review.comment}</p>
-              </li>
-            );
-          })}
-        </ul>
+        <table>
+          <thead>
+            <tr>
+              <th>Id comentario</th>
+              <th>Id experiencia</th>
+              <th>Id usuario</th>
+              <th>Comentario</th>
+            </tr>
+          </thead>
+          <tbody>
+            {reviews.map((review) => {
+              return (
+                <tr key={review.id}>
+                  <td>
+                    <input
+                      type="checkbox"
+                      id={review.id}
+                      name={review.id}
+                      value={review.id}
+                      onChange={handleChange}
+                    />
+                    <label htmlFor={review.id}>{review.id}</label>
+                  </td>
+                  <td>{review.idExperience}</td>
+                  <td>{review.idUser}</td>
+                  <td>{review.comment}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
         <Button type="submit">BORRAR SELECCIONADAS</Button>
       </form>
       {deleted && (

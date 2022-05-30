@@ -31,7 +31,7 @@ const CreateNewExperience = () => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    console.log("id a reactivar: ", formState.inputs.idExp.value);
+    // console.log("id a reactivar: ", formState.inputs.idExp.value);
     setShowReactivate(true);
   };
 

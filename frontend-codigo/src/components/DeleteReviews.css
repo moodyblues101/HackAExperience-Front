@@ -1,0 +1,11 @@
+.delete-form {
+  width: 100%;
+}
+
+.delete-form th,
+tr,
+td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}

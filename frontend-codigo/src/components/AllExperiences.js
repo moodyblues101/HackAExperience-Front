@@ -58,7 +58,7 @@ const AllExperiences = () => {
         }
       }
 
-      console.log("nextExp: ", nextExp);
+      // console.log("nextExp: ", nextExp);
       setNextExperiences(nextExp);
     } catch (err) { }
   }, [sendRequest]);

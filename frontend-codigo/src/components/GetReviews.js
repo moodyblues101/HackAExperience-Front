@@ -60,11 +60,13 @@ const GetReviews = ({ idToGet, urlPath, action }) => {
         <DeleteReviews reviews={reviews} urlPath="users" />
       </div>
 
-      {role === "administrador" ? (
-        <Button to="/user/admin/manage-experience-comments">VOLVER</Button>
-      ) : (
-        <Button to={`/user/${idToGet}/experiences`}>VOLVER</Button>
-      )}
+      <div style={{ "margin-top": "2rem" }}>
+        {role === "administrador" ? (
+          <Button to="/user/admin/manage-experience-comments">VOLVER</Button>
+        ) : (
+          <Button to={`/user/${idToGet}/experiences`}>VOLVER</Button>
+        )}
+      </div>
     </>
   );
 };

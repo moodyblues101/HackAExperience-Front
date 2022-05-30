@@ -52,15 +52,17 @@ const AddBusiness = () => {
       {isLoading && <LoadingSpinner />}
       <h2>Añadir datos empresa</h2>
       <form onSubmit={submitHandler}>
-        <Input
-          id="name"
-          element="input"
-          type="text"
-          label="Introduzca el nombre de la empresa"
-          validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(3)]}
-          errorText="Por favor, introduzca un nombre válido (mínimo 3 caracteres)"
-          onInput={inputHandler}
-        />
+        <div style={{ width: "15rem" }}>
+          <Input
+            id="name"
+            element="input"
+            type="text"
+            label="Introduzca el nombre de la empresa"
+            validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(3)]}
+            errorText="Por favor, introduzca un nombre válido (mínimo 3 caracteres)"
+            onInput={inputHandler}
+          />
+        </div>
         <div>
           <Button to="/user/admin/business">VOLVER</Button>
           <Button type="submit" disabled={!formState.isValid}>
