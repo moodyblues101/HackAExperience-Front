@@ -131,12 +131,14 @@ const LandingPage = () => {
           />
         ))}
       </div>
-      <h3>
-        Para elegir tu próxima experiencia, apúntate a nuestra newsletter
-        <Button className="newsletter_btn" type="button" onClick={showModalHandler}>
-          SÍ, QUIERO
-        </Button>
-      </h3>
+      <div>
+        <p>
+          Para elegir tu próxima experiencia, apúntate a nuestra newsletter
+          <button className="newsletter_btn" type="button" onClick={showModalHandler}>
+            SÍ, QUIERO
+          </button>
+        </p>
+      </div>
       <Modal
         show={showModalNewsletter}
         onCancel={cancelModal}

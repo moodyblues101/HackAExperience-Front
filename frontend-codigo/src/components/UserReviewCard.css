@@ -28,8 +28,8 @@
   padding: 10px; */
   /* border-radius: 99%; */
   border-radius: 5px 20px 5px;
-  width: 100px;
-  height: 100px;
+  min-width: 6.2rem;
+  height: 6.2rem;
   object-fit: cover;
   padding-left: 10px;
 }

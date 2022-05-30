@@ -8,10 +8,8 @@ const SearchPage = () => {
       <h2>search Page</h2>
 
       <div className="container-search">
-        <div>
-          <article className="article-search">
-            <AllExperiences />
-          </article>
+        <div className="article-search">
+          <AllExperiences />
         </div>
       </div>
     </>
