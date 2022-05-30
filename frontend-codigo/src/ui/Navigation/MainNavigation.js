@@ -47,9 +47,9 @@ const MainNavigation = () => {
           <span />
           <span />
         </button>
-        <h1 className="main-navigation__title">
+        {/* <h1 className="main-navigation__title">
           <Link to="/">HackAnExperience</Link>
-        </h1>
+        </h1> */}
         <button className="search-btn" onClick={searchHandle}>
           <SearchIcon className="icon_search" />
         </button>
