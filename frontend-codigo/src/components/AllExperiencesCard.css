@@ -20,3 +20,13 @@
   min-height: 12.5rem;
   width: 100%;
 }
+
+a {
+  text-decoration: none;
+  color: rgb(226, 98, 12);
+}
+
+li {
+  list-style-type: none;
+  padding: 20px;
+}

@@ -4,15 +4,13 @@ import "./SearchPage.css";
 
 const SearchPage = () => {
   return (
-    <>
-      <h2>search Page</h2>
 
-      <div className="container-search">
-        <div className="article-search">
-          <AllExperiences />
-        </div>
+    <div className="container-search">
+      <div className="article-search">
+        <AllExperiences />
       </div>
-    </>
+    </div>
+
   );
 };
 
