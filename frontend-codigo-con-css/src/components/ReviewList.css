@@ -1,0 +1,13 @@
+.review-list-container ul {
+  text-decoration: none;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  flex-basis: 25%;
+}
+
+@media (max-width: 768px) {
+  .review-list-container ul {
+    flex-wrap: wrap;
+  }
+}
