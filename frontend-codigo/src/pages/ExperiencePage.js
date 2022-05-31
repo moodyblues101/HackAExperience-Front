@@ -329,7 +329,7 @@ const ExperiencePage = () => {
         footer={
           <div>
             <Button onClick={cancelHandler}>CANCELAR</Button>
-            <Button to="/login">LOGIN</Button>
+            <Button to={`/login?experience=${idExp}`}>LOGIN</Button>
           </div>
         }
       >

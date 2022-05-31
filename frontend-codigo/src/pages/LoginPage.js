@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 import Card from "../ui/Card";
 import Input from "../ui/FormElements/Input";
@@ -14,6 +14,9 @@ import "./LoginPage.css";
 
 const LoginPage = () => {
   const history = useHistory();
+  const { search } = useLocation();
+  const query = new URLSearchParams(search);
+  const idExp = query.get("experience");
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
@@ -49,7 +52,11 @@ const LoginPage = () => {
       auth.login(responseData.id, responseData.role, responseData.accessToken);
 
       if (responseData.role !== "administrador") {
-        history.replace("/");
+        if (idExp) {
+          history.replace(`/experiences/${idExp}`);
+        } else {
+          history.replace("/");
+        }
       } else {
         history.replace("/user/admin/");
       }

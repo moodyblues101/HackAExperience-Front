@@ -13,8 +13,7 @@ const CreateNewExperience = () => {
   const [showIdInput, setShowIdInput] = useState(false);
   const [showReactivate, setShowReactivate] = useState(false);
   const [showNew, setShowNew] = useState(false);
-  const [idExp, setIdExp] = useState("");
-  const [formState, inputHandler, setFormData] = useForm(
+  const [formState, inputHandler] = useForm(
     { idExp: { value: "", isValid: false } },
     false
   );
@@ -31,7 +30,6 @@ const CreateNewExperience = () => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    // console.log("id a reactivar: ", formState.inputs.idExp.value);
     setShowReactivate(true);
   };
 
@@ -46,15 +44,17 @@ const CreateNewExperience = () => {
         </Button>
         {showIdInput && (
           <form onSubmit={submitHandler}>
-            <Input
-              id="idExp"
-              element="input"
-              type="text"
-              label="Introduce el id de la experiencia a reactivar:"
-              validators={[VALIDATOR_REQUIRE]}
-              errorText="Por favor, introduce un id válido."
-              onInput={inputHandler}
-            />
+            <div style={{ width: "20rem", margin: "0 auto" }}>
+              <Input
+                id="idExp"
+                element="input"
+                type="text"
+                label="Introduce el id de la experiencia a reactivar:"
+                validators={[VALIDATOR_REQUIRE]}
+                errorText="Por favor, introduce un id válido."
+                onInput={inputHandler}
+              />
+            </div>
             <Button type="submit">REACTIVAR</Button>
           </form>
         )}
