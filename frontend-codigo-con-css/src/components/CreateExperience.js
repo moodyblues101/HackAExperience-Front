@@ -11,6 +11,7 @@ import { useHttpClient } from "../hooks/http-hook";
 import { AuthContext } from "../store/auth-context";
 
 import "./ReactivateExperience.css";
+import Modal from "../ui/Modal";
 
 const CreateExperience = () => {
   const auth = useContext(AuthContext);
@@ -19,8 +20,9 @@ const CreateExperience = () => {
   const endTimeHourRef = useRef();
   const endTimeMinutesRef = useRef();
   const [fichero, setFichero] = useState();
+  const [showErrorImg, setShowErrorImg] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
-  const [formState, inputHandler, setFormData] = useForm(
+  const [formState, inputHandler] = useForm(
     {
       name: {
         value: "",
@@ -66,6 +68,11 @@ const CreateExperience = () => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
+
+    if (!fichero || fichero.length !== 3) {
+      setShowErrorImg(true);
+      return;
+    }
     const startTime =
       startTimeHourRef.current.value +
       ":" +
@@ -76,9 +83,6 @@ const CreateExperience = () => {
       ":" +
       endTimeMinutesRef.current.value +
       ":00";
-
-    // console.log("fecha comienzo: ", startTime);
-    // console.log("fecha fin: ", endTime);
 
     try {
       const formData = new FormData();
@@ -118,13 +122,9 @@ const CreateExperience = () => {
         { Authorization: "Bearer " + auth.token }
       );
 
-      // console.log("fichero: ", fichero);
-
       for (let index = 0; index < fichero.length; index++) {
         formData.append("imageExperience", fichero[index]);
       }
-
-      // console.log("formData: ", formData);
 
       await sendRequest(
         `http://localhost:3000/api/v1/experiences/${experienceId}/images`,
@@ -134,8 +134,14 @@ const CreateExperience = () => {
           Authorization: "Bearer " + auth.token,
         }
       );
-    } catch (err) {}
+    } catch (err) {
+      throw err;
+    }
     history.replace("/user/admin");
+  };
+
+  const cancelModalHandler = () => {
+    setShowErrorImg(false);
   };
 
   return (
@@ -192,7 +198,9 @@ const CreateExperience = () => {
           errorText="Por favor, introduzca una fecha válida."
           onInput={inputHandler}
         />
-        <label htmlFor="startTime">Hora de comienzo:</label>
+        <label style={{ marginRight: "1rem" }} htmlFor="startTime">
+          Hora de comienzo:
+        </label>
         <select name="startTime-hour" id="startTime" ref={startTimeHourRef}>
           <option value="00">00</option>
           <option value="01">01</option>
@@ -238,7 +246,9 @@ const CreateExperience = () => {
           errorText="Por favor, introduzca una fecha válida."
           onInput={inputHandler}
         />
-        <label id="endTime">Hora de final:</label>
+        <label style={{ marginRight: "1rem" }} id="endTime">
+          Hora de final:
+        </label>
         <select name="endTime-hour" id="endTime" ref={endTimeHourRef}>
           <option value="00">00</option>
           <option value="01">01</option>
@@ -289,7 +299,7 @@ const CreateExperience = () => {
           onInput={inputHandler}
         />
         <label className="new-exp-label">
-          Imagenes de la experiencia (max. 3):
+          Imágenes de la experiencia (max. 3):
         </label>
         <input
           id="files"
@@ -309,6 +319,14 @@ const CreateExperience = () => {
           <Button to="/user/admin/">VOLVER</Button>
         </div>
       </form>
+
+      <Modal
+        show={showErrorImg}
+        onCancel={cancelModalHandler}
+        footer={<Button onClick={cancelModalHandler}>OK</Button>}
+      >
+        Por favor, introduzca 3 imagenes
+      </Modal>
     </React.Fragment>
   );
 };
