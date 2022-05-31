@@ -1,0 +1,13 @@
+.btn-container {
+  display: flex;
+  align-items: center;
+}
+
+.comment-input textarea {
+  margin-left: 2rem;
+}
+
+.comment-input label {
+  display: block;
+  margin-bottom: 10px;
+}
