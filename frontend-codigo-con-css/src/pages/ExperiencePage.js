@@ -179,7 +179,7 @@ const ExperiencePage = () => {
         />
         <div>
           <div>
-            {experience.avgRatingExp ? (
+            {experience.avgRatingExp && (
               <ReactStars
                 value={+experience.avgRatingExp}
                 count={5}
@@ -187,8 +187,6 @@ const ExperiencePage = () => {
                 activeColor="#ffd700"
                 edit={false}
               />
-            ) : (
-              "Esta experiencia aún no ha sido valorada"
             )}
           </div>
           <div className="desc-container">
@@ -300,9 +298,7 @@ const ExperiencePage = () => {
         )}
       </div>
 
-      {reviews.length === 0 ? (
-        <p>Todavía no hay opiniones sobre esta experiencia.</p>
-      ) : (
+      {reviews.length !== 0 && (
         <div>
           <p>Opiniones de nuestros clientes:</p>
           <div className="exp-reviews-container">
@@ -329,7 +325,7 @@ const ExperiencePage = () => {
         footer={
           <div>
             <Button onClick={cancelHandler}>CANCELAR</Button>
-            <Button to="/login">LOGIN</Button>
+            <Button to={`/login?experience=${idExp}`}>LOGIN</Button>
           </div>
         }
       >

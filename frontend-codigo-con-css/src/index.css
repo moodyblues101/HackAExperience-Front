@@ -15,6 +15,8 @@ main {
   position: relative;
   min-height: 100vh;
   padding: 2rem;
-  margin-top: 6rem;
-  margin-bottom: 4rem;
+  margin: 6rem auto 4rem;
+  /* margin-top: 6rem;
+  margin-bottom: 4rem; */
+  max-width: 1000px;
 }
