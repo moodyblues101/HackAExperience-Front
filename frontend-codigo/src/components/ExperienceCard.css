@@ -6,6 +6,8 @@
   transition: transform 100ms ease-in;
   cursor: pointer;
   width: 25%;
+  max-width: 16.12rem;
+  max-height: 21.56rem;
 }
 
 .experience-card:hover {

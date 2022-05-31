@@ -95,8 +95,8 @@ const LandingPage = () => {
     <div className="landing-page">
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner />}
-      <h2>Experiencias mejor valoradas</h2>
 
+      <h2>Experiencias mejor valoradas</h2>
       <div className="container">
         {experiences.map((exp) => (
           <ExperienceCard

@@ -49,7 +49,7 @@
 }
 .btn-show-users {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .avatars-booked p {
