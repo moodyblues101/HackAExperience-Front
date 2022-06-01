@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 
 import Input from "../ui/FormElements/Input";
 import Button from "../ui/FormElements/Button";
+import Modal from "../ui/Modal";
 import ErrorModal from "../ui/ErrorModal";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../util/validators";
@@ -11,9 +12,9 @@ import { useHttpClient } from "../hooks/http-hook";
 import { AuthContext } from "../store/auth-context";
 
 import "./ReactivateExperience.css";
-import Modal from "../ui/Modal";
 
 const CreateExperience = () => {
+  const history = useHistory();
   const auth = useContext(AuthContext);
   const startTimeHourRef = useRef();
   const startTimeMinutesRef = useRef();
@@ -21,6 +22,7 @@ const CreateExperience = () => {
   const endTimeMinutesRef = useRef();
   const [fichero, setFichero] = useState();
   const [showErrorImg, setShowErrorImg] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [formState, inputHandler] = useForm(
     {
@@ -64,8 +66,6 @@ const CreateExperience = () => {
     false
   );
 
-  const history = useHistory();
-
   const submitHandler = async (event) => {
     event.preventDefault();
 
@@ -83,6 +83,27 @@ const CreateExperience = () => {
       ":" +
       endTimeMinutesRef.current.value +
       ":00";
+
+    const startDateAndTime =
+      formState.inputs.eventStartDate.value + " " + startTime;
+    const endDateAndTime = formState.inputs.eventEndDate.value + " " + endTime;
+
+    const now = new Date().getTime();
+
+    if (
+      new Date(startDateAndTime).getTime() < new Date(endDateAndTime).getTime()
+    ) {
+      if (
+        new Date(startDateAndTime).getTime() < now ||
+        new Date(endDateAndTime).getTime() < now
+      ) {
+        setShowModal(true);
+        return;
+      }
+    } else {
+      setShowModal(true);
+      return;
+    }
 
     try {
       const formData = new FormData();
@@ -106,14 +127,8 @@ const CreateExperience = () => {
 
       const formDate = new FormData();
 
-      formDate.append(
-        "eventStartDate",
-        formState.inputs.eventStartDate.value + " " + startTime
-      );
-      formDate.append(
-        "eventEndDate",
-        formState.inputs.eventEndDate.value + " " + endTime
-      );
+      formDate.append("eventStartDate", startDateAndTime);
+      formDate.append("eventEndDate", endDateAndTime);
 
       await sendRequest(
         `http://localhost:3000/api/v1/experiences/${experienceId}/dates`,
@@ -313,7 +328,6 @@ const CreateExperience = () => {
         <hr />
         <div>
           <Button type="submit" disabled={!formState.isValid}>
-            {/* <Button type="submit"> */}
             AÑADIR
           </Button>
           <Button to="/user/admin/">VOLVER</Button>
@@ -326,6 +340,18 @@ const CreateExperience = () => {
         footer={<Button onClick={cancelModalHandler}>OK</Button>}
       >
         Por favor, introduzca 3 imagenes
+      </Modal>
+
+      <Modal
+        show={showModal}
+        onCancel={cancelModalHandler}
+        footer={
+          <Button type="button" onClick={cancelModalHandler}>
+            OK
+          </Button>
+        }
+      >
+        Por favor, comprueba que las fechas y/o horas introducidas son correctas
       </Modal>
     </React.Fragment>
   );

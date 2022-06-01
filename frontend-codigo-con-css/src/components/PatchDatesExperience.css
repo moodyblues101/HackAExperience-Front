@@ -1,0 +1,17 @@
+.patch-dates-container {
+  text-align: center;
+}
+
+.patch-input-id {
+  width: 20rem;
+  margin: 0 auto;
+}
+
+.patch-date-show-table {
+  margin: 1.5rem auto;
+}
+
+.patch-date-form {
+  max-width: 50%;
+  margin: 1.5rem auto;
+}
