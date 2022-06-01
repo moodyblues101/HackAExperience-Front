@@ -23,6 +23,7 @@ const CreateExperience = () => {
   const [fichero, setFichero] = useState();
   const [showErrorImg, setShowErrorImg] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [isExpOk, setIsExpOK] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [formState, inputHandler] = useForm(
     {
@@ -149,14 +150,20 @@ const CreateExperience = () => {
           Authorization: "Bearer " + auth.token,
         }
       );
+
+      setIsExpOK(true);
     } catch (err) {
       throw err;
     }
-    history.replace("/user/admin");
   };
 
   const cancelModalHandler = () => {
-    setShowErrorImg(false);
+    setShowModal(false);
+  };
+
+  const cancelOkModalHandler = () => {
+    setIsExpOK(false);
+    history.replace("/user/admin");
   };
 
   return (
@@ -352,6 +359,18 @@ const CreateExperience = () => {
         }
       >
         Por favor, comprueba que las fechas y/o horas introducidas son correctas
+      </Modal>
+
+      <Modal
+        show={isExpOk}
+        onCancel={cancelOkModalHandler}
+        footer={
+          <Button type="button" onClick={cancelOkModalHandler}>
+            OK
+          </Button>
+        }
+      >
+        Experiencia creada correctamente
       </Modal>
     </React.Fragment>
   );
