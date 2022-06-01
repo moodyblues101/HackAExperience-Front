@@ -6,16 +6,19 @@ import Button from "../ui/FormElements/Button";
 import Card from "../ui/Card";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import ErrorModal from "../ui/ErrorModal";
+import Modal from "../ui/Modal";
 import { VALIDATOR_REQUIRE } from "../util/validators";
 import { useForm } from "../hooks/form-hook";
 import { useHttpClient } from "../hooks/http-hook";
 import { AuthContext } from "../store/auth-context";
+
 import "./PatchRequest.css";
 
 const PatchRequest = (props) => {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedData, setLoadedData] = useState();
+  const [showModal, setShowModal] = useState(false);
   const history = useHistory();
 
   let urlUpdate;
@@ -76,6 +79,7 @@ const PatchRequest = (props) => {
 
   const updateSubmitHandler = async (event) => {
     event.preventDefault();
+
     try {
       if (props.urlRoute === "users") {
         await sendRequest(
@@ -90,7 +94,8 @@ const PatchRequest = (props) => {
             Authorization: "Bearer " + auth.token,
           }
         );
-        history.replace(`/user/${props.id}/personal`);
+        setShowModal(true);
+        // history.replace(`/user/${props.id}/personal`);
       } else {
         await sendRequest(
           `${urlUpdate}/${props.id}`,
@@ -104,7 +109,7 @@ const PatchRequest = (props) => {
             Authorization: "Bearer " + auth.token,
           }
         );
-        history.push("/user/admin/");
+        setShowModal(true);
       }
     } catch (err) {}
   };
@@ -137,11 +142,20 @@ const PatchRequest = (props) => {
     );
   }
 
+  const cancelModalHandler = () => {
+    setShowModal(false);
+    if (props.urlRoute === "users") {
+      history.replace(`/user/${props.id}/personal`);
+    } else {
+      history.push("/user/admin/");
+    }
+  };
+
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
       {!isLoading && loadedData && (
-        <form className="place-form" onSubmit={updateSubmitHandler}>
+        <form className="patch-req-form" onSubmit={updateSubmitHandler}>
           <Input
             id={`${props.dataToUpdate}`}
             element={props.dataToUpdate === "bio" ? "textarea" : "input"}
@@ -167,6 +181,18 @@ const PatchRequest = (props) => {
           </Button>
         </form>
       )}
+
+      <Modal
+        show={showModal}
+        onCancel={cancelModalHandler}
+        footer={
+          <Button type="button" onClick={cancelModalHandler}>
+            OK
+          </Button>
+        }
+      >
+        Campo actualizado correctamente
+      </Modal>
     </React.Fragment>
   );
 };

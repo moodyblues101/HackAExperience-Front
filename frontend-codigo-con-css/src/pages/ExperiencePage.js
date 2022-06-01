@@ -207,7 +207,12 @@ const ExperiencePage = () => {
       </div>
       <div>
         {dates.length === 0 ? (
-          <p>No hay próximas fechas</p>
+          <div>
+            <p>No hay próximas fechas</p>
+            <Button type="button" onClick={showModalMail}>
+              Avísame cuando vuelva a estar disponible
+            </Button>
+          </div>
         ) : (
           <div>
             <p>¿Cuándo?</p>
@@ -236,50 +241,63 @@ const ExperiencePage = () => {
         )}
       </div>
 
+      {dates.length !== 0 && experience.availablePlaces !== 0 && (
+        <div>
+          <Button type="button" onClick={bookingHandler}>
+            RESERVAR
+          </Button>
+        </div>
+      )}
+
       <div>
-        {experience.availablePlaces === 0 ? (
-          <div>
-            <p>No quedan plazas disponibles</p>
-            <Button type="button" onClick={showModalMail}>
-              Avísame cuando vuelva a estar disponible
-            </Button>
-          </div>
-        ) : (
-          <div>
-            <Button type="button" onClick={bookingHandler}>
-              RESERVAR
-            </Button>
+        {
+          experience.availablePlaces === 0 && (
+            <div>
+              <p>No quedan plazas disponibles</p>
+              <Button type="button" onClick={showModalMail}>
+                Avísame cuando vuelva a estar disponible
+              </Button>
+            </div>
+          )
+          // : (
+          //   <div>
+          //     <Button type="button" onClick={bookingHandler}>
+          //       RESERVAR
+          //     </Button>
+          //   </div>
+          // )
+        }
+        {dates.length !== 0 && (
+          <div className="available-places">
+            {experience.availablePlaces !== 0 && (
+              <div>Quedan {experience.availablePlaces} plazas disponibles</div>
+            )}
+
+            <div className="avatars-booked">
+              {avatars.length === 0 ? (
+                <p>
+                  Aún no hay inscritos en esta experiencia. ¿Quieres ser el
+                  primero?
+                </p>
+              ) : (
+                <ul>
+                  {avatars.map((user, index) => {
+                    return (
+                      <li key={user[index]}>
+                        <img
+                          src={`http://localhost:3000/avatars/${user.avatar}`}
+                          alt="user"
+                        />
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </div>
           </div>
         )}
-        <div className="available-places">
-          {experience.availablePlaces !== 0 && (
-            <div>Quedan {experience.availablePlaces} plazas disponibles</div>
-          )}
 
-          <div className="avatars-booked">
-            {avatars.length === 0 ? (
-              <p>
-                Aún no hay inscritos en esta experiencia. ¿Quieres ser el
-                primero?
-              </p>
-            ) : (
-              <ul>
-                {avatars.map((user, index) => {
-                  return (
-                    <li key={user[index]}>
-                      <img
-                        src={`http://localhost:3000/avatars/${user.avatar}`}
-                        alt="user"
-                      />
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
-          </div>
-        </div>
-
-        {auth.token && (
+        {auth.token && dates.length !== 0 && (
           <div className="btn-show-users">
             {!noAvatars && !modalShowUsers && (
               <Button type="button" onClick={showUsersBooked}>
@@ -363,7 +381,9 @@ const ExperiencePage = () => {
         }
       >
         <div>
-          <label htmlFor="mail-user">Introduce tu mail para avisarte:</label>
+          <label style={{ marginRight: "1rem" }} htmlFor="mail-user">
+            Introduce tu mail para avisarte:
+          </label>
           <input id="mail-user" type="text" />
         </div>
       </Modal>
@@ -388,9 +408,9 @@ const ShowListUsersBooked = ({ avatars }) => {
         </tr>
       </thead>
       <tbody>
-        {avatars.map((user, index) => {
+        {avatars.map((user) => {
           return (
-            <tr key={user[index]}>
+            <tr key={user.id}>
               <td>
                 <img
                   src={`http://localhost:3000/avatars/${user.avatar}`}

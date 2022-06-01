@@ -1,8 +1,9 @@
-// import { SearchIcon } from "@heroicons/react/outline";
 import React, { useState } from "react";
 
+import PatchDatesExperience from "../../components/PatchDatesExperience";
 import PatchRequest from "../../components/PatchRequest";
 import Button from "../../ui/FormElements/Button";
+import Card from "../../ui/Card";
 
 import "./ModifyExperience.css";
 
@@ -10,7 +11,18 @@ const ModifyExperience = () => {
   const [idExperience, setIdExperience] = useState("");
   const [fieldToUpdate, setFieldToUpdate] = useState("");
   const [isExpShow, setIsExpShow] = useState(false);
-  const [inputShow, setInputShow] = useState(true);
+  const [inputShow, setInputShow] = useState(false);
+  const [inputDateShow, setInputDateShow] = useState(false);
+
+  const inputDateShowHandler = () => {
+    setInputDateShow(!inputDateShow);
+    setInputShow(false);
+  };
+
+  const inputShowHandler = () => {
+    setInputDateShow(false);
+    setInputShow(!inputShow);
+  };
 
   const toggleHandler = () => {
     setIsExpShow(!isExpShow);
@@ -19,8 +31,21 @@ const ModifyExperience = () => {
 
   return (
     <React.Fragment>
-      {inputShow && (
+      <div className="modify-menu-container">
+        <h3>MODIFICAR EXPERIENCIA POR:</h3>
         <div>
+          <Button onClick={inputDateShowHandler}>FECHAS</Button>
+          <Button onClick={inputShowHandler}>OTROS CAMPOS</Button>
+        </div>
+        <div className="btn-back">
+          <Button to="/user/admin/">VOLVER</Button>
+        </div>
+      </div>
+
+      {inputDateShow && <PatchDatesExperience />}
+
+      {inputShow && (
+        <div className="modify-id-container">
           <div className="field-exp">
             <label htmlFor="idExp" className="field-exp-label">
               Introduce id de la experiencia a modificar:
@@ -51,14 +76,11 @@ const ModifyExperience = () => {
               <option value="city">Ciudad</option>
               <option value="price">Precio</option>
               <option value="totalPlaces">Total plazas</option>
-              <option value="eventStartDate">Fecha inicio</option>
-              <option value="eventEndDate">Fecha fin</option>
-              <option value="idCategory">Categoría</option>
-              <option value="idBusiness">Empresa</option>
+              <option value="idCategory">Categoría (id)</option>
+              <option value="idBusiness">Empresa (id)</option>
             </select>
           </div>
           <div>
-            <Button to="/user/admin/">VOLVER</Button>
             <Button type="button" onClick={toggleHandler}>
               MOSTRAR
             </Button>

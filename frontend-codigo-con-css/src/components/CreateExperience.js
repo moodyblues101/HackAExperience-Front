@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 
 import Input from "../ui/FormElements/Input";
 import Button from "../ui/FormElements/Button";
+import Modal from "../ui/Modal";
 import ErrorModal from "../ui/ErrorModal";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../util/validators";
@@ -13,14 +14,18 @@ import { AuthContext } from "../store/auth-context";
 import "./ReactivateExperience.css";
 
 const CreateExperience = () => {
+  const history = useHistory();
   const auth = useContext(AuthContext);
   const startTimeHourRef = useRef();
   const startTimeMinutesRef = useRef();
   const endTimeHourRef = useRef();
   const endTimeMinutesRef = useRef();
   const [fichero, setFichero] = useState();
+  const [showErrorImg, setShowErrorImg] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [isExpOk, setIsExpOK] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
-  const [formState, inputHandler, setFormData] = useForm(
+  const [formState, inputHandler] = useForm(
     {
       name: {
         value: "",
@@ -62,10 +67,13 @@ const CreateExperience = () => {
     false
   );
 
-  const history = useHistory();
-
   const submitHandler = async (event) => {
     event.preventDefault();
+
+    if (!fichero || fichero.length !== 3) {
+      setShowErrorImg(true);
+      return;
+    }
     const startTime =
       startTimeHourRef.current.value +
       ":" +
@@ -77,8 +85,26 @@ const CreateExperience = () => {
       endTimeMinutesRef.current.value +
       ":00";
 
-    // console.log("fecha comienzo: ", startTime);
-    // console.log("fecha fin: ", endTime);
+    const startDateAndTime =
+      formState.inputs.eventStartDate.value + " " + startTime;
+    const endDateAndTime = formState.inputs.eventEndDate.value + " " + endTime;
+
+    const now = new Date().getTime();
+
+    if (
+      new Date(startDateAndTime).getTime() < new Date(endDateAndTime).getTime()
+    ) {
+      if (
+        new Date(startDateAndTime).getTime() < now ||
+        new Date(endDateAndTime).getTime() < now
+      ) {
+        setShowModal(true);
+        return;
+      }
+    } else {
+      setShowModal(true);
+      return;
+    }
 
     try {
       const formData = new FormData();
@@ -102,14 +128,8 @@ const CreateExperience = () => {
 
       const formDate = new FormData();
 
-      formDate.append(
-        "eventStartDate",
-        formState.inputs.eventStartDate.value + " " + startTime
-      );
-      formDate.append(
-        "eventEndDate",
-        formState.inputs.eventEndDate.value + " " + endTime
-      );
+      formDate.append("eventStartDate", startDateAndTime);
+      formDate.append("eventEndDate", endDateAndTime);
 
       await sendRequest(
         `http://localhost:3000/api/v1/experiences/${experienceId}/dates`,
@@ -118,13 +138,9 @@ const CreateExperience = () => {
         { Authorization: "Bearer " + auth.token }
       );
 
-      // console.log("fichero: ", fichero);
-
       for (let index = 0; index < fichero.length; index++) {
         formData.append("imageExperience", fichero[index]);
       }
-
-      // console.log("formData: ", formData);
 
       await sendRequest(
         `http://localhost:3000/api/v1/experiences/${experienceId}/images`,
@@ -134,7 +150,19 @@ const CreateExperience = () => {
           Authorization: "Bearer " + auth.token,
         }
       );
-    } catch (err) {}
+
+      setIsExpOK(true);
+    } catch (err) {
+      throw err;
+    }
+  };
+
+  const cancelModalHandler = () => {
+    setShowModal(false);
+  };
+
+  const cancelOkModalHandler = () => {
+    setIsExpOK(false);
     history.replace("/user/admin");
   };
 
@@ -192,7 +220,9 @@ const CreateExperience = () => {
           errorText="Por favor, introduzca una fecha válida."
           onInput={inputHandler}
         />
-        <label htmlFor="startTime">Hora de comienzo:</label>
+        <label style={{ marginRight: "1rem" }} htmlFor="startTime">
+          Hora de comienzo:
+        </label>
         <select name="startTime-hour" id="startTime" ref={startTimeHourRef}>
           <option value="00">00</option>
           <option value="01">01</option>
@@ -238,7 +268,9 @@ const CreateExperience = () => {
           errorText="Por favor, introduzca una fecha válida."
           onInput={inputHandler}
         />
-        <label id="endTime">Hora de final:</label>
+        <label style={{ marginRight: "1rem" }} id="endTime">
+          Hora de final:
+        </label>
         <select name="endTime-hour" id="endTime" ref={endTimeHourRef}>
           <option value="00">00</option>
           <option value="01">01</option>
@@ -289,7 +321,7 @@ const CreateExperience = () => {
           onInput={inputHandler}
         />
         <label className="new-exp-label">
-          Imagenes de la experiencia (max. 3):
+          Imágenes de la experiencia (max. 3):
         </label>
         <input
           id="files"
@@ -303,12 +335,43 @@ const CreateExperience = () => {
         <hr />
         <div>
           <Button type="submit" disabled={!formState.isValid}>
-            {/* <Button type="submit"> */}
             AÑADIR
           </Button>
           <Button to="/user/admin/">VOLVER</Button>
         </div>
       </form>
+
+      <Modal
+        show={showErrorImg}
+        onCancel={cancelModalHandler}
+        footer={<Button onClick={cancelModalHandler}>OK</Button>}
+      >
+        Por favor, introduzca 3 imagenes
+      </Modal>
+
+      <Modal
+        show={showModal}
+        onCancel={cancelModalHandler}
+        footer={
+          <Button type="button" onClick={cancelModalHandler}>
+            OK
+          </Button>
+        }
+      >
+        Por favor, comprueba que las fechas y/o horas introducidas son correctas
+      </Modal>
+
+      <Modal
+        show={isExpOk}
+        onCancel={cancelOkModalHandler}
+        footer={
+          <Button type="button" onClick={cancelOkModalHandler}>
+            OK
+          </Button>
+        }
+      >
+        Experiencia creada correctamente
+      </Modal>
     </React.Fragment>
   );
 };

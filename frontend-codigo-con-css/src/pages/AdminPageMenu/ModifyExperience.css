@@ -1,3 +1,19 @@
+.modify-menu-container {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 0 4rem 2rem;
+  border: 1px solid black;
+}
+
+.btn-back {
+  margin-top: 2rem;
+  text-align: left;
+}
+
+.modify-id-container {
+  text-align: center;
+}
+
 .field-exp {
   margin-bottom: 1rem;
 }
