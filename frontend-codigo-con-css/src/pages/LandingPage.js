@@ -68,11 +68,21 @@ const LandingPage = () => {
 
   const fetchReviews = useCallback(async () => {
     const resRev = await sendRequest("http://localhost:3000/api/v1/reviews");
-    const bestReviews = resRev.reviewsData.filter((exp) => exp.rating >= 4);
+
+    const bestReviews = resRev.reviewsData
+      .sort((revA, revB) => revA.rating - revB.rating)
+      .reverse();
+
+    const ids = bestReviews.map((o) => o.idUser);
+
+    const filtered = bestReviews.filter(
+      ({ idUser }, index) => !ids.includes(idUser, index + 1)
+    );
+
     const revToShow = [];
 
-    for (let i = 0; i < bestReviews.length && i < 3; i++) {
-      revToShow.push(bestReviews[i]);
+    for (let i = 0; i < filtered.length && i < 3; i++) {
+      revToShow.push(filtered[i]);
     }
 
     setReviews(revToShow);
@@ -108,7 +118,7 @@ const LandingPage = () => {
                     alt="experience"
                   />
                 </div>
-                <div>{exp.name}</div>
+                <div className="name-exp-container">{exp.name}</div>
                 <ReactStars
                   value={exp.rating}
                   count={5}
@@ -129,6 +139,7 @@ const LandingPage = () => {
             <Review
               key={review.id}
               avatar={review.profilePic}
+              userName={review.userName}
               comment={review.comment}
             />
           ))}
@@ -147,9 +158,9 @@ const LandingPage = () => {
                     alt="experience"
                   />
                 </div>
-                <div>{exp.name}</div>
+                <div className="name-exp-container">{exp.name}</div>
 
-                {exp.rating !== null ? (
+                {exp.rating !== null && (
                   <ReactStars
                     value={exp.rating}
                     count={5}
@@ -157,8 +168,6 @@ const LandingPage = () => {
                     activeColor="#ffd700"
                     edit={false}
                   />
-                ) : (
-                  <div>Aún sin valorar</div>
                 )}
               </Link>
             </li>
@@ -206,6 +215,7 @@ const Review = (props) => {
           src={`http://localhost:3000/avatars/${props.avatar}`}
           alt="avatar user"
         />
+        <div className="review-list-userName">{props.userName}</div>
       </div>
       <div className="review-list-comment">{props.comment}</div>
     </li>

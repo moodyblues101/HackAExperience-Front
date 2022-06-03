@@ -118,7 +118,7 @@ const BookingPage = () => {
             <tbody>
               {dates.map((date) => {
                 return (
-                  <tr>
+                  <tr key={date.id}>
                     <td>
                       <label>
                         <input
@@ -139,6 +139,7 @@ const BookingPage = () => {
             </tbody>
           </table>
         </div>
+        <Button to={`/experiences/${idExp}`}>CANCELAR</Button>
         <Button type="submit">RESERVAR</Button>
       </form>
       <Modal

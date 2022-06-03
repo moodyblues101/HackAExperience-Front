@@ -24,6 +24,10 @@
   width: auto;
 }
 
+.light-text {
+  font-weight: 300;
+}
+
 .desc-container {
   margin-top: 3rem;
 }
@@ -37,36 +41,9 @@
   font-weight: 300;
 }
 
-.available-places {
-  display: flex;
-  align-items: center;
-  justify-content: right;
-  padding-right: 5rem;
-}
-
-.available-places div {
-  margin-top: 1rem;
-}
-.btn-show-users {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.avatars-booked p {
-  padding-left: 2rem;
-}
-.avatars-booked ul {
-  list-style: none;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
-.avatars-booked img {
-  height: 4rem;
-  width: 4rem;
-  border-radius: 50%;
-  margin-right: -1rem;
+.exp-bookings-container {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .exp-reviews-container ul {
@@ -78,8 +55,9 @@
 
 .exp-reviews-container li {
   display: flex;
-  flex-basis: 25%;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   margin-right: 1rem;
 }
 
@@ -89,19 +67,15 @@
   border-radius: 50%;
 }
 
-.modal-users img {
-  height: 4rem;
-  width: 4rem;
-  border-radius: 50%;
+.exp-reviews-data {
+  margin-left: 1rem;
 }
 
 @media (max-width: 768px) {
   .exp-main {
     flex-wrap: wrap;
   }
-  .available-places {
-    flex-wrap: wrap;
-  }
+
   .exp-reviews-container {
     flex-wrap: wrap;
   }

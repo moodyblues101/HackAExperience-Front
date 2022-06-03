@@ -42,6 +42,9 @@
   height: 10rem;
 }
 
+.name-exp-container {
+  max-width: 10rem;
+}
 .landing-section-container img {
   height: 100%;
   width: 100%;
@@ -54,6 +57,7 @@
 
   display: flex;
   flex-direction: row;
+  max-height: 10rem;
 }
 
 .landing-reviews-container-li {
@@ -64,10 +68,18 @@
   align-items: center;
 }
 
+.avatar-container {
+  text-align: center;
+}
 .avatar-container img {
   height: 6rem;
   width: 6rem;
   border-radius: 50%;
+}
+
+.review-list-userName {
+  margin-bottom: 0.75rem;
+  font-weight: 300;
 }
 
 .review-list-comment {

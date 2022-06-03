@@ -1,0 +1,34 @@
+.exp-book-user-container {
+  display: flex;
+}
+.exp-book-input {
+  margin-top: 1rem;
+  width: 19rem;
+  background-color: rgb(233, 229, 229);
+  border: none;
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.exp-book-input:hover {
+  font-weight: 500;
+}
+
+.exp-book-p {
+  font-weight: 300;
+  font-size: 0.9rem;
+  max-width: 19rem;
+  text-align: center;
+}
+
+.btn-show-users {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 768px) {
+  .exp-book-user-container {
+    flex-wrap: wrap;
+  }
+}

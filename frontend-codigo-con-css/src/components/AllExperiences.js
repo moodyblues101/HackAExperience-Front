@@ -1,12 +1,11 @@
 import { useEffect, useState, useRef, useCallback } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, Link } from "react-router-dom";
 
 import { useHttpClient } from "../hooks/http-hook";
 import ErrorModal from "../ui/ErrorModal";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import Button from "../ui/FormElements/Button";
 import Modal from "../ui/Modal";
-import { Link } from "react-router-dom";
 import formatDate from "../util/formatDate";
 import ReactStars from "react-rating-stars-component";
 
