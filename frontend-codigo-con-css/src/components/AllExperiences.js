@@ -5,9 +5,10 @@ import { useHttpClient } from "../hooks/http-hook";
 import ErrorModal from "../ui/ErrorModal";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import Button from "../ui/FormElements/Button";
-import Modal from "../ui/Modal";
 import formatDate from "../util/formatDate";
 import ReactStars from "react-rating-stars-component";
+
+import Pagination from "./Pagination";
 
 import "./AllExperiences.css";
 
@@ -31,7 +32,6 @@ const AllExperiences = () => {
   const cityRef = useRef();
   const categoryRef = useRef();
   const [showList, setShowList] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const getAllExperiences = useCallback(async () => {
@@ -139,7 +139,6 @@ const AllExperiences = () => {
 
     if (finalFilterExp.length === 0) {
       setShowList(false);
-      setShowModal(true);
     }
 
     setLoadedExperiences(finalFilterExp);
@@ -211,10 +210,6 @@ const AllExperiences = () => {
         </div>
       )}
 
-      <Modal show={showModal} footer={<Button to="/">VOLVER</Button>}>
-        <p>No existen experiencias para mostrar</p>
-      </Modal>
-
       {showList && (
         <div className="btn-new-search">
           <Button type="button" onClick={cleanSearchHandler}>
@@ -232,20 +227,17 @@ const AllExperiences = () => {
               {isSortAscending ? "De mayor a menor" : "De menor a mayor"}
             </Button>
           </div>
-          <ul>
-            {sortedExperiences.map((experience) => (
-              <Experience
-                key={experience.id}
-                id={experience.id}
-                image={experience.imgExp}
-                name={experience.name}
-                city={experience.city}
-                price={experience.price}
-                date={experience.dates[0].eventStartDate}
-                rating={experience.rating}
-              />
-            ))}
-          </ul>
+          {sortedExperiences.length > 0 ? (
+            <Pagination
+              data={sortedExperiences}
+              RenderComponent={Experience}
+              title="Experiencias encontradas"
+              pageLimit={4}
+              dataLimit={5}
+            />
+          ) : (
+            <h3>No hay experiencias para mostrar</h3>
+          )}
         </div>
       )}
     </>
