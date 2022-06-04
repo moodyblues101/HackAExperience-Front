@@ -21,23 +21,23 @@ const Footer = () => {
         </span> */}
       </div>
       <div className="footer-logo-rrss-container">
-        <Link to="http://www.facebook.com">
+        <a href="https://www.facebook.com" target="_blank" rel="noreferrer">
           <img
             className="footer-logo-rrss"
             src={facebook}
             alt="logo facebook"
           />
-        </Link>
-        <Link to="http://www.instagram.com">
+        </a>
+        <a href="https://www.instagram.com" target="_blank" rel="noreferrer">
           <img
             className="footer-logo-rrss"
             src={instagram}
             alt="logo instagram"
           />
-        </Link>
-        <Link to="http://www.twitter.com">
+        </a>
+        <a href="https://www.twitter.com" target="_blank" rel="noreferrer">
           <img className="footer-logo-rrss" src={twitter} alt="logo twitter" />
-        </Link>
+        </a>
       </div>
     </footer>
   );
