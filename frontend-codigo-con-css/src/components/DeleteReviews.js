@@ -12,6 +12,7 @@ import "./DeleteReviews.css";
 const DeleteReviews = ({ reviews, urlPath }) => {
   const [deleted, setDeleted] = useState(false);
   const [checkedId, setCheckedId] = useState({ idReview: [] });
+  const [showButtonDel, setShowButtonDel] = useState(true);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const auth = useContext(AuthContext);
 
@@ -48,40 +49,42 @@ const DeleteReviews = ({ reviews, urlPath }) => {
     <>
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner />}
-      <form className="delete-form" onSubmit={sendReviewsToDelete}>
-        <table>
-          <thead>
-            <tr>
-              <th>Id comentario</th>
-              <th>Id experiencia</th>
-              <th>Id usuario</th>
-              <th>Comentario</th>
-            </tr>
-          </thead>
-          <tbody>
-            {reviews.map((review) => {
-              return (
-                <tr key={review.id}>
-                  <td>
-                    <input
-                      type="checkbox"
-                      id={review.id}
-                      name={review.id}
-                      value={review.id}
-                      onChange={handleChange}
-                    />
-                    <label htmlFor={review.id}>{review.id}</label>
-                  </td>
-                  <td>{review.idExperience}</td>
-                  <td>{review.idUser}</td>
-                  <td>{review.comment}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-        <Button type="submit">BORRAR SELECCIONADAS</Button>
-      </form>
+      {reviews.length !== 0 && (
+        <form className="delete-form" onSubmit={sendReviewsToDelete}>
+          <table>
+            <thead>
+              <tr>
+                <th>Id comentario</th>
+                <th>Id experiencia</th>
+                <th>Id usuario</th>
+                <th>Comentario</th>
+              </tr>
+            </thead>
+            <tbody>
+              {reviews.map((review) => {
+                return (
+                  <tr key={review.id}>
+                    <td>
+                      <input
+                        type="checkbox"
+                        id={review.id}
+                        name={review.id}
+                        value={review.id}
+                        onChange={handleChange}
+                      />
+                      <label htmlFor={review.id}>{review.id}</label>
+                    </td>
+                    <td>{review.idExperience}</td>
+                    <td>{review.idUser}</td>
+                    <td>{review.comment}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+          <Button type="submit">BORRAR SELECCIONADAS</Button>
+        </form>
+      )}
       {deleted && (
         <Modal
           show={!error}

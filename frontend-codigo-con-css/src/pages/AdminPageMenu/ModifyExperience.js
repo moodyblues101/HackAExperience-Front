@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 
 import PatchDatesExperience from "../../components/PatchDatesExperience";
 import PatchRequest from "../../components/PatchRequest";
@@ -8,6 +9,7 @@ import Card from "../../ui/Card";
 import "./ModifyExperience.css";
 
 const ModifyExperience = () => {
+  const idExp = useParams().idExp;
   const [idExperience, setIdExperience] = useState("");
   const [fieldToUpdate, setFieldToUpdate] = useState("");
   const [isExpShow, setIsExpShow] = useState(false);
@@ -38,15 +40,15 @@ const ModifyExperience = () => {
           <Button onClick={inputShowHandler}>OTROS CAMPOS</Button>
         </div>
         <div className="btn-back">
-          <Button to="/user/admin/">VOLVER</Button>
+          <Button to="/user/admin/experiences">VOLVER</Button>
         </div>
       </div>
 
-      {inputDateShow && <PatchDatesExperience />}
+      {inputDateShow && <PatchDatesExperience idExp={idExp} />}
 
       {inputShow && (
         <div className="modify-id-container">
-          <div className="field-exp">
+          {/* <div className="field-exp">
             <label htmlFor="idExp" className="field-exp-label">
               Introduce id de la experiencia a modificar:
             </label>
@@ -57,7 +59,7 @@ const ModifyExperience = () => {
               value={idExperience}
               onChange={(event) => setIdExperience(event.target.value)}
             />
-          </div>
+          </div> */}
           <div className="field-exp">
             <label htmlFor="dataToUpdate-field" className="field-exp-label">
               Elige campo a modificar:
@@ -91,7 +93,7 @@ const ModifyExperience = () => {
         <PatchRequest
           urlRoute="experiences"
           dataToUpdate={fieldToUpdate}
-          id={idExperience}
+          id={idExp}
         />
       )}
     </React.Fragment>

@@ -61,7 +61,8 @@ const GetReviews = ({ idToGet, urlPath, action }) => {
 
       <div style={{ "margin-top": "2rem" }}>
         {role === "administrador" ? (
-          <Button to="/user/admin/manage-experience-comments">VOLVER</Button>
+          // <Button to="/user/admin/manage-experience-comments">VOLVER</Button>
+          <Button to="/user/admin/experiences">VOLVER</Button>
         ) : (
           <Button to={`/user/${idToGet}/experiences`}>VOLVER</Button>
         )}

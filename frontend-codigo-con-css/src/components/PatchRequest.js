@@ -173,7 +173,7 @@ const PatchRequest = (props) => {
             to={
               props.urlRoute === "users"
                 ? `/user/${props.id}/personal`
-                : "/user/admin/"
+                : "/user/admin/experiences"
             }
             exact="exact"
           >

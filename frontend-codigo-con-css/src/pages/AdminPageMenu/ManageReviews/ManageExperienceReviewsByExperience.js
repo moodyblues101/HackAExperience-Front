@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 
 import Input from "../../../ui/FormElements/Input";
 import { VALIDATOR_REQUIRE } from "../../../util/validators";
@@ -7,26 +8,27 @@ import { useForm } from "../../../hooks/form-hook";
 import GetReviews from "../../../components/GetReviews";
 
 const ManageExperienceReviewsByExperience = () => {
-  const [isExpShow, setIsExpShow] = useState(false);
-  const [inputShow, setInputShow] = useState(true);
-  const [formState, inputHandler] = useForm(
-    {
-      idExperience: {
-        value: "",
-        isValid: false,
-      },
-    },
-    false
-  );
+  const idExp = useParams().idExp;
+  // const [isExpShow, setIsExpShow] = useState(false);
+  // const [inputShow, setInputShow] = useState(true);
+  // const [formState, inputHandler] = useForm(
+  //   {
+  //     idExperience: {
+  //       value: "",
+  //       isValid: false,
+  //     },
+  //   },
+  //   false
+  // );
 
-  const toggleHandler = () => {
-    setIsExpShow(!isExpShow);
-    setInputShow(!inputShow);
-  };
+  // const toggleHandler = () => {
+  //   setIsExpShow(!isExpShow);
+  //   setInputShow(!inputShow);
+  // };
 
   return (
     <React.Fragment>
-      {inputShow && (
+      {/* {inputShow && (
         <>
           <div style={{ width: "15rem" }}>
             <Input
@@ -44,13 +46,14 @@ const ManageExperienceReviewsByExperience = () => {
             MOSTRAR
           </Button>
         </>
-      )}
-      {isExpShow && (
+      )} */}
+      {/* {isExpShow && (
         <GetReviews
           idToGet={formState.inputs.idExperience.value}
           urlPath="experiences"
         />
-      )}
+      )} */}
+      <GetReviews idToGet={idExp} urlPath="experiences" />
     </React.Fragment>
   );
 };

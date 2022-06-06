@@ -1,0 +1,38 @@
+.manage-exp-btn-new {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+}
+.manage-exp-container td,
+th {
+  /* border: 1px solid #202123; */
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid #202123;
+}
+.manage-exp-actions-container {
+  /* height: 10rem; */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+/* .manage-exp-btn-container {
+  margin-bottom: 1rem;
+} */
+
+.manage-exp-btn {
+  width: fit-content;
+  background-color: rgb(233, 229, 229);
+  border: none;
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.manage-exp-btn:hover {
+  font-weight: 500;
+  cursor: pointer;
+}

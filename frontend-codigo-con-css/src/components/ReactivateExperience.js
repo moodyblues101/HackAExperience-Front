@@ -74,7 +74,8 @@ const ReactivateExperience = ({ idExp }) => {
     const resExp = await sendRequest(
       `http://localhost:3000/api/v1/experiences/${idExp}`
     );
-    setLoadedData({ price: resExp.price, totalPlaces: resExp.totalPlaces });
+
+    setLoadedData(resExp.price);
     setFormData(
       {
         name: {
@@ -91,10 +92,6 @@ const ReactivateExperience = ({ idExp }) => {
         },
         price: {
           value: resExp.price,
-          isValid: true,
-        },
-        totalPlaces: {
-          value: resExp.totalPlaces,
           isValid: true,
         },
         idCategory: {
@@ -194,7 +191,7 @@ const ReactivateExperience = ({ idExp }) => {
         </p>
         <p>
           Precio anterior:{" "}
-          <span style={{ fontWeight: "300" }}>{loadedData.price}€</span>
+          <span style={{ fontWeight: "300" }}>{loadedData}€</span>
         </p>
         <div style={{ width: "10rem" }}>
           <Input
@@ -207,16 +204,16 @@ const ReactivateExperience = ({ idExp }) => {
             onInput={inputHandler}
           />
         </div>
-        <p>
+        {/* <p>
           Número total de plazas anterior:{" "}
           <span style={{ fontWeight: "300" }}>{loadedData.totalPlaces}</span>
-        </p>
+        </p> */}
         <div style={{ width: "10rem" }}>
           <Input
             id="totalPlaces"
             element="input"
             type="text"
-            label="Nuevo número total de plazas:"
+            label="Número total de plazas:"
             validators={[VALIDATOR_REQUIRE()]}
             errorText="Por favor, introduzca un numero válido."
             onInput={inputHandler}
@@ -335,7 +332,7 @@ const ReactivateExperience = ({ idExp }) => {
           <Button type="submit" disabled={!formState.isValid}>
             AÑADIR
           </Button>
-          <Button to="/user/admin/">VOLVER</Button>
+          <Button to="/user/admin/experiences">VOLVER</Button>
         </div>
       </form>
     </React.Fragment>

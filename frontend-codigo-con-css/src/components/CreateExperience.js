@@ -337,7 +337,7 @@ const CreateExperience = () => {
           <Button type="submit" disabled={!formState.isValid}>
             AÑADIR
           </Button>
-          <Button to="/user/admin/">VOLVER</Button>
+          <Button to="/user/admin/experiences">VOLVER</Button>
         </div>
       </form>
 

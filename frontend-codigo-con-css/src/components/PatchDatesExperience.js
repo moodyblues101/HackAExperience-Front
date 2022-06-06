@@ -1,4 +1,4 @@
-import { useState, useContext, useRef } from "react";
+import { useState, useContext, useRef, useCallback, useEffect } from "react";
 
 import { useHttpClient } from "../hooks/http-hook";
 import { AuthContext } from "../store/auth-context";
@@ -13,7 +13,7 @@ import Modal from "../ui/Modal";
 
 import "./PatchDatesExperience.css";
 
-const PatchDatesExperience = () => {
+const PatchDatesExperience = ({ idExp }) => {
   const auth = useContext(AuthContext);
   const startTimeHourRef = useRef();
   const startTimeMinutesRef = useRef();
@@ -46,17 +46,21 @@ const PatchDatesExperience = () => {
     false
   );
 
-  const isExpDateShowHandler = async () => {
-    setIsFieldShow(false);
+  const fetchExperienceDates = useCallback(async () => {
+    // setIsFieldShow(false);
     try {
       const response = await sendRequest(
-        `http://localhost:3000/api/v1/experiences/${formState.inputs.idExperience.value}/dates`
+        `http://localhost:3000/api/v1/experiences/${idExp}/dates`
       );
 
       setDatesExp(response);
       setIsExpDateShow(true);
     } catch (err) {}
-  };
+  }, [idExp, sendRequest]);
+
+  useEffect(() => {
+    fetchExperienceDates();
+  }, [fetchExperienceDates]);
 
   const showInputNewDateHandler = () => {
     setShowInputNewDate(true);
@@ -125,7 +129,7 @@ const PatchDatesExperience = () => {
     <div className="patch-dates-container">
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner />}
-      {isFieldsShow && (
+      {/* {isFieldsShow && (
         <div className="patch-input-id">
           <div>
             <Input
@@ -142,7 +146,7 @@ const PatchDatesExperience = () => {
             MOSTRAR FECHAS
           </Button>
         </div>
-      )}
+      )} */}
 
       {isExpDateShow && (
         <div>
@@ -307,7 +311,7 @@ const PatchDatesExperience = () => {
               <Button type="submit" disabled={!formState.isValid}>
                 AÑADIR
               </Button>
-              <Button to="/user/admin/">VOLVER</Button>
+              <Button to="/user/admin/experiences">VOLVER</Button>
             </div>
           </form>
         </>
