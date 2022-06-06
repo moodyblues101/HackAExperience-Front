@@ -61,6 +61,7 @@
 }
 
 .landing-reviews-container-li {
+  margin-right: 1rem;
   margin-bottom: 2rem;
   display: flex;
   flex-direction: row;

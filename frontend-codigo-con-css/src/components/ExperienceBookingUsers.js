@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useContext } from "react";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
 import { useHttpClient } from "../hooks/http-hook";
 import { AuthContext } from "../store/auth-context";
@@ -14,10 +14,10 @@ import "./ExperienceBookingUsers.css";
 
 const ExperienceBookingUsers = ({ idExp }) => {
   const auth = useContext(AuthContext);
-  const history = useHistory();
+  // const history = useHistory();
   const [dates, setDates] = useState([]);
   const [idDateToSee, setIdDateToSee] = useState(null);
-  const [showModal, setShowModal] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
   const [showUsers, setShowUsers] = useState(false);
   const [isShowModalMail, setIsShowModalMail] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -48,6 +48,7 @@ const ExperienceBookingUsers = ({ idExp }) => {
       }
       return {
         id: date.id,
+        eventStartDate: date.eventStartDate,
         dateText: dateData,
         totalPlaces: date.totalPlaces,
         availablePlaces: date.availablePlaces,
@@ -68,16 +69,16 @@ const ExperienceBookingUsers = ({ idExp }) => {
     setShowUsers(true);
   };
 
-  const bookingHandler = () => {
-    if (auth.token) {
-      history.push(`/booking/${idExp}`);
-    } else {
-      setShowModal(true);
-    }
-  };
+  // const bookingHandler = () => {
+  //   if (auth.token) {
+  //     history.push(`/booking/${idExp}`);
+  //   } else {
+  //     setShowModal(true);
+  //   }
+  // };
 
   const cancelHandler = () => {
-    setShowModal(false);
+    // setShowModal(false);
     setIsShowModalMail(false);
   };
 
@@ -103,6 +104,7 @@ const ExperienceBookingUsers = ({ idExp }) => {
           {dates.length !== 0 && (
             <div>
               <label htmlFor="dateToSee-field">¿Cuándo?</label>
+
               {dates.map((date) => (
                 <div key={date.id}>
                   <input
@@ -127,10 +129,11 @@ const ExperienceBookingUsers = ({ idExp }) => {
 
           {dates.length !== 0 && auth.token && (
             <p className="exp-book-p">
-              Selecciona una fecha y mira quién está inscrito
+              Selecciona una fecha y mira quién está inscrito y si quedan plazas
+              disponibles.
             </p>
           )}
-          <div>
+          {/* <div>
             {dates.length !== 0 && dates.availablePlaces !== 0 && (
               <div>
                 <Button type="button" onClick={bookingHandler}>
@@ -138,14 +141,16 @@ const ExperienceBookingUsers = ({ idExp }) => {
                 </Button>
               </div>
             )}
-          </div>
+          </div> */}
         </div>
 
         <div>
-          {showUsers && <ShowUsersBooked idDate={idDateToSee} dates={dates} />}
+          {showUsers && (
+            <ShowUsersBooked idExp={idExp} idDate={idDateToSee} dates={dates} />
+          )}
         </div>
 
-        <Modal
+        {/* <Modal
           show={showModal}
           onCancel={cancelHandler}
           footer={
@@ -156,7 +161,7 @@ const ExperienceBookingUsers = ({ idExp }) => {
           }
         >
           <p>Para poder reservar una experiencia tienes que iniciar sesión</p>
-        </Modal>
+        </Modal> */}
 
         <Modal
           show={isShowModalMail}

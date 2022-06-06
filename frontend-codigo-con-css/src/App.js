@@ -197,7 +197,7 @@ function App() {
                 </Route>
               )}
               {userRole === "usuario" && (
-                <Route path="/booking/:idExp" exact>
+                <Route path="/booking/:idExp/:idDate" exact>
                   <BookingPage />
                 </Route>
               )}

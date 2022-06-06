@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useContext } from "react";
+import { useHistory } from "react-router-dom";
 
 import { useHttpClient } from "../hooks/http-hook";
 import { AuthContext } from "../store/auth-context";
@@ -9,13 +10,19 @@ import LoadingSpinner from "../ui/LoadingSpinner";
 
 import "./ShowUsersBooked.css";
 
-const ShowUsersBooked = ({ idDate, dates }) => {
+const ShowUsersBooked = ({ idExp, idDate, dates }) => {
+  console.log("idExp: ", idExp);
+  console.log("idDate: ", idDate);
+  console.log("dates: ", dates);
+
+  const history = useHistory();
   const auth = useContext(AuthContext);
   const [avatars, setAvatars] = useState([]);
   const [modalShowUsers, setModalShowUsers] = useState(false);
   const [isShowModalMail, setIsShowModalMail] = useState(false);
   const [showUsersBooked, setShowUsersBooked] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [showModal, setShowModal] = useState(false);
 
   const dateData = dates.filter((date) => date.id === idDate);
 
@@ -50,11 +57,22 @@ const ShowUsersBooked = ({ idDate, dates }) => {
   };
 
   const cancelHandler = () => {
+    setShowModal(false);
     setIsShowModalMail(false);
   };
 
   const showUsersBookedHandler = () => {
     setShowUsersBooked(!showUsersBooked);
+  };
+
+  const bookingHandler = () => {
+    if (auth.token) {
+      history.push(
+        `/booking/${idExp}/${idDate}?eventStartDate=${dateData[0].eventStartDate}`
+      );
+    } else {
+      setShowModal(true);
+    }
   };
 
   return (
@@ -71,10 +89,17 @@ const ShowUsersBooked = ({ idDate, dates }) => {
           </div>
         ) : (
           <div className="available-places">
-            <p>
-              {`Quedan ${dateData[0].availablePlaces} plazas de un total de
+            <div>
+              <p>
+                {`Quedan ${dateData[0].availablePlaces} plazas de un total de
           ${dateData[0].totalPlaces}.`}
-            </p>
+              </p>
+            </div>
+            <div>
+              <Button type="button" onClick={bookingHandler}>
+                RESERVAR
+              </Button>
+            </div>
           </div>
         )}
 
@@ -84,7 +109,7 @@ const ShowUsersBooked = ({ idDate, dates }) => {
               <ul>
                 {avatars.map((user, index) => {
                   return (
-                    <li key={user[index]}>
+                    <li key={index}>
                       <img
                         src={`http://localhost:3000/avatars/${user.avatar}`}
                         alt="user"
@@ -131,6 +156,19 @@ const ShowUsersBooked = ({ idDate, dates }) => {
             <input id="mail-user" type="text" />
           </div>
         </Modal>
+
+        <Modal
+          show={showModal}
+          onCancel={cancelHandler}
+          footer={
+            <div>
+              <Button onClick={cancelHandler}>CANCELAR</Button>
+              <Button to={`/login?experience=${idExp}`}>LOGIN</Button>
+            </div>
+          }
+        >
+          <p>Para poder reservar una experiencia tienes que iniciar sesión</p>
+        </Modal>
       </div>
     </>
   );
@@ -151,7 +189,7 @@ const ShowListUsersBooked = ({ avatars }) => {
       <tbody>
         {avatars.map((user, i) => {
           return (
-            <tr key={user[i]}>
+            <tr key={i}>
               <td>
                 <img
                   src={`http://localhost:3000/avatars/${user.avatar}`}

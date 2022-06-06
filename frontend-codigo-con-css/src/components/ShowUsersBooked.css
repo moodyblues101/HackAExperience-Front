@@ -1,4 +1,5 @@
 .show-users-container {
+  width: 100%;
   margin: auto 2rem;
   display: flex;
   flex-direction: column;
@@ -7,10 +8,11 @@
 }
 
 .available-places {
+  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: right;
-  padding-right: 5rem;
+  justify-content: space-between;
+  /* padding-right: 5rem; */
 }
 
 .avatars-booked ul {

@@ -1,5 +1,5 @@
-import { useState, useContext, useCallback, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useContext } from "react";
+import { useParams, useLocation } from "react-router-dom";
 
 import { AuthContext } from "../store/auth-context";
 import { useForm } from "../hooks/form-hook";
@@ -20,9 +20,11 @@ const BookingPage = () => {
   const auth = useContext(AuthContext);
   const idUser = useContext(AuthContext).userId;
   const idExp = useParams().idExp;
+  const idDate = useParams().idDate;
+  const { search } = useLocation();
+  const query = new URLSearchParams(search);
+  const eventStartDate = query.get("eventStartDate");
   const [bookingOk, setBookingOk] = useState(false);
-  const [dates, setDates] = useState([]);
-  const [dateSelected, setDateSelected] = useState();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [formState, inputHandler] = useForm(
     {
@@ -34,46 +36,19 @@ const BookingPage = () => {
     false
   );
 
-  const fetchDates = useCallback(async () => {
-    const datesExp = await sendRequest(
-      `http://localhost:3000/api/v1/experiences/${idExp}/dates`
-    );
-
-    // console.log("datesExp: ", datesExp);
-
-    const datesFormatExp = [];
-
-    for (const date of datesExp) {
-      const startDate = formatDate(date.eventStartDate);
-      const endDate = formatDate(date.eventEndDate);
-      datesFormatExp.push({
-        ...date,
-        eventStartDate: startDate,
-        eventEndDate: endDate,
-      });
-    }
-    // console.log("dates format: ", datesFormatExp);
-
-    setDates(datesFormatExp);
-  }, [idExp, sendRequest]);
-
-  useEffect(() => {
-    fetchDates();
-  }, [fetchDates]);
+  const formatedDate = formatDate(eventStartDate);
 
   const submitHandler = async (event) => {
     event.preventDefault();
 
-    // console.log("date selected: ", dateSelected);
     const amountBookings = formState.inputs.amount.value;
 
     try {
       for (let i = 1; i <= amountBookings; i++) {
-        // console.log("idDAte: ", dateSelected);
         await sendRequest(
           `http://localhost:3000/api/v1/experiences/${idExp}/bookings`,
           "POST",
-          JSON.stringify({ idDate: dateSelected }),
+          JSON.stringify({ idDate: idDate }),
           {
             "Content-Type": "application/json",
             Authorization: "Bearer " + auth.token,
@@ -107,41 +82,15 @@ const BookingPage = () => {
             initialValid={true}
           />
         </div>
-        <div>
-          <label htmlFor="date">Selecciona una fecha: </label>
-          <table>
-            <thead>
-              <tr>
-                <td></td>
-              </tr>
-            </thead>
-            <tbody>
-              {dates.map((date) => {
-                return (
-                  <tr key={date.id}>
-                    <td>
-                      <label>
-                        <input
-                          type="radio"
-                          id={date.id}
-                          name="date"
-                          value={date.id}
-                          onChange={(e) => setDateSelected(e.target.value)}
-                        />{" "}
-                        {date.eventStartDate.day}/{date.eventStartDate.month}/
-                        {date.eventStartDate.year} a las{" "}
-                        {date.eventStartDate.time}h
-                      </label>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+        <div style={{ marginBottom: "2rem" }}>
+          Fecha seleccionada: {formatedDate.day}/{formatedDate.month}/
+          {formatedDate.year} - {formatedDate.time}h
         </div>
+
         <Button to={`/experiences/${idExp}`}>CANCELAR</Button>
         <Button type="submit">RESERVAR</Button>
       </form>
+
       <Modal
         show={bookingOk}
         footer={

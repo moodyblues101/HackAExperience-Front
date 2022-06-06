@@ -153,7 +153,7 @@ const DateExperience = ({ date }) => {
   return (
     <div>
       <div>
-        {newDate.day} {newDate.month} {newDate.year} {newDate.time}
+        {newDate.day} {newDate.month} {newDate.year} {newDate.time}h
       </div>
     </div>
   );

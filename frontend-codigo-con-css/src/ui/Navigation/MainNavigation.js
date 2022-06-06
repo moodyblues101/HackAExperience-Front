@@ -55,12 +55,14 @@ const MainNavigation = () => {
             alt="logo empresa"
           />
         </Link>
-        <button className="search-btn" onClick={searchHandle}>
-          <SearchIcon className="icon_search" />
-        </button>
-        <nav className="main-navigation__header-nav">
-          <NavLinks />
-        </nav>
+        <div className="main-navigation__container-btn">
+          <button className="search-btn" onClick={searchHandle}>
+            <SearchIcon className="icon_search" />
+          </button>
+          <nav className="main-navigation__header-nav">
+            <NavLinks />
+          </nav>
+        </div>
       </MainHeader>
       {userRole !== "administrador" && <NavigationCategories />}
     </>
