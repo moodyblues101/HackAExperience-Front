@@ -11,10 +11,6 @@ import LoadingSpinner from "../ui/LoadingSpinner";
 import "./ShowUsersBooked.css";
 
 const ShowUsersBooked = ({ idExp, idDate, dates }) => {
-  console.log("idExp: ", idExp);
-  console.log("idDate: ", idDate);
-  console.log("dates: ", dates);
-
   const history = useHistory();
   const auth = useContext(AuthContext);
   const [avatars, setAvatars] = useState([]);
@@ -32,8 +28,6 @@ const ShowUsersBooked = ({ idExp, idDate, dates }) => {
       `http://localhost:3000/api/v1/bookings/dates/${idDate}`
     );
 
-    // console.log("bookResponse: ", bookResponse);
-
     if (bookResponse.length !== 0) {
       setModalShowUsers(true);
       const arrayProfilePics = bookResponse.map((booking) => {
@@ -43,7 +37,6 @@ const ShowUsersBooked = ({ idExp, idDate, dates }) => {
           name: booking.name,
         };
       });
-      //   console.log("arrayProfilePics: ", arrayProfilePics);
       setAvatars(arrayProfilePics);
     }
   }, [idDate, sendRequest]);
@@ -67,9 +60,7 @@ const ShowUsersBooked = ({ idExp, idDate, dates }) => {
 
   const bookingHandler = () => {
     if (auth.token) {
-      history.push(
-        `/booking/${idExp}/${idDate}?eventStartDate=${dateData[0].eventStartDate}`
-      );
+      history.push(`/booking/${idExp}/${idDate}`);
     } else {
       setShowModal(true);
     }
@@ -80,9 +71,9 @@ const ShowUsersBooked = ({ idExp, idDate, dates }) => {
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner />}
       <div className="show-users-container">
-        {dateData.availablePlaces === 0 ? (
+        {dateData[0].availablePlaces === 0 ? (
           <div className="available-places">
-            <p>No quedan plazas disponibles</p>
+            <p>No quedan plazas.</p>
             <Button type="button" onClick={showModalMail}>
               Avísame cuando vuelva a estar disponible
             </Button>

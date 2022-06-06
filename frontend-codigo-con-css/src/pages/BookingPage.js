@@ -1,5 +1,5 @@
-import { useState, useContext } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useState, useContext, useCallback, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import { AuthContext } from "../store/auth-context";
 import { useForm } from "../hooks/form-hook";
@@ -21,10 +21,10 @@ const BookingPage = () => {
   const idUser = useContext(AuthContext).userId;
   const idExp = useParams().idExp;
   const idDate = useParams().idDate;
-  const { search } = useLocation();
-  const query = new URLSearchParams(search);
-  const eventStartDate = query.get("eventStartDate");
+  const [startDate, setStartDate] = useState("");
+  const [availablePlaces, setAvailablePlaces] = useState(0);
   const [bookingOk, setBookingOk] = useState(false);
+  const [showModalNotPlaces, setShowModalNotPlaces] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [formState, inputHandler] = useForm(
     {
@@ -36,12 +36,34 @@ const BookingPage = () => {
     false
   );
 
-  const formatedDate = formatDate(eventStartDate);
+  const fetchDataDate = useCallback(async () => {
+    const dataDate = await sendRequest(
+      `http://localhost:3000/api/v1/experiences/${idExp}/dates/${idDate}`,
+      "GET",
+      null,
+      { Authorization: "Bearer " + auth.token }
+    );
+
+    const dataStart = formatDate(dataDate[0].eventStartDate);
+    setStartDate(dataStart);
+
+    const dateAvailablePlaces = dataDate[0].availablePlaces;
+    setAvailablePlaces(dateAvailablePlaces);
+  }, [idExp, idDate, auth.token, sendRequest]);
+
+  useEffect(() => {
+    fetchDataDate();
+  }, [fetchDataDate]);
 
   const submitHandler = async (event) => {
     event.preventDefault();
 
     const amountBookings = formState.inputs.amount.value;
+
+    if (amountBookings > availablePlaces) {
+      setShowModalNotPlaces(true);
+      return;
+    }
 
     try {
       for (let i = 1; i <= amountBookings; i++) {
@@ -57,6 +79,10 @@ const BookingPage = () => {
       }
       setBookingOk(true);
     } catch (err) {}
+  };
+
+  const cancelHandler = () => {
+    setShowModalNotPlaces(false);
   };
 
   return (
@@ -83,13 +109,26 @@ const BookingPage = () => {
           />
         </div>
         <div style={{ marginBottom: "2rem" }}>
-          Fecha seleccionada: {formatedDate.day}/{formatedDate.month}/
-          {formatedDate.year} - {formatedDate.time}h
+          Fecha seleccionada: {startDate.day}/{startDate.month}/{startDate.year}{" "}
+          - {startDate.time}h
         </div>
 
         <Button to={`/experiences/${idExp}`}>CANCELAR</Button>
         <Button type="submit">RESERVAR</Button>
       </form>
+
+      <Modal
+        show={showModalNotPlaces}
+        footer={
+          <Button type="button" onClick={cancelHandler}>
+            OK
+          </Button>
+        }
+      >
+        <p>
+          Lo sentimos, pero no solo quedan {availablePlaces} plazas disponibles
+        </p>
+      </Modal>
 
       <Modal
         show={bookingOk}

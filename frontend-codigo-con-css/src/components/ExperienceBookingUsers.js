@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback, useContext } from "react";
-// import { useHistory } from "react-router-dom";
 
 import { useHttpClient } from "../hooks/http-hook";
 import { AuthContext } from "../store/auth-context";
@@ -14,10 +13,8 @@ import "./ExperienceBookingUsers.css";
 
 const ExperienceBookingUsers = ({ idExp }) => {
   const auth = useContext(AuthContext);
-  // const history = useHistory();
   const [dates, setDates] = useState([]);
   const [idDateToSee, setIdDateToSee] = useState(null);
-  // const [showModal, setShowModal] = useState(false);
   const [showUsers, setShowUsers] = useState(false);
   const [isShowModalMail, setIsShowModalMail] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -27,12 +24,12 @@ const ExperienceBookingUsers = ({ idExp }) => {
       `http://localhost:3000/api/v1/experiences/${idExp}/dates`
     );
 
+    console.log("resdAtes: ", resDates);
+
     const now = new Date();
     const nextDates = resDates.filter(
       (exp) => new Date(exp.eventStartDate) > now
     );
-
-    // console.log("nextDates: ", nextDates);
 
     const formatNextDates = nextDates.map((date) => {
       const startDate = formatDate(date.eventStartDate);
@@ -55,8 +52,6 @@ const ExperienceBookingUsers = ({ idExp }) => {
       };
     });
 
-    // console.log("formatNextDates: ", formatNextDates);
-
     setDates(formatNextDates);
   }, [idExp, sendRequest]);
 
@@ -69,16 +64,7 @@ const ExperienceBookingUsers = ({ idExp }) => {
     setShowUsers(true);
   };
 
-  // const bookingHandler = () => {
-  //   if (auth.token) {
-  //     history.push(`/booking/${idExp}`);
-  //   } else {
-  //     setShowModal(true);
-  //   }
-  // };
-
   const cancelHandler = () => {
-    // setShowModal(false);
     setIsShowModalMail(false);
   };
 
@@ -133,15 +119,6 @@ const ExperienceBookingUsers = ({ idExp }) => {
               disponibles.
             </p>
           )}
-          {/* <div>
-            {dates.length !== 0 && dates.availablePlaces !== 0 && (
-              <div>
-                <Button type="button" onClick={bookingHandler}>
-                  RESERVAR
-                </Button>
-              </div>
-            )}
-          </div> */}
         </div>
 
         <div>
@@ -149,19 +126,6 @@ const ExperienceBookingUsers = ({ idExp }) => {
             <ShowUsersBooked idExp={idExp} idDate={idDateToSee} dates={dates} />
           )}
         </div>
-
-        {/* <Modal
-          show={showModal}
-          onCancel={cancelHandler}
-          footer={
-            <div>
-              <Button onClick={cancelHandler}>CANCELAR</Button>
-              <Button to={`/login?experience=${idExp}`}>LOGIN</Button>
-            </div>
-          }
-        >
-          <p>Para poder reservar una experiencia tienes que iniciar sesión</p>
-        </Modal> */}
 
         <Modal
           show={isShowModalMail}
