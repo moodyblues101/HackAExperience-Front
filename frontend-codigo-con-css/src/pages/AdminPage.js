@@ -11,7 +11,7 @@ const AdminPage = () => {
             <div className="circle-il"></div>
             <Link to="/user/admin/new-experience">Gestionar experiencias</Link>
           </li>
-          {/* <li className="admin-il">
+          <li className="admin-il">
             <div className="circle-il"></div>
             <Link to="/user/admin/new-experience">Añadir experiencia</Link>
           </li>
@@ -30,7 +30,7 @@ const AdminPage = () => {
             <Link to="/user/admin/manage-experience-comments">
               Gestionar comentarios
             </Link>
-          </li> */}
+          </li>
           <li className="admin-il">
             <div className="circle-il"></div>
             <Link to="/user/admin/business">
