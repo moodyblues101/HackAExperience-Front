@@ -137,7 +137,7 @@ const OptionAddReview = ({ experiences }) => {
                         <Button to={`/experiences/${exp.id}`}>VER</Button>
                       </div>
                       {exp.isNotCommented && (
-                        <div>
+                        <div className="add-review-btn">
                           <Button
                             type="button"
                             onClick={() => {

@@ -46,6 +46,11 @@ const NavLinksSide = () => {
             </button>
           </li>
         )}
+        <div className="nav-link-side-search-btn">
+          <li className="li-side">
+            <Link to="/search">Búsqueda</Link>
+          </li>
+        </div>
       </ul>
     </>
   );

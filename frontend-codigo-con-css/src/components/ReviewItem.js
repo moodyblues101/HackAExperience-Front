@@ -11,17 +11,22 @@ const ReviewItem = (props) => {
           alt="profile pic"
         />
       </div>
-      <div className="review-comment-container">{props.comment}</div>
-      <div>
-        {props.rating !== null && (
-          <ReactStars
-            value={props.rating}
-            count={5}
-            size={24}
-            activeColor="#ffd700"
-            edit={false}
-          />
-        )}
+      <div className="review-list-container-li-div">
+        <div className="review-list-name-rating-container">
+          <div className="light-text">{props.userName}</div>
+          <div>
+            {props.rating !== null && (
+              <ReactStars
+                value={props.rating}
+                count={5}
+                size={24}
+                activeColor="#ffd700"
+                edit={false}
+              />
+            )}
+          </div>
+        </div>
+        <div className="review-comment-container">{props.comment}</div>
       </div>
     </li>
   );

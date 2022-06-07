@@ -8,6 +8,8 @@ import Button from "../../ui/FormElements/Button";
 import LoadingSpinner from "../../ui/LoadingSpinner";
 import Modal from "../../ui/Modal";
 
+import "./DeleteUser.css";
+
 const DeleteUser = () => {
   const params = useParams();
   const auth = useContext(AuthContext);
@@ -43,14 +45,16 @@ const DeleteUser = () => {
         <p>{error}</p>
       </Modal>
       {isLoading && <LoadingSpinner />}
-      <Card>
-        <p>¿Está seguro de que quiere darse de baja?</p>
-        <p>Todos sus datos serán eliminados.</p>
-        <Button type="button" onClick={deleteUserHandler}>
-          OK
-        </Button>
-        <Button to={`/user/${params.userId}/personal`}>VOLVER</Button>
-      </Card>
+      <div className="delete-user-container">
+        <Card>
+          <p>¿Está seguro de que quiere darse de baja?</p>
+          <p>Todos sus datos serán eliminados.</p>
+          <Button type="button" onClick={deleteUserHandler}>
+            OK
+          </Button>
+          <Button to={`/user/${params.userId}/personal`}>VOLVER</Button>
+        </Card>
+      </div>
       {isDeleted && (
         <Modal
           show={!error}

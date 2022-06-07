@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 
+import { BriefcaseIcon, CollectionIcon } from "@heroicons/react/outline";
+
 import "./AdminPage.css";
 
 const AdminPage = () => {
@@ -8,8 +10,11 @@ const AdminPage = () => {
       <div className="admin-container">
         <ul className="admin-ul">
           <li className="admin-il">
-            <div className="circle-il"></div>
-            <Link to="/user/admin/experiences">Gestionar experiencias</Link>
+            {/* <div className="circle-il"></div> */}
+            <Link to="/user/admin/experiences">
+              <CollectionIcon className="user-admin-icon" />
+              <p>Gestionar experiencias</p>
+            </Link>
           </li>
           {/* <li className="admin-il">
             <div className="circle-il"></div>
@@ -32,9 +37,10 @@ const AdminPage = () => {
             </Link>
           </li> */}
           <li className="admin-il">
-            <div className="circle-il"></div>
+            {/* <div className="circle-il"></div> */}
             <Link to="/user/admin/business">
-              Gestionar empresas colaboradoras
+              <BriefcaseIcon className="user-admin-icon" />
+              <p>Gestionar empresas colaboradoras</p>
             </Link>
           </li>
         </ul>

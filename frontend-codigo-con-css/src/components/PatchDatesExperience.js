@@ -307,11 +307,13 @@ const PatchDatesExperience = ({ idExp }) => {
               <option value="30">30</option>
               <option value="45">45</option>
             </select>
-            <div>
+            <div className="patch-date-btn-container">
               <Button type="submit" disabled={!formState.isValid}>
                 AÑADIR
               </Button>
-              <Button to="/user/admin/experiences">VOLVER</Button>
+              <div className="patch-date-back-btn">
+                <Button to="/user/admin/experiences">VOLVER</Button>
+              </div>
             </div>
           </form>
         </>

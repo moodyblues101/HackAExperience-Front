@@ -37,6 +37,7 @@
 .stars-landing {
   margin: 0 auto;
 }
+
 .img-exp-container {
   width: 10rem;
   height: 10rem;
@@ -45,6 +46,7 @@
 .name-exp-container {
   max-width: 10rem;
 }
+
 .landing-section-container img {
   height: 100%;
   width: 100%;
@@ -54,13 +56,11 @@
 .landing-reviews-container ul {
   list-style: none;
   padding: 0;
-
   display: flex;
   flex-direction: row;
-  max-height: 10rem;
 }
 
-.landing-reviews-container-li {
+.landing-reviews-container li {
   margin-right: 1rem;
   margin-bottom: 2rem;
   display: flex;
@@ -72,6 +72,7 @@
 .avatar-container {
   text-align: center;
 }
+
 .avatar-container img {
   height: 6rem;
   width: 6rem;
@@ -97,19 +98,21 @@
 
 @media (max-width: 768px) {
   .landing-section-container ul {
+    padding-left: 40px;
     flex-wrap: wrap;
+    justify-content: space-between;
   }
 
   .img-exp-container {
-    width: 7rem;
-    height: 7rem;
+    width: 8rem;
+    height: 8rem;
   }
 
   .landing-reviews-container ul {
-    flex-wrap: wrap;
+    flex-direction: column;
   }
 
-  .landing-reviews-container-li {
+  .landing-reviews-container li {
     flex-basis: 100%;
   }
 }

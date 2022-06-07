@@ -19,3 +19,15 @@
 .nav-cat-ul .active {
   color: #fd8210;
 }
+
+@media (max-width: 768px) {
+  .nav-cat-ul {
+    padding-left: 0;
+  }
+  .nav-cat-ul li {
+    display: inline;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    font-size: medium;
+  }
+}

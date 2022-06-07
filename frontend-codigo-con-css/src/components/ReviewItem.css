@@ -6,13 +6,21 @@
   margin-bottom: 2rem;
 }
 
-.review-list-container-li div {
+.review-list-container-li-div {
   margin-left: 1rem;
 }
 .review-list-container-li img {
   height: 6rem;
   width: 6rem;
   border-radius: 50%;
+}
+
+.review-list-name-rating-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
 }
 
 .review-comment-container {

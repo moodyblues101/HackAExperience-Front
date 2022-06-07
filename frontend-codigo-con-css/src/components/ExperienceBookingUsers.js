@@ -24,8 +24,6 @@ const ExperienceBookingUsers = ({ idExp }) => {
       `http://localhost:3000/api/v1/experiences/${idExp}/dates`
     );
 
-    console.log("resdAtes: ", resDates);
-
     const now = new Date();
     const nextDates = resDates.filter(
       (exp) => new Date(exp.eventStartDate) > now

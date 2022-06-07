@@ -15,6 +15,7 @@ const ReviewList = (props) => {
             comment={review.comment}
             rating={review.rating}
             avatar={review.profilePic}
+            userName={review.userName}
           />
         ))}
       </ul>

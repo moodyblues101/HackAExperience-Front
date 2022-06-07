@@ -50,7 +50,6 @@ const AllExperiences = () => {
 
         expWithDates.push({ ...exp, dates, imgExp: imgExp[0] });
       }
-      // console.log("expwhithdates: ", expWithDates);
 
       const now = new Date();
 
@@ -62,7 +61,6 @@ const AllExperiences = () => {
         }
       }
 
-      // console.log("nextExp: ", nextExp);
       setNextExperiences(nextExp);
     } catch (err) {}
   }, [sendRequest]);
@@ -79,10 +77,6 @@ const AllExperiences = () => {
     const category = categoryRef.current.value;
     const date = dateRef.current.value;
 
-    // console.log("ciudad: ", city);
-    // console.log("categoria: ", category);
-    // console.log("fecha: ", date);
-
     let filteredExperiences;
     if (city.length !== 0) {
       filteredExperiences = nextExperiences.filter(
@@ -94,13 +88,9 @@ const AllExperiences = () => {
       });
     }
 
-    // console.log("filteredExp1: ", filteredExperiences);
-    // console.log("filteredExp1 long: ", filteredExperiences.length);
-
     let filtExp2;
     if (category.length !== 0) {
       filtExp2 = filteredExperiences.filter((exp) => {
-        // console.log("id categoria exp: ", exp.idCategory);
         return exp.idCategory === +category;
       });
     } else {
@@ -111,7 +101,6 @@ const AllExperiences = () => {
 
     let finalFilterExp;
 
-    // console.log("date: ", date);
     if (date.length !== 0) {
       const almostFinalFilterExp = filtExp2.map((exp) => {
         const formatDates = exp.dates.map((date) => {
@@ -124,7 +113,6 @@ const AllExperiences = () => {
         });
         return { ...exp, dates: formatDates };
       });
-      // console.log("formatDaes: ", almostFinalFilterExp);
 
       finalFilterExp = almostFinalFilterExp.filter((exp) =>
         exp.dates.includes(date)
@@ -134,8 +122,6 @@ const AllExperiences = () => {
         return { ...exp };
       });
     }
-
-    // console.log("filteredExp3: ", finalFilterExp);
 
     if (finalFilterExp.length === 0) {
       setShowList(false);
@@ -222,11 +208,15 @@ const AllExperiences = () => {
 
       {showList && (
         <div>
-          <div className="search-btn-sort">
-            <Button type="button" onClick={changeSortHandler}>
-              {isSortAscending ? "De mayor a menor" : "De menor a mayor"}
-            </Button>
-          </div>
+          {sortedExperiences.length !== 0 && (
+            <div className="search-btn-sort">
+              <Button type="button" onClick={changeSortHandler}>
+                {isSortAscending
+                  ? "Precio de mayor a menor"
+                  : "Precio de menor a mayor"}
+              </Button>
+            </div>
+          )}
           {sortedExperiences.length > 0 ? (
             <Pagination
               data={sortedExperiences}

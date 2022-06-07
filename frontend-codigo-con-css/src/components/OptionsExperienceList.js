@@ -89,7 +89,7 @@ const OptionsExperienceList = ({ experiences }) => {
                           VER
                         </Button>
                       </div>
-                      <div>
+                      <div className="add-review-btn ">
                         <Button
                           type="button"
                           onClick={() => {

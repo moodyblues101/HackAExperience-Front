@@ -41,7 +41,7 @@ const ManageExperiences = () => {
   };
 
   return (
-    <>
+    <div className="manage-experience-container">
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner />}
       <div className="manage-exp-btn-new">
@@ -121,7 +121,7 @@ const ManageExperiences = () => {
           </tbody>
         </table>
       </div>
-    </>
+    </div>
   );
 };
 

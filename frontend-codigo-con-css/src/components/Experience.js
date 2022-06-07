@@ -20,10 +20,10 @@ const Experience = (props) => {
             alt="experience"
           />
         </div>
-        <div>{props.name}</div>
-        <div>{props.city}</div>
+        <div className="exp-list-name">{props.name}</div>
+        <div className="light-text">{props.city}</div>
         <div>{props.price}€</div>
-        <div>{startDate}</div>
+        <div className="light-text">{startDate}</div>
       </Link>
     </li>
   );

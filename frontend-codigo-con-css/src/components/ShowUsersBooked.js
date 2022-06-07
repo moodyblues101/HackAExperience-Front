@@ -14,6 +14,7 @@ const ShowUsersBooked = ({ idExp, idDate, dates }) => {
   const history = useHistory();
   const auth = useContext(AuthContext);
   const [avatars, setAvatars] = useState([]);
+  const [avatarsShow, setAvatarsShow] = useState([]);
   const [modalShowUsers, setModalShowUsers] = useState(false);
   const [isShowModalMail, setIsShowModalMail] = useState(false);
   const [showUsersBooked, setShowUsersBooked] = useState(false);
@@ -37,7 +38,15 @@ const ShowUsersBooked = ({ idExp, idDate, dates }) => {
           name: booking.name,
         };
       });
+
+      const arrayShowPics = [];
+
+      for (let i = 0; i < arrayProfilePics.length && i < 5; i++) {
+        arrayShowPics.push(arrayProfilePics[i]);
+      }
+
       setAvatars(arrayProfilePics);
+      setAvatarsShow(arrayShowPics);
     }
   }, [idDate, sendRequest]);
 
@@ -98,7 +107,7 @@ const ShowUsersBooked = ({ idExp, idDate, dates }) => {
           {avatars.length !== 0 && modalShowUsers && (
             <div>
               <ul>
-                {avatars.map((user, index) => {
+                {avatarsShow.map((user, index) => {
                   return (
                     <li key={index}>
                       <img

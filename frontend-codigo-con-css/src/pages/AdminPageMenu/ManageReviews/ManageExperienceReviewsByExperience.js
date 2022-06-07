@@ -7,6 +7,8 @@ import Button from "../../../ui/FormElements/Button";
 import { useForm } from "../../../hooks/form-hook";
 import GetReviews from "../../../components/GetReviews";
 
+import "./ManageExperienceReviewsByExperience.css";
+
 const ManageExperienceReviewsByExperience = () => {
   const idExp = useParams().idExp;
   // const [isExpShow, setIsExpShow] = useState(false);
@@ -53,7 +55,9 @@ const ManageExperienceReviewsByExperience = () => {
           urlPath="experiences"
         />
       )} */}
-      <GetReviews idToGet={idExp} urlPath="experiences" />
+      <div className="manage-reviews-exp-container">
+        <GetReviews idToGet={idExp} urlPath="experiences" />
+      </div>
     </React.Fragment>
   );
 };

@@ -1,4 +1,5 @@
 .exp-book-user-container {
+  margin: 0;
   display: flex;
 }
 .exp-book-input {

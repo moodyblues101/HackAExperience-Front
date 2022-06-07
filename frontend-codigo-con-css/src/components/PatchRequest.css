@@ -5,3 +5,22 @@
   margin: 0 auto;
   max-width: 40rem;
 }
+
+.patch-req-btn-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .patch-req-form {
+    width: 100%;
+  }
+  .patch-req-btn-container {
+    flex-wrap: wrap;
+  }
+
+  .patch-req-btn-cancel {
+    margin-top: 1rem;
+  }
+}

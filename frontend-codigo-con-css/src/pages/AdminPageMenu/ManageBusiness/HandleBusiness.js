@@ -9,6 +9,8 @@ import Modal from "../../../ui/Modal";
 import UpdateBusiness from "./UpdateBusiness";
 import formatDate from "../../../util/formatDate";
 
+import "./HandleBusiness.css";
+
 const HandleBusiness = () => {
   const auth = useContext(AuthContext);
   const [businessList, setBusinessList] = useState([]);
@@ -66,7 +68,7 @@ const HandleBusiness = () => {
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner />}
       {showList && (
-        <div>
+        <div className="handle-business-container">
           <h2>Listado de empresas</h2>
           <table>
             <thead>
@@ -91,19 +93,21 @@ const HandleBusiness = () => {
                         formatDate(bus.createdAt).year}
                     </td>
                     <td>
-                      <div>
+                      <div className="handle-business-btn-container">
                         <Button
                           type="button"
                           onClick={() => updateHandler(bus.id, bus.name)}
                         >
                           ACTUALIZAR
                         </Button>
-                        <Button
-                          type="button"
-                          onClick={() => deleteHandler(bus.id)}
-                        >
-                          BORRAR
-                        </Button>
+                        <div className="handle-business-del-btn">
+                          <Button
+                            type="button"
+                            onClick={() => deleteHandler(bus.id)}
+                          >
+                            BORRAR
+                          </Button>
+                        </div>
                       </div>
                     </td>
                   </tr>

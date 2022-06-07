@@ -14,15 +14,9 @@
 }
 
 .li-side {
-  /* border: #fd8210; */
-  /* color: #fd8210; */
-  /* line-height: 2; */
   padding: 0 10px;
   margin-right: 1rem;
   font-size: 1rem;
-  /* text-align: center; */
-  /* border-radius: 8px; */
-  /* background-color: white; */
 }
 
 .li-side a,
@@ -63,4 +57,8 @@
   text-align: center;
   border-radius: 8px;
   background-color: white;
+}
+
+.nav-link-side-search-btn {
+  margin-top: 3rem;
 }

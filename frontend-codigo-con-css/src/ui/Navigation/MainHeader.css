@@ -12,12 +12,6 @@
   padding: 0 1.5rem;
 }
 
-/* main {
-  margin-top: 5rem;
-  position: relative;
-  min-height: 100vh;
-} */
-
 @media (min-width: 768px) {
   .main-header {
     justify-content: space-between;

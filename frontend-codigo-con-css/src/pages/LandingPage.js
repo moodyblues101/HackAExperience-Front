@@ -102,12 +102,12 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="landing-page">
+    <>
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner />}
 
-      <h2>Experiencias mejor valoradas</h2>
       <div className="landing-section-container">
+        <h2>Experiencias mejor valoradas</h2>
         <ul>
           {experiences.map((exp) => (
             <li key={exp.id}>
@@ -132,8 +132,8 @@ const LandingPage = () => {
         </ul>
       </div>
 
-      <h2>Opininiones de nuestros clientes</h2>
       <div className="landing-reviews-container">
+        <h2>Opiniones de nuestros clientes</h2>
         <ul>
           {reviews.map((review) => (
             <Review
@@ -146,8 +146,8 @@ const LandingPage = () => {
         </ul>
       </div>
 
-      <h2>Experiencias mas buscadas</h2>
       <div className="landing-section-container">
+        <h2>Experiencias mas buscadas</h2>
         <ul>
           {expMostVisited.map((exp) => (
             <li key={exp.id}>
@@ -201,7 +201,7 @@ const LandingPage = () => {
         <label>Introduce tu email:</label>
         <input type="email" />
       </Modal>
-    </div>
+    </>
   );
 };
 

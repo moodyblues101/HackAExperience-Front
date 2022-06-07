@@ -11,3 +11,13 @@
   display: block;
   margin-bottom: 10px;
 }
+
+@media (max-width: 768px) {
+  .btn-container {
+    flex-wrap: wrap;
+  }
+
+  .add-review-btn {
+    margin-top: 1rem;
+  }
+}

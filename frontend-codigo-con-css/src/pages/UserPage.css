@@ -1,16 +1,25 @@
 .user-ul {
-  margin: 0;
+  width: 75%;
+  margin: 5rem auto;
   padding: 0;
   list-style: none;
+  text-align: center;
+
+  display: flex;
+  flex-direction: row;
 }
 
 .user-li {
-  margin: 14x 0;
-  padding-left: 25px;
+  margin: 0 auto;
+  padding-right: 35px;
   padding-bottom: 1rem;
 
   display: flex;
+  flex-direction: column;
   align-items: center;
+}
+.user-li p {
+  margin-top: 0;
 }
 
 .user-li a {
@@ -19,6 +28,17 @@
 }
 
 .user-li a:hover {
+  color: #fd8210;
+  transform: scale(1.07);
+}
+
+.user-icon {
+  height: 10rem;
+  color: #fd8210;
+}
+
+.user-personal-icon {
+  height: 7rem;
   color: #fd8210;
 }
 
@@ -40,4 +60,10 @@
 
 .back-menu a:hover {
   color: #fd8210;
+}
+
+@media (max-width: 768px) {
+  .user-ul {
+    flex-wrap: wrap;
+  }
 }

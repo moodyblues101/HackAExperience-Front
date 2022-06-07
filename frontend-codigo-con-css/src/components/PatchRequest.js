@@ -166,19 +166,25 @@ const PatchRequest = (props) => {
             initialValue={loadedData}
             initialValid={true}
           />
-          <Button type="submit" disabled={!formState.isValid}>
-            MODIFICAR
-          </Button>
-          <Button
-            to={
-              props.urlRoute === "users"
-                ? `/user/${props.id}/personal`
-                : "/user/admin/experiences"
-            }
-            exact="exact"
-          >
-            CANCELAR
-          </Button>
+          <div className="patch-req-btn-container">
+            <div>
+              <Button type="submit" disabled={!formState.isValid}>
+                MODIFICAR
+              </Button>
+            </div>
+            <div className="patch-req-btn-cancel">
+              <Button
+                to={
+                  props.urlRoute === "users"
+                    ? `/user/${props.id}/personal`
+                    : "/user/admin/experiences"
+                }
+                exact="exact"
+              >
+                CANCELAR
+              </Button>
+            </div>
+          </div>
         </form>
       )}
 

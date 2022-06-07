@@ -34,7 +34,7 @@ const DeleteExperience = () => {
   };
 
   return (
-    <>
+    <div className="delete-experience-container">
       <p>Se va a borrar la experiencia {idExp}</p>
       <p>¿Estás seguro?</p>
       <div>
@@ -85,7 +85,7 @@ const DeleteExperience = () => {
         <p>¿Estas seguro de querer borrar la experiencia {experienceId}?</p>
       </Modal> */}
       {delExperience && <DeleteRequest id={idExp} />}
-    </>
+    </div>
   );
 };
 

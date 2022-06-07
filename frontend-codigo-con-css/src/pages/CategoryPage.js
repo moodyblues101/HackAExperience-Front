@@ -52,39 +52,28 @@ const CategoryPage = () => {
         `http://localhost:3000/api/v1/categories/${idCat}/experiences`
       );
 
-      // console.log("resExp: ", resExp);
-
       const now = new Date();
       const arrayNextExperiences = [];
-
-      // const arrayNextExperiences = resExp.filter(
-      //   (exp) => new Date(exp.eventStartDate) > now
-      // );
 
       for (let i = 0; i < resExp.length; i++) {
         const dateExp = await sendRequest(
           `http://localhost:3000/api/v1/experiences/${resExp[i].id}/dates`
         );
-        // console.log("dateExp: ", dateExp);
 
         const nextDates = dateExp.filter(
           (date) => new Date(date.eventStartDate) > now
         );
 
-        // console.log("nextDates: ", nextDates);
         if (nextDates.length !== 0) {
           arrayNextExperiences.push({ ...resExp[i], dates: nextDates });
         }
       }
-      // console.log("arrayNext: ", arrayNextExperiences);
 
       const arrayShowExp = [];
 
       for (let i = 0; i < arrayNextExperiences.length && i < 4; i++) {
         arrayShowExp.push(arrayNextExperiences[i]);
       }
-
-      // console.log("arrayShowExp: ", arrayShowExp);
 
       const imgAdded = [];
 

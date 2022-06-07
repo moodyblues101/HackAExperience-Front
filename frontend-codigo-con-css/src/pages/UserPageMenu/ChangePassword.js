@@ -11,6 +11,8 @@ import { useHttpClient } from "../../hooks/http-hook";
 import { AuthContext } from "../../store/auth-context";
 import { useParams } from "react-router-dom";
 
+import "./ChangePassword.css";
+
 const ChangePassword = () => {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -72,12 +74,12 @@ const ChangePassword = () => {
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
       {!isLoading && (
-        <form className="place-form" onSubmit={passwordUpdateSubmitHandler}>
+        <form className="password-form" onSubmit={passwordUpdateSubmitHandler}>
           <Input
             id="password"
             element="input"
             type="password"
-            label="Contraseña"
+            label="Nueva contraseña:"
             validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(4)]}
             errorText="Por favor, introduce una contraseña válida (de al menos 4 caracteres)."
             onInput={inputHandler}
@@ -88,17 +90,21 @@ const ChangePassword = () => {
             id="repeatedPassword"
             element="input"
             type="password"
-            label="Repetir contraseña"
+            label="Repetir contraseña:"
             validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(4)]}
             errorText="Por favor, introduce una contraseña válida (de al menos 4 caracteres)."
             onInput={inputHandler}
             initialValue=""
             initialValid={true}
           />
-          <Button type="submit" disabled={!formState.isValid}>
-            ACTUALIZAR CONTRASEÑA
-          </Button>
-          <Button to={`/user/${userId}/personal`}>CANCELAR</Button>
+          <div className="change-password-btn-container">
+            <Button type="submit" disabled={!formState.isValid}>
+              ACTUALIZAR CONTRASEÑA
+            </Button>
+            <div className="change-password-cancel-btn">
+              <Button to={`/user/${userId}/personal`}>CANCELAR</Button>
+            </div>
+          </div>
         </form>
       )}
     </React.Fragment>

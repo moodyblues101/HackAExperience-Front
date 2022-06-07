@@ -1,3 +1,7 @@
+.modify-experience-container {
+  margin-top: 6rem;
+}
+
 .modify-menu-container {
   text-align: center;
   margin-bottom: 2rem;
@@ -20,4 +24,13 @@
 
 .field-exp-label {
   padding-right: 1rem;
+}
+
+@media (max-width: 768px) {
+  .btn-back {
+    text-align: center;
+  }
+  .modifiy-exp-another-fields-btn {
+    margin-top: 1rem;
+  }
 }

@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 
 import PatchRequest from "../../components/PatchRequest";
 
-import "./AddName.css";
+// import "./AddName.css";
 
 const AddName = () => {
   const userId = useParams().userId;
