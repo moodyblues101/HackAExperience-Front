@@ -61,9 +61,9 @@ const ManageExperiences = () => {
             </tr>
           </thead>
           <tbody>
-            {experiencesList.map((exp) => {
+            {experiencesList.map((exp, index) => {
               return (
-                <tr key={exp.id}>
+                <tr key={index}>
                   <td>{exp.id}</td>
                   <td>{exp.name}</td>
                   <td>{exp.city}</td>

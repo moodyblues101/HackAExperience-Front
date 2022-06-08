@@ -132,7 +132,7 @@ const ReactivateExperience = ({ idExp }) => {
       formData.append("description", formState.inputs.description.value);
       formData.append("city", formState.inputs.city.value);
       formData.append("price", formState.inputs.price.value);
-      formData.append("totalPlaces", formState.inputs.totalPlaces.value);
+      // formData.append("totalPlaces", formState.inputs.totalPlaces.value);
       formData.append("idCategory", formState.inputs.idCategory.value);
       formData.append("idBusiness", formState.inputs.idBusiness.value);
 
@@ -155,6 +155,8 @@ const ReactivateExperience = ({ idExp }) => {
         "eventEndDate",
         formState.inputs.eventEndDate.value + " " + endTime
       );
+
+      formDate.append("totalPlaces", formState.inputs.totalPlaces.value);
 
       await sendRequest(
         `http://localhost:3000/api/v1/experiences/${experienceId}/dates`,

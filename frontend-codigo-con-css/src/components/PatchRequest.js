@@ -147,7 +147,7 @@ const PatchRequest = (props) => {
     if (props.urlRoute === "users") {
       history.replace(`/user/${props.id}/personal`);
     } else {
-      history.push("/user/admin/");
+      history.push("/user/admin/experiences");
     }
   };
 

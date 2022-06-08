@@ -9,6 +9,12 @@
   border: 1px solid black;
 }
 
+.modify-experience-btn-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 .btn-back {
   margin-top: 2rem;
   text-align: left;
@@ -27,10 +33,14 @@
 }
 
 @media (max-width: 768px) {
+  .modify-experience-btn-container {
+    flex-wrap: wrap;
+  }
+
+  .modify-experience-btn-container div {
+    margin-top: 1rem;
+  }
   .btn-back {
     text-align: center;
-  }
-  .modifiy-exp-another-fields-btn {
-    margin-top: 1rem;
   }
 }

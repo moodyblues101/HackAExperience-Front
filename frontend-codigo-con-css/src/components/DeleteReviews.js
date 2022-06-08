@@ -88,9 +88,7 @@ const DeleteReviews = ({ reviews, urlPath }) => {
       {deleted && (
         <Modal
           show={!error}
-          footer={
-            <Button to="/user/admin/manage-experience-comments">OK</Button>
-          }
+          footer={<Button to="/user/admin/experiences">OK</Button>}
         >
           <p>Review(s) borrada(s) correctamente</p>
         </Modal>

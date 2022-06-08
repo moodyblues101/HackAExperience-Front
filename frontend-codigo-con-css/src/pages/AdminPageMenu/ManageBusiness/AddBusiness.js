@@ -46,7 +46,7 @@ const AddBusiness = () => {
 
   const cancelHandler = () => {
     setIsAdded(false);
-    history.push("/user/admin/business");
+    history.push("/user/admin/business/manage");
   };
   return (
     <>

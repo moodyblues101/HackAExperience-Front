@@ -79,7 +79,7 @@ const UpdateBusiness = ({ id, name }) => {
             initialValid={true}
           />
           <div>
-            <Button to="/user/admin/business">VOLVER</Button>
+            <Button to="/user/admin/business/manage">VOLVER</Button>
             <Button type="submit">ACTUALIZAR</Button>
           </div>
         </form>

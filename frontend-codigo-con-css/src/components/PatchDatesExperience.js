@@ -21,19 +21,17 @@ const PatchDatesExperience = ({ idExp }) => {
   const endTimeMinutesRef = useRef();
   const [datesExp, setDatesExp] = useState([]);
   const [dateSelected, setDateSelected] = useState();
+  const [totalPlacesSel, setTotalPlacesSel] = useState();
   const [activateBtn, setActivatedBtn] = useState(false);
-  const [isFieldsShow, setIsFieldShow] = useState(true);
+  const [isTotalPlacesShow, setIsTotalPlacesShow] = useState(false);
   const [isExpDateShow, setIsExpDateShow] = useState(false);
   const [showInputNewDate, setShowInputNewDate] = useState(false);
+  const [showInputNewTotalPlaces, setShowInputNewTotalPlaces] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isPatchOk, setIsPatchOk] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [formState, inputHandler] = useForm(
     {
-      idExperience: {
-        value: null,
-        isValid: false,
-      },
       eventStartDate: {
         value: null,
         isValid: false,
@@ -47,14 +45,17 @@ const PatchDatesExperience = ({ idExp }) => {
   );
 
   const fetchExperienceDates = useCallback(async () => {
-    // setIsFieldShow(false);
     try {
       const response = await sendRequest(
         `http://localhost:3000/api/v1/experiences/${idExp}/dates`
       );
 
-      setDatesExp(response);
-      setIsExpDateShow(true);
+      const now = new Date().getTime();
+      const datesFuture = response.filter(
+        (date) => new Date(date.eventStartDate).getTime() > now
+      );
+
+      setDatesExp(datesFuture);
     } catch (err) {}
   }, [idExp, sendRequest]);
 
@@ -63,10 +64,12 @@ const PatchDatesExperience = ({ idExp }) => {
   }, [fetchExperienceDates]);
 
   const showInputNewDateHandler = () => {
-    setShowInputNewDate(true);
+    // setShowInputNewDate(true);
+    setShowInputNewDate(!showInputNewDate);
+    setShowInputNewTotalPlaces(false);
   };
 
-  const submitHandler = async (event) => {
+  const submitDatesHandler = async (event) => {
     event.preventDefault();
 
     const startTime =
@@ -106,9 +109,10 @@ const PatchDatesExperience = ({ idExp }) => {
 
       formDate.append("eventStartDate", startDateAndTime);
       formDate.append("eventEndDate", endDateAndTime);
+      formDate.append("totalPlaces", totalPlacesSel);
 
       await sendRequest(
-        `http://localhost:3000/api/v1/experiences/${formState.inputs.idExperience.value}/dates/${dateSelected}`,
+        `http://localhost:3000/api/v1/experiences/${idExp}/dates/${dateSelected}`,
         "PATCH",
         formDate,
         { Authorization: "Bearer " + auth.token }
@@ -117,7 +121,46 @@ const PatchDatesExperience = ({ idExp }) => {
     } catch (err) {}
     setShowInputNewDate(false);
     setIsExpDateShow(false);
-    setIsFieldShow(true);
+  };
+
+  const showDatesHandler = () => {
+    setActivatedBtn(false);
+    setIsExpDateShow(true);
+    setIsTotalPlacesShow(false);
+    setShowInputNewTotalPlaces(false);
+  };
+
+  const showtotalPlacesHandler = () => {
+    setActivatedBtn(false);
+    setIsTotalPlacesShow(true);
+    setIsExpDateShow(false);
+    showInputNewDateHandler(false);
+  };
+
+  const showInputNewtotalPlacesHandler = () => {
+    // setShowInputNewTotalPlaces(true);
+    setShowInputNewTotalPlaces(!showInputNewTotalPlaces);
+    setShowInputNewDate(false);
+  };
+
+  const submitTotalPlacesHandler = async (event) => {
+    event.preventDefault();
+
+    try {
+      const formDate = new FormData();
+
+      formDate.append("totalPlaces", totalPlacesSel);
+
+      await sendRequest(
+        `http://localhost:3000/api/v1/experiences/${idExp}/dates/${dateSelected}`,
+        "PATCH",
+        formDate,
+        { Authorization: "Bearer " + auth.token }
+      );
+      setIsPatchOk(true);
+    } catch (err) {}
+    setIsTotalPlacesShow(false);
+    setShowInputNewTotalPlaces(false);
   };
 
   const cancelModalHandler = () => {
@@ -129,31 +172,24 @@ const PatchDatesExperience = ({ idExp }) => {
     <div className="patch-dates-container">
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner />}
-      {/* {isFieldsShow && (
-        <div className="patch-input-id">
-          <div>
-            <Input
-              id="idExperience"
-              element="input"
-              type="number"
-              label="Introduce id de la experiencia a modificar:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Por favor, introduzca una id válida."
-              onInput={inputHandler}
-            />
-          </div>
-          <Button type="button" onClick={isExpDateShowHandler}>
-            MOSTRAR FECHAS
+
+      <div className="patch-dates-menu-btns">
+        <Button type="button" onClick={showDatesHandler}>
+          FECHAS
+        </Button>
+        <div className="patch-date-back-btn">
+          <Button type="button" onClick={showtotalPlacesHandler}>
+            TOTAL DE PLAZAS
           </Button>
         </div>
-      )} */}
+      </div>
 
       {isExpDateShow && (
-        <div>
+        <div className="patch-experience-dates-container">
           <label
             className="patch-exp-label"
             htmlFor="date"
-          >{`Selecciona fecha a modificar de la experiencia ${formState.inputs.idExperience.value}:  `}</label>
+          >{`Selecciona fecha a modificar de la experiencia ${idExp}:  `}</label>
           <table className="patch-date-show-table">
             <thead>
               <tr>
@@ -177,6 +213,7 @@ const PatchDatesExperience = ({ idExp }) => {
                           value={date.id}
                           onChange={(e) => {
                             setDateSelected(e.target.value);
+                            setTotalPlacesSel(date.totalPlaces);
                             setActivatedBtn(true);
                           }}
                         />
@@ -199,6 +236,7 @@ const PatchDatesExperience = ({ idExp }) => {
               })}
             </tbody>
           </table>
+
           <div>
             <Button
               type="button"
@@ -212,9 +250,69 @@ const PatchDatesExperience = ({ idExp }) => {
         </div>
       )}
 
+      {isTotalPlacesShow && (
+        <div className="patch-experience-dates-container">
+          <label
+            className="patch-exp-label"
+            htmlFor="date"
+          >{`Selecciona plazas a modificar de la experiencia ${idExp}:  `}</label>
+          <table className="patch-date-show-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th></th>
+                <th>Plazas totales</th>
+                <th>Fecha inicio</th>
+              </tr>
+            </thead>
+            <tbody>
+              {datesExp.map((date, index) => {
+                return (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>
+                      <label>
+                        <input
+                          type="radio"
+                          id={date.id}
+                          name="date"
+                          value={date.id}
+                          onChange={(e) => {
+                            setDateSelected(e.target.value);
+                            setTotalPlacesSel(date.totalPlaces);
+                            setActivatedBtn(true);
+                          }}
+                        />
+                      </label>
+                    </td>
+                    <td>{date.totalPlaces}</td>
+                    <td>
+                      {formatDate(date.eventStartDate).day}/
+                      {formatDate(date.eventStartDate).month}/
+                      {formatDate(date.eventStartDate).year}{" "}
+                      {formatDate(date.eventStartDate).time}h
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+          <div>
+            <Button
+              type="button"
+              onClick={showInputNewtotalPlacesHandler}
+              disabled={!activateBtn}
+            >
+              SELECCIONAR
+            </Button>
+          </div>
+          <hr />
+        </div>
+      )}
+
       {showInputNewDate && (
         <>
-          <form className="patch-date-form" onSubmit={submitHandler}>
+          <form className="patch-date-form" onSubmit={submitDatesHandler}>
             <Input
               id="eventStartDate"
               element="date"
@@ -308,9 +406,7 @@ const PatchDatesExperience = ({ idExp }) => {
               <option value="45">45</option>
             </select>
             <div className="patch-date-btn-container">
-              <Button type="submit" disabled={!formState.isValid}>
-                AÑADIR
-              </Button>
+              <Button type="submit">AÑADIR</Button>
               <div className="patch-date-back-btn">
                 <Button to="/user/admin/experiences">VOLVER</Button>
               </div>
@@ -318,6 +414,28 @@ const PatchDatesExperience = ({ idExp }) => {
           </form>
         </>
       )}
+
+      {showInputNewTotalPlaces && (
+        <div className="patch-experience-dates-container">
+          <form onSubmit={submitTotalPlacesHandler}>
+            <label>Total de plazas: </label>
+            <input
+              type="number"
+              id="totalPlaces"
+              name="totalPlaces"
+              value={totalPlacesSel}
+              onChange={(e) => setTotalPlacesSel(e.target.value)}
+            />
+            <div className="patch-date-btn-container">
+              <Button type="submit">AÑADIR</Button>
+              <div className="patch-date-back-btn">
+                <Button to="/user/admin/experiences">VOLVER</Button>
+              </div>
+            </div>
+          </form>
+        </div>
+      )}
+
       <Modal
         show={showModal}
         onCancel={cancelModalHandler}
@@ -333,13 +451,9 @@ const PatchDatesExperience = ({ idExp }) => {
       <Modal
         show={isPatchOk}
         onCancel={cancelModalHandler}
-        footer={
-          <Button type="button" onClick={cancelModalHandler}>
-            OK
-          </Button>
-        }
+        footer={<Button to="/user/admin/experiences">OK</Button>}
       >
-        Fechas actualizadas correctamente
+        Datos actualizados correctamente
       </Modal>
     </div>
   );

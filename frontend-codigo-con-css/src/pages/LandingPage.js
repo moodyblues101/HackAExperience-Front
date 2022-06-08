@@ -109,8 +109,8 @@ const LandingPage = () => {
       <div className="landing-section-container">
         <h2>Experiencias mejor valoradas</h2>
         <ul>
-          {experiences.map((exp) => (
-            <li key={exp.id}>
+          {experiences.map((exp, index) => (
+            <li key={index}>
               <Link to={`/experiences/${exp.id}`}>
                 <div className="img-exp-container">
                   <img
@@ -149,8 +149,8 @@ const LandingPage = () => {
       <div className="landing-section-container">
         <h2>Experiencias mas buscadas</h2>
         <ul>
-          {expMostVisited.map((exp) => (
-            <li key={exp.id}>
+          {expMostVisited.map((exp, index) => (
+            <li key={index}>
               <Link to={`/experiences/${exp.id}`}>
                 <div className="img-exp-container">
                   <img
