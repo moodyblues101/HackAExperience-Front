@@ -49,16 +49,19 @@
 .exp-reviews-container ul {
   text-decoration: none;
   list-style: none;
+
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .exp-reviews-container li {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   margin-right: 1rem;
+  margin-bottom: 2rem;
 }
 
 .exp-reviews-container img {
