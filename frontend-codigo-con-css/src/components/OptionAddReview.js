@@ -134,7 +134,9 @@ const OptionAddReview = ({ experiences }) => {
                   <td>
                     <div className="btn-container">
                       <div>
-                        <Button to={`/experiences/${exp.id}`}>VER</Button>
+                        <Button to={`/experiences/${exp.idExperience}`}>
+                          VER
+                        </Button>
                       </div>
                       {exp.isNotCommented && (
                         <div className="add-review-btn">
