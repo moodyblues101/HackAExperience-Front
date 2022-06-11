@@ -152,7 +152,7 @@ const LandingPage = () => {
       <h3>
         Para elegir tu próxima experiencia, apúntate a nuestra newsletter
         <Button type="button" onClick={showModalHandler}>
-          SÍ, QUIERO
+          ¡Me apunto!
         </Button>
       </h3>
       <Modal

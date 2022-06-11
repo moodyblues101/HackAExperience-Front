@@ -9,10 +9,6 @@
   list-style: none;
 }
 
-.nav-container-side a {
-  text-decoration: none;
-}
-
 .li-side {
   /* border: #fd8210; */
   /* color: #fd8210; */
@@ -24,18 +20,16 @@
   /* border-radius: 8px; */
   /* background-color: white; */
 }
-
-.li-side a,
-.li-side a:active,
-.li-side a.active {
-  border: #fd8210;
+.li-login {
   color: #fd8210;
+  border: #fd8210;
   line-height: 2;
   padding: 0 20px;
   font-size: 1rem;
   text-align: center;
   border-radius: 8px;
-  background-color: white;
+  background-color: #fd8210;
+  font-family: 'Montserrat Light', arial;
 }
 
 .btn-logout-side {
@@ -48,7 +42,6 @@
   font-weight: bold;
   text-align: center;
   border-radius: 8px;
-  background-color: white;
 }
 
 .li-logout-side a,
@@ -62,5 +55,4 @@
   font-size: 1rem;
   text-align: center;
   border-radius: 8px;
-  background-color: white;
 }

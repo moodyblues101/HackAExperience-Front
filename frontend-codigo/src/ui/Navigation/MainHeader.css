@@ -1,4 +1,7 @@
 .main-header {
+  display: flex;
+
+  flex-grow: inherit;
   width: 100%;
   height: 5rem;
   position: fixed;
@@ -11,14 +14,57 @@
   padding: 0 1.5rem;
 }
 
-main {
-  margin-top: 6rem;
-  position: relative;
-  min-height: 100vh;
+.btn_login {
+  border: #fd8210;
+
+  line-height: 2;
+  padding: 0 20px;
+  margin-right: 0.5rem;
+  font-size: 1rem;
+  text-align: center;
+  border-radius: 8px;
+
+  background-color: white;
 }
 
-@media (min-width: 768px) {
-  .main-header {
-    justify-content: space-between;
-  }
+.btn_login:hover {
+  background-color: #fd8210;
+  color: white;
+}
+
+.li-register {
+  line-height: 2;
+  padding: 0 20px;
+  margin-right: 0.5rem;
+  font-size: 1rem;
+  text-align: center;
+  border-radius: 6px;
+
+  background-color: white;
+}
+
+.btn_register {
+  background-color: white;
+  line-height: 2;
+  padding: 0 20px;
+  margin-left: 0.5rem;
+  font-size: 1rem;
+  text-align: center;
+  border-radius: 6px;
+}
+
+.btn_register:hover {
+  background-color: white;
+  color: #fd8210;
+}
+*/ .btn_logout {
+  border: #fd8210;
+  color: #fd8210;
+  line-height: 2;
+  padding: 0 20px;
+  margin-right: 0.5rem;
+  font-size: 1rem;
+  text-align: center;
+  border-radius: 8px;
+  background-color: white;
 }
