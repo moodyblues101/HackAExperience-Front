@@ -1,0 +1,46 @@
+.modify-experience-container {
+  margin-top: 6rem;
+}
+
+.modify-menu-container {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 0 4rem 2rem;
+  border: 1px solid black;
+}
+
+.modify-experience-btn-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.btn-back {
+  margin-top: 2rem;
+  text-align: left;
+}
+
+.modify-id-container {
+  text-align: center;
+}
+
+.field-exp {
+  margin-bottom: 1rem;
+}
+
+.field-exp-label {
+  padding-right: 1rem;
+}
+
+@media (max-width: 768px) {
+  .modify-experience-btn-container {
+    flex-wrap: wrap;
+  }
+
+  .modify-experience-btn-container div {
+    margin-top: 1rem;
+  }
+  .btn-back {
+    text-align: center;
+  }
+}

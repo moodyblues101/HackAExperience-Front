@@ -11,7 +11,7 @@ import Input from "../ui/FormElements/Input";
 import Button from "../ui/FormElements/Button";
 import ErrorModal from "../ui/ErrorModal";
 import LoadingSpinner from "../ui/LoadingSpinner";
-import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../util/validators";
+import { VALIDATOR_REQUIRE } from "../util/validators";
 import { useForm } from "../hooks/form-hook";
 import { useHttpClient } from "../hooks/http-hook";
 import { AuthContext } from "../store/auth-context";
@@ -24,7 +24,6 @@ const ReactivateExperience = ({ idExp }) => {
   const startTimeMinutesRef = useRef();
   const endTimeHourRef = useRef();
   const endTimeMinutesRef = useRef();
-  const [files, setFiles] = useState();
   const [loadedData, setLoadedData] = useState("");
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [formState, inputHandler, setFormData] = useForm(
@@ -98,14 +97,6 @@ const ReactivateExperience = ({ idExp }) => {
           value: resExp.totalPlaces,
           isValid: true,
         },
-        eventStartDate: {
-          value: resExp.eventStartDate,
-          isValid: true,
-        },
-        eventEndDate: {
-          value: resExp.eventEndDate,
-          isValid: true,
-        },
         idCategory: {
           value: resExp.idCategory,
           isValid: true,
@@ -117,20 +108,6 @@ const ReactivateExperience = ({ idExp }) => {
       },
       true
     );
-
-    const imgExpRes = await sendRequest(
-      `http://localhost:3000/api/v1/experiences/${idExp}/images`
-    );
-
-    console.log("imgExpRes: ", imgExpRes);
-
-    const imgExp = imgExpRes.map((img) => {
-      const file = new File(["img"], `${img.name}`, { type: "image/jpg" });
-
-      return file;
-    });
-
-    setFiles(imgExp);
   }, [idExp, setFormData, sendRequest]);
 
   useEffect(() => {
@@ -139,7 +116,6 @@ const ReactivateExperience = ({ idExp }) => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
-    console.log("actualizo experiencia");
     const startTime =
       startTimeHourRef.current.value +
       ":" +
@@ -151,9 +127,6 @@ const ReactivateExperience = ({ idExp }) => {
       endTimeMinutesRef.current.value +
       ":00";
 
-    // console.log("fecha comienzo: ", startTime);
-    // console.log("fecha fin: ", endTime);
-
     try {
       const formData = new FormData();
 
@@ -162,29 +135,11 @@ const ReactivateExperience = ({ idExp }) => {
       formData.append("city", formState.inputs.city.value);
       formData.append("price", formState.inputs.price.value);
       formData.append("totalPlaces", formState.inputs.totalPlaces.value);
-      formData.append(
-        "eventStartDate",
-        formState.inputs.eventStartDate.value + " " + startTime
-      );
-      //   console.log(
-      //     "fecha inicio: ",
-      //     formState.inputs.eventStartDate.value + " " + startTime
-      //   );
-      formData.append(
-        "eventEndDate",
-        formState.inputs.eventEndDate.value + " " + endTime
-      );
-      //   console.log(
-      //     "fecha final: ",
-      //     formState.inputs.eventEndDate.value + " " + startTime
-      //   );
       formData.append("idCategory", formState.inputs.idCategory.value);
       formData.append("idBusiness", formState.inputs.idBusiness.value);
 
-      console.log("formData: ", formData);
-
       const res = await sendRequest(
-        "http://localhost:3000/api/v1/experiences/",
+        ` http://localhost:3000/api/v1/experiences/${idExp}/reactivate`,
         "POST",
         formData,
         { Authorization: "Bearer " + auth.token }
@@ -192,24 +147,24 @@ const ReactivateExperience = ({ idExp }) => {
 
       const { experienceId } = res;
 
-      console.log("fichero: ", files);
+      const formDate = new FormData();
 
-      for (let index = 0; index < files.length; index++) {
-        console.log("paso fichero a formData: ", files[index]);
-        formData.append("imageExperience", files[index]);
-      }
-
-      console.log("formData: ", formData);
+      formDate.append(
+        "eventStartDate",
+        formState.inputs.eventStartDate.value + " " + startTime
+      );
+      formDate.append(
+        "eventEndDate",
+        formState.inputs.eventEndDate.value + " " + endTime
+      );
 
       await sendRequest(
-        `http://localhost:3000/api/v1/experiences/${experienceId}/images`,
+        `http://localhost:3000/api/v1/experiences/${experienceId}/dates`,
         "POST",
-        formData,
-        {
-          Authorization: "Bearer " + auth.token,
-        }
+        formDate,
+        { Authorization: "Bearer " + auth.token }
       );
-    } catch (err) {}
+    } catch (err) { }
     history.replace("/user/admin");
   };
 
@@ -218,42 +173,67 @@ const ReactivateExperience = ({ idExp }) => {
       <ErrorModal error={error} onClear={clearError} />
       <form className="place-form" onSubmit={submitHandler}>
         {isLoading && <LoadingSpinner asOverlay />}
-        <p>Name: {formState.inputs.name.value}</p>
-        <p>Descripción: {formState.inputs.description.value}</p>
-        <p>Lugar: {formState.inputs.city.value}</p>
-        <p>Precio anterior: {loadedData.price}</p>
-        <Input
-          id="price"
-          element="input"
-          type="text"
-          label="Nuevo precio"
-          validators={[VALIDATOR_REQUIRE()]}
-          errorText="Por favor, introduzca un precio válido."
-          onInput={inputHandler}
-          //   initialValue={loadedData.price} //NO FUNCIONA!! ¿?
-          //   initialValid={true}
-        />
-        <p>Número total de plazas anterior: {loadedData.totalPlaces}</p>
-        <Input
-          id="totalPlaces"
-          element="input"
-          type="text"
-          label="Nuevo número total de plazas:"
-          validators={[VALIDATOR_REQUIRE()]}
-          errorText="Por favor, introduzca un numero válido."
-          onInput={inputHandler}
-          //   initialValue={loadedData.totalPlaces}
-          //   initialValid={true}
-        />
-        <Input
-          id="eventStartDate"
-          element="date"
-          label="Fecha de comienzo"
-          validators={[VALIDATOR_REQUIRE()]}
-          errorText="Por favor, introduzca una fecha válida."
-          onInput={inputHandler}
-        />
-        <label htmlFor="startTime">Hora de comienzo:</label>
+        <p>
+          Nombre:{" "}
+          <span style={{ fontWeight: "300" }}>
+            {formState.inputs.name.value}
+          </span>
+        </p>
+        <p>
+          Descripción:{" "}
+          <span style={{ fontWeight: "300" }}>
+            {formState.inputs.description.value}
+          </span>
+        </p>
+        <p>
+          Lugar:{" "}
+          <span style={{ fontWeight: "300" }}>
+            {formState.inputs.city.value}
+          </span>
+        </p>
+        <p>
+          Precio anterior:{" "}
+          <span style={{ fontWeight: "300" }}>{loadedData.price}€</span>
+        </p>
+        <div style={{ width: "10rem" }}>
+          <Input
+            id="price"
+            element="input"
+            type="text"
+            label="Nuevo precio:"
+            validators={[VALIDATOR_REQUIRE()]}
+            errorText="Por favor, introduzca un precio válido."
+            onInput={inputHandler}
+          />
+        </div>
+        <p>
+          Número total de plazas anterior:{" "}
+          <span style={{ fontWeight: "300" }}>{loadedData.totalPlaces}</span>
+        </p>
+        <div style={{ width: "10rem" }}>
+          <Input
+            id="totalPlaces"
+            element="input"
+            type="text"
+            label="Nuevo número total de plazas:"
+            validators={[VALIDATOR_REQUIRE()]}
+            errorText="Por favor, introduzca un numero válido."
+            onInput={inputHandler}
+          />
+        </div>
+        <div style={{ width: "10rem" }}>
+          <Input
+            id="eventStartDate"
+            element="date"
+            label="Fecha de comienzo"
+            validators={[VALIDATOR_REQUIRE()]}
+            errorText="Por favor, introduzca una fecha válida."
+            onInput={inputHandler}
+          />
+        </div>
+        <label style={{ marginRight: "1rem" }} htmlFor="startTime">
+          Hora de comienzo:
+        </label>
         <select name="startTime-hour" id="startTime" ref={startTimeHourRef}>
           <option value="00">00</option>
           <option value="01">01</option>
@@ -291,15 +271,19 @@ const ReactivateExperience = ({ idExp }) => {
           <option value="30">30</option>
           <option value="45">45</option>
         </select>
-        <Input
-          id="eventEndDate"
-          element="date"
-          label="Fecha de final"
-          validators={[VALIDATOR_REQUIRE()]}
-          errorText="Por favor, introduzca una fecha válida."
-          onInput={inputHandler}
-        />
-        <label id="endTime">Hora de final:</label>
+        <div style={{ width: "10rem" }}>
+          <Input
+            id="eventEndDate"
+            element="date"
+            label="Fecha de final"
+            validators={[VALIDATOR_REQUIRE()]}
+            errorText="Por favor, introduzca una fecha válida."
+            onInput={inputHandler}
+          />
+        </div>
+        <label style={{ marginRight: "1rem" }} id="endTime">
+          Hora de final:
+        </label>
         <select name="endTime-hour" id="endTime" ref={endTimeHourRef}>
           <option value="00">00</option>
           <option value="01">01</option>
@@ -333,22 +317,21 @@ const ReactivateExperience = ({ idExp }) => {
           <option value="30">30</option>
           <option value="45">45</option>
         </select>
-        <p>Categoría (id): {formState.inputs.idCategory.value}</p>
-        <p>Código de empresa: {formState.inputs.idBusiness.value}</p>
-        {/* <label className="new-exp-label">Imagenes de la experiencia:</label>
-        <input
-          id="files"
-          multiple
-          type="file"
-          onChange={(event) => {
-            const fichero = event.target.files;
-            setFichero(fichero);
-          }}
-        /> */}
+        <p>
+          Categoría (id):{" "}
+          <span style={{ fontWeight: "300" }}>
+            {formState.inputs.idCategory.value}
+          </span>
+        </p>
+        <p>
+          Código de empresa:{" "}
+          <span style={{ fontWeight: "300" }}>
+            {formState.inputs.idBusiness.value}
+          </span>
+        </p>
         <hr />
         <div>
           <Button type="submit" disabled={!formState.isValid}>
-            {/* <Button type="submit"> */}
             AÑADIR
           </Button>
           <Button to="/user/admin/">VOLVER</Button>

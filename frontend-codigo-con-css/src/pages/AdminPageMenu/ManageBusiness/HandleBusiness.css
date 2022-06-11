@@ -1,0 +1,18 @@
+.handle-business-container {
+  margin-top: 6rem;
+}
+
+.handle-business-btn-container {
+  display: flex;
+  flex-direction: row;
+}
+
+@media (max-width: 768px) {
+  .handle-business-btn-container {
+    flex-wrap: wrap;
+  }
+
+  .handle-business-del-btn {
+    margin-top: 1rem;
+  }
+}

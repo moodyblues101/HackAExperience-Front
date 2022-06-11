@@ -11,6 +11,8 @@ import Card from "../ui/Card";
 import Button from "../ui/FormElements/Button";
 import formatDate from "../util/formatDate";
 
+import "./OptionAddReview.css";
+
 const OptionAddReview = ({ experiences }) => {
   const history = useHistory();
   const auth = useContext(AuthContext);
@@ -109,30 +111,50 @@ const OptionAddReview = ({ experiences }) => {
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner />}
       {showList && (
-        <ul>
-          {arrayExpToShow.map((exp) => {
-            return (
-              <li key={exp.id}>
-                <label htmlFor={exp.id}>Nombre: {exp.name}</label>
-                <p>Descripción: {exp.description}</p>
-                <DateExperience date={exp.eventStartDate} />
-                <div>
-                  <Button to={"/experiences"}>VER</Button>
-                  {exp.isNotCommented && (
-                    <Button
-                      type="button"
-                      onClick={() => {
-                        reviewFormHandler(exp.idExperience);
-                      }}
-                    >
-                      AÑADIR VALORACIÓN
-                    </Button>
-                  )}
-                </div>
-              </li>
-            );
-          })}
-        </ul>
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Fecha</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {arrayExpToShow.map((exp) => {
+              return (
+                <tr key={exp.id}>
+                  <td>
+                    <label htmlFor={exp.id}>{exp.name}</label>
+                  </td>
+                  <td>{exp.description}</td>
+                  <td>
+                    <DateExperience date={exp.eventStartDate} />
+                  </td>
+                  <td>
+                    <div className="btn-container">
+                      <div>
+                        <Button to={"/experiences"}>VER</Button>
+                      </div>
+                      {exp.isNotCommented && (
+                        <div>
+                          <Button
+                            type="button"
+                            onClick={() => {
+                              reviewFormHandler(exp.idExperience);
+                            }}
+                          >
+                            AÑADIR VALORACIÓN
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       )}
 
       {sureModal && (
@@ -145,7 +167,7 @@ const OptionAddReview = ({ experiences }) => {
               type="text"
               value={commentToAdd}
               onChange={(e) => setCommentToAdd(e.target.value)}
-              // onBlur={() => setIsTouched(true)}
+            // onBlur={() => setIsTouched(true)}
             />
 
             <ReactStars

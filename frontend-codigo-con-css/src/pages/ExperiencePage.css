@@ -1,0 +1,85 @@
+.exp-main {
+  display: flex;
+  flex-direction: row;
+}
+
+.photos-container {
+  display: flex;
+  align-items: baseline;
+}
+
+.photos-container-item {
+  height: 19rem;
+  width: 19rem;
+}
+
+.photos-container-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slide-arrow-exp {
+  height: 3rem;
+  width: auto;
+}
+
+.light-text {
+  font-weight: 300;
+}
+
+.desc-container {
+  margin-top: 3rem;
+}
+
+.city-container {
+  margin-top: 1rem;
+}
+
+.business-container {
+  margin-top: 1rem;
+  font-weight: 300;
+}
+
+.exp-bookings-container {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.exp-reviews-container ul {
+  text-decoration: none;
+  list-style: none;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.exp-reviews-container li {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: center; */
+  align-items: center;
+  margin-right: 1rem;
+  margin-bottom: 2rem;
+}
+
+.exp-reviews-container img {
+  height: 6rem;
+  width: 6rem;
+  border-radius: 50%;
+}
+
+.exp-reviews-data {
+  margin-left: 1rem;
+}
+
+@media (max-width: 768px) {
+  .exp-main {
+    flex-wrap: wrap;
+  }
+
+  .exp-reviews-container {
+    flex-wrap: wrap;
+  }
+}

@@ -1,0 +1,34 @@
+.menu-container {
+  margin-bottom: 1.5rem;
+}
+.menu-cont-ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu-cont-li {
+  margin: 14x 0;
+  padding-left: 25px;
+  padding-bottom: 1rem;
+
+  display: flex;
+  align-items: center;
+}
+
+.menu-cont-li a {
+  text-decoration: none;
+  color: black;
+}
+
+.menu-cont-li a:hover {
+  color: #fd8210;
+}
+
+.circle-li {
+  height: 5px;
+  width: 5px;
+  border-radius: 50%;
+  background-color: #fd8210;
+  margin-right: 10px;
+}

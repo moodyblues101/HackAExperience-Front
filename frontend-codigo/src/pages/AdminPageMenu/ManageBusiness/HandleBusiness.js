@@ -7,6 +7,7 @@ import ErrorModal from "../../../ui/ErrorModal";
 import LoadingSpinner from "../../../ui/LoadingSpinner";
 import Modal from "../../../ui/Modal";
 import UpdateBusiness from "./UpdateBusiness";
+import formatDate from "../../../util/formatDate";
 
 const HandleBusiness = () => {
   const auth = useContext(AuthContext);
@@ -24,7 +25,7 @@ const HandleBusiness = () => {
     try {
       const res = await sendRequest("http://localhost:3000/api/v1/business");
       setBusinessList(res);
-    } catch (err) {}
+    } catch (err) { }
   }, [sendRequest]);
 
   useEffect(() => {
@@ -57,7 +58,7 @@ const HandleBusiness = () => {
       );
 
       setDelOk(true);
-    } catch (err) {}
+    } catch (err) { }
   };
 
   return (
@@ -66,29 +67,50 @@ const HandleBusiness = () => {
       {isLoading && <LoadingSpinner />}
       {showList && (
         <div>
-          <h2>listado de empresas</h2>
-          <ul>
-            {businessList.map((bus) => {
-              return (
-                <li key={bus.id}>
-                  <div>{bus.id}</div>
-                  <div>{bus.name}</div>
-                  <div>{bus.createdAt}</div>
-                  <div>
-                    <Button
-                      type="button"
-                      onClick={() => updateHandler(bus.id, bus.name)}
-                    >
-                      ACTUALIZAR
-                    </Button>
-                    <Button type="button" onClick={() => deleteHandler(bus.id)}>
-                      BORRAR
-                    </Button>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
+          <h2>Listado de empresas</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Fecha de creación</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {businessList.map((bus) => {
+                return (
+                  <tr key={bus.id}>
+                    <td>{bus.id}</td>
+                    <td>{bus.name}</td>
+                    <td>
+                      {formatDate(bus.createdAt).day +
+                        "/" +
+                        formatDate(bus.createdAt).month +
+                        "/" +
+                        formatDate(bus.createdAt).year}
+                    </td>
+                    <td>
+                      <div>
+                        <Button
+                          type="button"
+                          onClick={() => updateHandler(bus.id, bus.name)}
+                        >
+                          ACTUALIZAR
+                        </Button>
+                        <Button
+                          type="button"
+                          onClick={() => deleteHandler(bus.id)}
+                        >
+                          BORRAR
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
           <Button to="/user/admin/business">VOLVER</Button>
         </div>
       )}

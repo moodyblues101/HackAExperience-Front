@@ -42,7 +42,11 @@ const AllExperiences = () => {
         const dates = await sendRequest(
           `http://localhost:3000/api/v1/experiences/${exp.id}/dates`
         );
-        expWithDates.push({ ...exp, dates });
+        const imgExp = await sendRequest(
+          `http://localhost:3000/api/v1/experiences/${exp.id}/images`
+        );
+
+        expWithDates.push({ ...exp, dates, imgExp: imgExp[0] });
       }
       // console.log("expwhithdates: ", expWithDates);
 
@@ -56,9 +60,9 @@ const AllExperiences = () => {
         }
       }
 
-      console.log("nextExp: ", nextExp);
+      // console.log("nextExp: ", nextExp);
       setNextExperiences(nextExp);
-    } catch (err) {}
+    } catch (err) { }
   }, [sendRequest]);
 
   useEffect(() => {
@@ -167,9 +171,8 @@ const AllExperiences = () => {
   const changeSortHandler = () => {
     history.push({
       pathname: location.pathname,
-      search: `?city=${citySearch}&date=${dateSearch}&category=${categorySearch}&sort=${
-        isSortAscending ? "desc" : "asc"
-      }`,
+      search: `?city=${citySearch}&date=${dateSearch}&category=${categorySearch}&sort=${isSortAscending ? "desc" : "asc"
+        }`,
     });
   };
 
@@ -227,6 +230,7 @@ const AllExperiences = () => {
               <Experience
                 key={experience.id}
                 id={experience.id}
+                image={experience.imgExp}
                 name={experience.name}
                 description={experience.description}
                 city={experience.city}
@@ -246,6 +250,10 @@ export default AllExperiences;
 const Experience = (props) => {
   return (
     <li>
+      <img
+        src={`http://localhost:3000/experiences/${props.id}/${props.image.name}`}
+        alt="experience"
+      />
       <h2>
         <Link to={`/experiences/${props.id}`}>{props.name}</Link>
       </h2>

@@ -1,0 +1,23 @@
+.add-business-container {
+  width: 50%;
+  text-align: center;
+  margin: 6rem auto;
+  max-width: 40rem;
+}
+
+.form-add-business {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-input {
+  width: 15rem;
+}
+
+@media (max-width: 768px) {
+  .add-business-container {
+    width: 100%;
+  }
+}

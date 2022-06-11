@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { AuthContext } from "../../store/auth-context";
 import SideDrawer from "./SideDrawer";
@@ -47,9 +47,9 @@ const MainNavigation = () => {
           <span />
           <span />
         </button>
-        {/* <h1 className="main-navigation__title">
+        <h1 className="main-navigation__title">
           <Link to="/">HackAExperience</Link>
-        </h1> */}
+        </h1>
         <button className="search-btn" onClick={searchHandle}>
           <SearchIcon className="icon_search" />
         </button>

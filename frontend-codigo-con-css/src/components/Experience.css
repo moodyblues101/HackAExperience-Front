@@ -1,0 +1,45 @@
+.experience-list-container-li {
+  display: flex;
+  flex-direction: column;
+  margin-right: 1rem;
+  padding: 1rem;
+  overflow: hidden;
+  transition: transform 100ms ease-in;
+  cursor: pointer;
+}
+
+.experience-list-container-li div {
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.experience-list-container-li a {
+  text-decoration: none;
+  color: black;
+}
+
+.experience-list-container-li:hover {
+  transform: scale(1.07);
+}
+
+.experience-list-img-container {
+  height: 10rem;
+  width: 10rem;
+}
+.experience-list-container-li img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.exp-list-name {
+  max-width: 10rem;
+}
+
+@media (max-width: 768px) {
+  .experience-list-img-container {
+    height: 8rem;
+    width: 8rem;
+    margin-right: 1rem;
+  }
+}

@@ -6,7 +6,6 @@ import Button from "../../../ui/FormElements/Button";
 import { useForm } from "../../../hooks/form-hook";
 import { useHttpClient } from "../../../hooks/http-hook";
 import { AuthContext } from "../../../store/auth-context";
-import Card from "../../../ui/Card";
 import ErrorModal from "../../../ui/ErrorModal";
 import LoadingSpinner from "../../../ui/LoadingSpinner";
 import DeleteReviews from "../../../components/DeleteReviews";
@@ -37,38 +36,42 @@ const ManageExperienceReviewsByUserAndExperience = () => {
     <React.Fragment>
       {inputShow && (
         <>
-          <Input
-            id="userId"
-            element="input"
-            type="text"
-            label="Introduzca id de usuario:"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Por favor, introduzca una id válida"
-            onInput={inputHandler}
-          />
-          <Input
-            id="idExperience"
-            element="input"
-            type="text"
-            label="Introduzca id de experiencia:"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Por favor, introduzca una id válida"
-            onInput={inputHandler}
-          />
+          <div style={{ width: "15rem" }}>
+            <Input
+              id="userId"
+              element="input"
+              type="text"
+              label="Introduzca id de usuario:"
+              validators={[VALIDATOR_REQUIRE()]}
+              errorText="Por favor, introduzca una id válida"
+              onInput={inputHandler}
+            />
+            <Input
+              id="idExperience"
+              element="input"
+              type="text"
+              label="Introduzca id de experiencia:"
+              validators={[VALIDATOR_REQUIRE()]}
+              errorText="Por favor, introduzca una id válida"
+              onInput={inputHandler}
+            />
+          </div>
+          <Button to="/user/admin/manage-experience-comments">VOLVER</Button>
           <Button type="button" onClick={toggleHandler}>
             MOSTRAR
           </Button>
-          <Button to="/user/admin/manage-experience-comments">VOLVER</Button>
         </>
       )}
       {isExpShow && (
-        <Card>
+        <>
           <GetReviewsTwoData
             user={formState.inputs.userId.value}
             experience={formState.inputs.idExperience.value}
           />
-          <Button to="/user/admin/manage-experience-comments">VOLVER</Button>
-        </Card>
+          <div style={{ "margin-top": "2rem" }}>
+            <Button to="/user/admin/manage-experience-comments">VOLVER</Button>
+          </div>
+        </>
       )}
     </React.Fragment>
   );
@@ -106,7 +109,7 @@ const GetReviewsTwoData = ({ user, experience }) => {
       );
 
       setReviews(transformedReviews);
-    } catch (err) {}
+    } catch (err) { }
   }, [user, experience, auth.token, sendRequest]);
 
   useEffect(() => {

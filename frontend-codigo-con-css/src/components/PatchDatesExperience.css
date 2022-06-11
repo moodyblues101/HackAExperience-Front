@@ -1,0 +1,45 @@
+.patch-dates-container {
+  text-align: center;
+}
+
+.patch-dates-menu-btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.patch-input-id {
+  width: 20rem;
+  margin: 0 auto;
+}
+
+.patch-experience-dates-container {
+  margin-top: 2rem;
+}
+
+.patch-date-show-table {
+  margin: 1.5rem auto;
+}
+
+.patch-date-form {
+  max-width: 50%;
+  margin: 1.5rem auto;
+}
+
+.patch-date-btn-container {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .patch-dates-menu-btns {
+    flex-wrap: wrap;
+  }
+  .patch-date-btn-container {
+    flex-wrap: wrap;
+  }
+  .patch-date-back-btn {
+    margin-top: 1rem;
+  }
+}

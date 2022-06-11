@@ -1,148 +1,24 @@
-
 .main-header {
-
- 
-  display: flex;
-
-  flex-grow:inherit;
   width: 100%;
   height: 5rem;
-
   position: fixed;
-  top: 0; 
+  top: 0;
 
   display: flex;
-  align-items:center;
-  justify-content: center;
-  background-color: #202123;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgb(28, 27, 27);
   padding: 0 1.5rem;
 }
 
-.main-header img {
-  padding-top: 8px;
+main {
+  margin-top: 6rem;
+  position: relative;
+  min-height: 100vh;
 }
 
-
-.form_search {
-  height: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.form_search input {
-  height: fit-content;
-  flex: 1 1 auto;
-  max-width: 400px;
-}
-
-.icon_search {
-  height: 1rem;
-  color: #fd8210;
-}
-
-.form_search_btn {
-  height: fit-content;
-  border: #fd8210;
-  padding: 0.25rem 0.25rem;
-  margin-left: 0.5rem;
-  text-align: center;
-  background-color: white;
-}
-
-.head-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  align-items: baseline;
-}
-
-.li-login {
-  border: white;
-  line-height: 2;
-  padding: 0 20px;
-  margin-right: 0.5rem;
-  font-size: 1rem;
-  text-align: center;
-  border-radius: 6px;
-  background-color:#fd8210;
-  justify-content: space-between;
-}
-
-.btn_login {
-
-
-  border: #fd8210;
-
-  line-height: 2;
-  padding: 0 20px;
-  margin-right: 0.5rem;
-  font-size: 1rem;
-  text-align: center;
-  border-radius: 8px;
-
-  background-color: white;
-
-} 
-
- .btn_login:hover {
-  background-color: #fd8210;
-  color: white;
-}
-
-.li-register {
-
-  border: white;
-  line-height: 2;
-  padding: 0 20px;
-  margin-right: 0.5rem;
-  font-size: 1rem;
-  text-align: center;
-  border-radius: 6px;
-
-  background-color:#fd8210;
-}
-
-.btn_register {
-  border: #fd8210;
-
-  background-color: #fd8210;
-}
-
-.btn_register {
-  border: white;
-
-  color: white;
-  line-height: 2;
-  padding: 0 20px;
-  margin-left: 0.5rem;
-  font-size: 1rem;
-  text-align: center;
-  border-radius: 6px;
-
-
-  background-color: #fd8210;
-
-}
-
-.btn_register:hover {
-  background-color: white;
-  color: #fd8210;
-} */
-
-.btn_logout {
-  border:#fd8210;
-  color: #fd8210;
-  line-height: 2;
-  padding: 0 20px;
-  margin-right: 0.5rem;
-  font-size: 1rem;
-  text-align: center;
-  border-radius: 8px;
-  background-color: white;
-}
-*/ .btn_logout:hover {
-  background-color: #fd8210;
-  color:aqua;
+@media (min-width: 768px) {
+  .main-header {
+    justify-content: space-between;
+  }
 }

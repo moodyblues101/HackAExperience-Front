@@ -131,7 +131,7 @@ const ExperiencePage = () => {
   };
 
   const showUsersBooked = () => {
-    setModalShowUsers(true);
+    setModalShowUsers(!modalShowUsers);
   };
 
   const showModalMail = () => {
@@ -142,75 +142,93 @@ const ExperiencePage = () => {
     <>
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner />}
-      {/* <p>{`Categoria/${experience.name}`}</p> */}
       <h3>{experience.name}</h3>
-      <div>
-        {/* <div>image</div> */}
+      <div className="exp-main">
         <List
           data={imgExperience}
           render={(image, index) => (
             <div key={image.id}>
               {index === currentImg && (
                 <>
-                  <img
-                    src={`http://localhost:3000/experiences/${idExp}/${image.name}`}
-                    alt="experience_image"
-                  />
-                  {imgExperience.length > 1 && (
-                    <>
-                      <ChevronLeftIcon
+                  <div className="photos-container">
+                    <div className="photos-container-item">
+                      <img
+                        src={`http://localhost:3000/experiences/${idExp}/${image.name}`}
+                        alt="experience_image"
+                      />
+                    </div>
+
+                    {imgExperience.length > 1 && (
+                      <>
+                        {/* <ChevronLeftIcon
                         className="slide-arrow-exp"
                         onClick={prevImg}
-                      />
-                      <ChevronRightIcon
-                        className="slide-arrow-exp"
-                        // AQUI TENDRIA QUE SER NEXTIMG, PERO NO FUNCIONA:
-                        onClick={prevImg}
-                      />
-                    </>
-                  )}
+                      /> */}
+                        <ChevronRightIcon
+                          className="slide-arrow-exp"
+                          // AQUI TENDRIA QUE SER NEXTIMG, PERO NO FUNCIONA:
+                          onClick={prevImg}
+                        />
+                      </>
+                    )}
+                  </div>
                 </>
               )}
             </div>
           )}
         />
-        <div>VALORACION: </div>
-        {experience.avgRatingExp ? (
-          <ReactStars
-            value={+experience.avgRatingExp}
-            count={5}
-            size={24}
-            activeColor="#ffd700"
-            edit={false}
-          />
-        ) : (
-          "Esta experiencia aún no ha sido valorada"
-        )}
-        <div>DESCRIPCION: {experience.description}</div>
+        <div>
+          <div>
+            {experience.avgRatingExp ? (
+              <ReactStars
+                value={+experience.avgRatingExp}
+                count={5}
+                size={24}
+                activeColor="#ffd700"
+                edit={false}
+              />
+            ) : (
+              "Esta experiencia aún no ha sido valorada"
+            )}
+          </div>
+          <div className="desc-container">
+            <span style={{ fontWeight: "300" }}>{experience.description}</span>
+          </div>
+          <div className="city-container">
+            ¿Dónde?{" "}
+            <span style={{ fontWeight: "300" }}>En {experience.city}.</span>
+          </div>
+          <div className="city-container">
+            ¿Cuánto cuesta?{" "}
+            <span style={{ fontWeight: "300" }}>{experience.price}€.</span>
+          </div>
+          <div className="business-container">
+            Gestionado por {experience.businessName}.
+          </div>
+        </div>
       </div>
       <div>
-        <p>{experience.city}</p>
         {dates.length === 0 ? (
           <p>No hay próximas fechas</p>
         ) : (
           <div>
-            <p>Próximas fechas:</p>
+            <p>¿Cuándo?</p>
             {dates.map((date) => {
               let dateData;
               if (date.startDate.day === date.endDate.day) {
                 dateData = (
-                  <p>
-                    -{date.startDate.day} de {date.startDate.month} del{" "}
-                    {date.startDate.year} a las {date.startDate.time}h. Termina
-                    a las {date.endDate.time}h
+                  <p style={{ fontWeight: "300" }}>
+                    El {date.startDate.day} de {date.startDate.month} del{" "}
+                    {date.startDate.year} a las {date.startDate.time}h, hasta
+                    las {date.endDate.time}h.
                   </p>
                 );
               } else {
                 dateData = (
-                  <p>
-                    -Del {date.startDate.day} de {date.startDate.month} del{" "}
+                  <p style={{ fontWeight: "300" }}>
+                    Del {date.startDate.day} de {date.startDate.month} del{" "}
                     {date.startDate.year} a las {date.startDate.time}h hasta{" "}
-                    {date.endDate.day} a las {date.endDate.time}h
+                    {date.endDate.day} a las {date.endDate.time}h.
                   </p>
                 );
               }
@@ -218,8 +236,6 @@ const ExperiencePage = () => {
             })}
           </div>
         )}
-
-        <p>Gestionado por {experience.businessName}</p>
       </div>
 
       <div>
@@ -237,76 +253,95 @@ const ExperiencePage = () => {
             </Button>
           </div>
         )}
-        {auth.token && (
-          <div>
-            {experience.availablePlaces !== 0 && (
-              <div>Quedan {experience.availablePlaces} plazas disponibles</div>
+        <div className="available-places">
+          {experience.availablePlaces !== 0 && (
+            <div>Quedan {experience.availablePlaces} plazas disponibles</div>
+          )}
+
+          <div className="avatars-booked">
+            {avatars.length === 0 ? (
+              <p>
+                Aún no hay inscritos en esta experiencia. ¿Quieres ser el
+                primero?
+              </p>
+            ) : (
+              <ul>
+                {avatars.map((user, index) => {
+                  return (
+                    <li key={user[index]}>
+                      <img
+                        src={`http://localhost:3000/avatars/${user.avatar}`}
+                        alt="user"
+                      />
+                    </li>
+                  );
+                })}
+              </ul>
             )}
-            {!noAvatars && (
+          </div>
+        </div>
+
+        {auth.token && (
+          <div className="btn-show-users">
+            {!noAvatars && !modalShowUsers && (
               <Button type="button" onClick={showUsersBooked}>
                 Mira quién está apuntado en esta experiencia
               </Button>
             )}
+            {modalShowUsers && (
+              <div>
+                <ShowListUsersBooked avatars={avatars} />
+                <Button type="button" onClick={showUsersBooked}>
+                  OCULTAR
+                </Button>
+              </div>
+            )}
           </div>
         )}
-        {/* <div>avatares de inscritos</div> */}
-        {avatars.length === 0 ? (
-          <p>
-            Aún no hay inscritos en esta experiencia. ¿Quieres ser el primero?
-          </p>
-        ) : (
-          <ul>
-            {avatars.map((user, index) => {
-              return (
-                <li key={user[index]}>
-                  <img
-                    src={`http://localhost:3000/avatars/${user.avatar}`}
-                    alt="user"
-                  />
-                </li>
-              );
-            })}
-          </ul>
-        )}
       </div>
+
       {reviews.length === 0 ? (
         <p>Todavía no hay opiniones sobre esta experiencia.</p>
       ) : (
         <div>
-          <div>Opiniones de nuestros clientes:</div>
-          <ul>
-            {reviews.map((rev) => (
-              <li key={rev.id}>
-                <div>
-                  <img
-                    src={`http://localhost:3000/avatars/${rev.profilePic}`}
-                    alt="user"
-                  />
-                  <p>{rev.comment}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <p>Opiniones de nuestros clientes:</p>
+          <div className="exp-reviews-container">
+            <ul>
+              {reviews.map((rev) => (
+                <li key={rev.id}>
+                  <div>
+                    <img
+                      src={`http://localhost:3000/avatars/${rev.profilePic}`}
+                      alt="user"
+                    />
+                    <p>{rev.comment}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       )}
+
       <Modal
         show={showModal}
         onCancel={cancelHandler}
         footer={
           <div>
             <Button onClick={cancelHandler}>CANCELAR</Button>
-            <Button to="/login">LOGIN</Button>
+            <Button to={`/login?experience=${idExp}`}>LOGIN</Button>
           </div>
         }
       >
         <p>Para poder reservar una experiencia tienes que iniciar sesión</p>
       </Modal>
-      <Modal
+
+      {/* <Modal
         show={modalShowUsers}
         onCancel={cancelHandler}
         footer={<Button onClick={cancelHandler}>OK</Button>}
       >
-        <ul>
+        <ul className="modal-users">
           {avatars.map((user, index) => {
             return (
               <li key={user[index]}>
@@ -320,7 +355,8 @@ const ExperiencePage = () => {
             );
           })}
         </ul>
-      </Modal>
+      </Modal> */}
+
       <Modal
         show={isShowModalMail}
         onCancel={cancelHandler}
@@ -343,4 +379,34 @@ export default ExperiencePage;
 
 const List = ({ data, render }) => {
   return <div>{data.map(render)}</div>;
+};
+
+const ShowListUsersBooked = ({ avatars }) => {
+  return (
+    <table className="modal-users">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Nombre</th>
+          <th>Bio</th>
+        </tr>
+      </thead>
+      <tbody>
+        {avatars.map((user, index) => {
+          return (
+            <tr key={user[index]}>
+              <td>
+                <img
+                  src={`http://localhost:3000/avatars/${user.avatar}`}
+                  alt="user"
+                />
+              </td>
+              <td>{user.name}</td>
+              <td>{user.bio}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  );
 };

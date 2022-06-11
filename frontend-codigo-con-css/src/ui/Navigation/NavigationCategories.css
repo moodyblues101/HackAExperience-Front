@@ -1,0 +1,33 @@
+.nav-cat-ul {
+  text-align: center;
+  margin-top: 6rem;
+  /* position: fixed; */
+}
+.nav-cat-ul li {
+  display: inline;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-size: large;
+}
+
+.nav-cat-ul a {
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+}
+
+.nav-cat-ul .active {
+  color: #fd8210;
+}
+
+@media (max-width: 768px) {
+  .nav-cat-ul {
+    padding-left: 0;
+  }
+  .nav-cat-ul li {
+    display: inline;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    font-size: medium;
+  }
+}

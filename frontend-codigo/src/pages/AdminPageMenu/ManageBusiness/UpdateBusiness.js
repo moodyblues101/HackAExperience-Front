@@ -53,7 +53,7 @@ const UpdateBusiness = ({ id, name }) => {
         }
       );
       setShowModalOk(true);
-    } catch (err) {}
+    } catch (err) { }
   };
 
   const cancelNameError = () => {
@@ -64,7 +64,7 @@ const UpdateBusiness = ({ id, name }) => {
     <>
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner />}
-      <h2>actualizar empresa</h2>
+      <h2>Actualizar empresa</h2>
       <Card>
         <form onSubmit={submitHandler}>
           <Input
