@@ -126,14 +126,16 @@ const ShowUsersBooked = ({ idExp, idDate, dates }) => {
           {avatars.length !== 0 && auth.token && modalShowUsers && (
             <div className="btn-show-users">
               <Button type="button" onClick={showUsersBookedHandler}>
-                Mira quién está apuntado en esta experiencia
+                {showUsersBooked
+                  ? "OCULTAR"
+                  : "Mira quién está apuntado en esta experiencia"}
               </Button>
               {showUsersBooked && (
                 <div>
                   <ShowListUsersBooked avatars={avatars} />
-                  <Button type="button" onClick={showUsersBookedHandler}>
+                  {/* <Button type="button" onClick={showUsersBookedHandler}>
                     OCULTAR
-                  </Button>
+                  </Button> */}
                 </div>
               )}
             </div>

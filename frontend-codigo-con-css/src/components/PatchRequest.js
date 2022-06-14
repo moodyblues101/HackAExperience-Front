@@ -158,12 +158,14 @@ const PatchRequest = (props) => {
         <form className="patch-req-form" onSubmit={updateSubmitHandler}>
           <Input
             id={`${props.dataToUpdate}`}
-            element={props.dataToUpdate === "bio" ? "textarea" : "input"}
+            // element={props.dataToUpdate === "bio" ? "textarea" : "input"}
+            element="input"
+            placeholder={loadedData}
             type="text"
             validators={[VALIDATOR_REQUIRE()]}
             errorText="Por favor, introduzca un dato válido"
             onInput={inputHandler}
-            initialValue={loadedData}
+            // initialValue={loadedData}
             initialValid={true}
           />
           <div className="patch-req-btn-container">

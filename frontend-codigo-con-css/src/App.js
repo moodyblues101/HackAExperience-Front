@@ -18,14 +18,10 @@ import NotFound from "./pages/NotFoundPage";
 import AdminPage from "./pages/AdminPage";
 import ManageExperiences from "./pages/AdminPageMenu/ManageExperiences";
 import ReuseExperience from "./pages/AdminPageMenu/ReuseExperience";
-// import CreateNewExperience from "./pages/AdminPageMenu/CreateNewExperience";
 import CreateExperience from "./components/CreateExperience";
 import ModifyExperience from "./pages/AdminPageMenu/ModifyExperience";
 import DeleteExperience from "./pages/AdminPageMenu/DeleteExperience";
-// import ManageExperienceReviews from "./pages/AdminPageMenu/ManageExperienceReviews";
-// import ManageExperienceReviewsByUser from "./pages/AdminPageMenu/ManageReviews/ManageExperienceReviewsByUser";
 import ManageExperienceReviewsByExperience from "./pages/AdminPageMenu/ManageReviews/ManageExperienceReviewsByExperience";
-// import ManageExperienceReviewsByUserAndExperience from "./pages/AdminPageMenu/ManageReviews/ManageExperienceReviewsByUserAndExperience";
 import UserPersonalPage from "./pages/UserPersonalPage";
 import UserExperiencesPage from "./pages/UserExperiencesPage";
 import ManageBusiness from "./pages/AdminPageMenu/ManageBusiness";
@@ -107,7 +103,6 @@ function App() {
               )}
               {userRole === "administrador" && (
                 <Route path="/user/admin/experiences/new-experience" exact>
-                  {/* <CreateNewExperience /> */}
                   <CreateExperience />
                 </Route>
               )}
@@ -127,22 +122,6 @@ function App() {
                   <DeleteExperience />
                 </Route>
               )}
-              {/* {userRole === "administrador" && (
-                <Route
-                  path="/user/admin/experiences/manage-experience-comments"
-                  exact
-                >
-                  <ManageExperienceReviews />
-                </Route>
-              )} */}
-              {/* {userRole === "administrador" && (
-                <Route
-                  path="/user/admin/experiences/manage-experience-comments/user"
-                  exact
-                >
-                  <ManageExperienceReviewsByUser />
-                </Route>
-              )} */}
               {userRole === "administrador" && (
                 <Route
                   path="/user/admin/experiences/manage-experience-comments/:idExp"
@@ -151,14 +130,6 @@ function App() {
                   <ManageExperienceReviewsByExperience />
                 </Route>
               )}
-              {/* {userRole === "administrador" && (
-                <Route
-                  path="/user/admin/experiences/manage-experience-comments/user-experience"
-                  exact
-                >
-                  <ManageExperienceReviewsByUserAndExperience />
-                </Route>
-              )} */}
               {userRole === "administrador" && (
                 <Route path="/user/admin/business" exact>
                   <ManageBusiness />

@@ -19,12 +19,14 @@ select {
 
 .btn-new-search {
   margin-bottom: 2rem;
-  text-align: center;
+  text-align: left;
+  margin-left: 14rem;
 }
 
 .search-btn-sort {
   text-align: right;
   margin-bottom: 1.5rem;
+  margin-right: 7rem;
 }
 
 .search-li-container {

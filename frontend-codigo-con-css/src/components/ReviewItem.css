@@ -13,6 +13,7 @@
   height: 6rem;
   width: 6rem;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .review-list-name-rating-container {

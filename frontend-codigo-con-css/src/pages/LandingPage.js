@@ -28,8 +28,6 @@ const LandingPage = () => {
       })
       .reverse();
 
-    // console.log("orderBestExp: ", orderBestExp);
-
     const expToShow = [];
 
     for (let i = 0; i < orderBestExp.length && i < 4; i++) {
@@ -119,13 +117,15 @@ const LandingPage = () => {
                   />
                 </div>
                 <div className="name-exp-container">{exp.name}</div>
-                <ReactStars
-                  value={exp.rating}
-                  count={5}
-                  size={24}
-                  activeColor="#ffd700"
-                  edit={false}
-                />
+                <div>
+                  <ReactStars
+                    value={exp.rating}
+                    count={5}
+                    size={24}
+                    activeColor="#ffd700"
+                    edit={false}
+                  />
+                </div>
               </Link>
             </li>
           ))}
