@@ -134,7 +134,7 @@ const PatchDatesExperience = ({ idExp }) => {
     setActivatedBtn(false);
     setIsTotalPlacesShow(true);
     setIsExpDateShow(false);
-    showInputNewDateHandler(false);
+    setShowInputNewDate(false);
   };
 
   const showInputNewtotalPlacesHandler = () => {
